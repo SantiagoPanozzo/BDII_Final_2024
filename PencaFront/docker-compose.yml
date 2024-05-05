@@ -1,0 +1,6 @@
+﻿services:
+  pencaapi:
+    image: pencafront
+    build:
+      context: .
+      dockerfile: Dockerfile

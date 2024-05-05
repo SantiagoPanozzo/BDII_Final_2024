@@ -1,0 +1,6 @@
+﻿services:
+  pencaapi:
+    image: pencaapi
+    build:
+      context: .
+      dockerfile: PencaAPI/Dockerfile

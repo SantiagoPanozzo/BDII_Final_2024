@@ -4,3 +4,15 @@
     build:
       context: .
       dockerfile: PencaAPI/Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - pencadb
+
+  pencadb:
+    image: pencadb
+    build:
+      context: ./PencaDB
+      dockerfile: Dockerfile
+    ports:
+      - "8001:5432"

@@ -1,0 +1,9 @@
+﻿services:
+  pencaapi:
+    image: pencaapi
+    build:
+      context: .
+      dockerfile: PencaAPI/Dockerfile
+    ports:
+      - "8000:8000"
+

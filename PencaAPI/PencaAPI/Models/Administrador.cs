@@ -1,5 +1,13 @@
 namespace PencaAPI.Models;
 
+/// <summary>
+/// Implementación de un Usuario Administrador del sistema.
+/// </summary>
+/// <param name="nombre">Nombre del administrador</param>
+/// <param name="apellido">Apellido del administrador</param>
+/// <param name="cedula">Cédula del administrador</param>
+/// <param name="fechaNacimiento">Fecha de nacimiento del administrador</param>
+/// <param name="rolUniversidad">Rol en la universidad del administrador</param>
 public class Administrador(string nombre, string apellido, int cedula, DateTime fechaNacimiento, string rolUniversidad)
     : IUsuario
 {

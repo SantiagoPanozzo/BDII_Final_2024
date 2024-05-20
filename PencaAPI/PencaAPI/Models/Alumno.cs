@@ -1,5 +1,17 @@
 namespace PencaAPI.Models;
 
+/// <summary>
+/// Implementación de un Usuario Alumno del sistema.
+/// </summary>
+/// <param name="nombre">Nombre del alumno</param>
+/// <param name="apellido">Apellido del alumno</param>
+/// <param name="cedula">Cédula del alumno</param>
+/// <param name="fechaNacimiento">Fecha de nacimiento del alumno</param>
+/// <param name="anioIngreso">Año de ingreso del alumno</param>
+/// <param name="semestreIngreso">Semestre de ingreso del alumno</param>
+/// <param name="puntajeTotal">Puntaje total obtenido por el alumno</param>
+/// <param name="campeon">Campeón elegido por el alumno</param>
+/// <param name="subCampeon">Subcampeón elegido por el alumno</param>
 public class Alumno (
     string nombre, string apellido, int cedula, DateTime fechaNacimiento, int anioIngreso, int semestreIngreso,
     int? puntajeTotal, string campeon, string subCampeon)
@@ -18,7 +30,7 @@ public class Alumno (
 
     public override string ToString()
     {
-        return $"Nombre: {Nombre}, Apellido: {Apellido}, Cedula: {Cedula}, Id: {Id}, FechaNacimiento: {FechaNacimiento}, AnioIngreso: {AnioIngreso}, SemestreIngreso: {SemestreIngreso}, PuntajeTotal: {PuntajeTotal}, Campeon: {Campeon}, SubCampeon: {SubCampeon}";
+        return $"Nombre: {Nombre}, Apellido: {Apellido}, Cédula: {Cedula}, Id: {Id}, Fecha de Nacimiento: {FechaNacimiento}, Año de ingreso: {AnioIngreso}, Semestre de ingreso: {SemestreIngreso}, Puntaje total: {PuntajeTotal}, Campeón: {Campeon}, Subcampeón: {SubCampeon}";
     }
 
 }

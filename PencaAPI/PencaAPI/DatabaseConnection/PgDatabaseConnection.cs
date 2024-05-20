@@ -9,11 +9,7 @@ using Npgsql;
 public class PgDatabaseConnection 
 {
     private readonly NpgsqlConnection _connection;
-    
-    /// <summary>
-    /// Constructor de la clase PgDatabaseConnection
-    /// </summary>
-    /// <param name="connectionString">String de conexión a la base de datos Postgres</param>
+
     public PgDatabaseConnection(string connectionString)
     {
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
@@ -22,10 +18,12 @@ public class PgDatabaseConnection
     }
 
     /// <summary>
-    /// Realizar una petición a la base de datos con un string de consulta de manera asíncrona
+    /// Realizar una petición a la base de datos PostgreSQL con un string de consulta de manera asíncrona.
     /// </summary>
-    /// <param name="queryString">String de consulta</param>
-    /// <returns>String[] con las columnas que retorna la base de datos, en orden de la petición</returns>
+    /// <param name="queryString">String de consulta, con parámetros indicados por un @NOMBRE</param>
+    /// <returns>Lista de filas de la base de datos. Cada fila es un Diccionario que contiene todas las columnas para
+    /// esa fila, donde la clave es un string con el nombre de la columna y su valor es un objeto genérico con el dato
+    /// almacenado para esa columna en esa fila.</returns>
     public async Task<List<Dictionary<string, object>>> QueryAsync(string queryString)
     {
         var results = new List<Dictionary<string, object>>();
@@ -45,12 +43,15 @@ public class PgDatabaseConnection
     }
     
     /// <summary>
-    /// Realizar una petición a la base de datos con un string de consulta de manera asíncrona
+    /// Realizar una petición a la base de datos PostgreSQL con un string de consulta de manera asíncrona, utilizando
+    /// parámetros.
     /// </summary>
     /// <param name="queryString">String de consulta, con parámetros indicados por un @NOMBRE</param>
     /// <param name="parameters">Diccionario con pares (clave, valor) donde la clave es el NOMBRE de un parámetro y el
     /// valor es el valor del parámetro correspondiente (puede ser de cualquier tipo).</param>
-    /// <returns>String[] con las columnas que retorna la base de datos, en orden de la petición</returns>
+    /// <returns>Lista de filas de la base de datos. Cada fila es un Diccionario que contiene todas las columnas para
+    /// esa fila, donde la clave es un string con el nombre de la columna y su valor es un objeto genérico con el dato
+    /// almacenado para esa columna en esa fila.</returns>
     public async Task<List<Dictionary<string, object>>> QueryAsync(string queryString, Dictionary<string, object> parameters)
     {
         var results = new List<Dictionary<string, object>>();
@@ -72,5 +73,9 @@ public class PgDatabaseConnection
         return results;
     }
 
+    ~PgDatabaseConnection()
+    {
+        this._connection.Close();
+    }
     
 }

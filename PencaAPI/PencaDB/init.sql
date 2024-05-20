@@ -36,27 +36,24 @@ create table Partido(
 	constraint fk_partido_etapa foreign key (Etapa) references Etapa(Id)	
 );
 
-create table Usuario(
-	Cedula int primary key,
-	Nombre varchar(20) not null,
-	Apellido varchar(20) not null,
-	Fecha_Nacimiento date not null
-);
-
 create table Administrador(
 	Cedula int primary key,
+  Nombre varchar(20) not null,
+	Apellido varchar(20) not null,
+	Fecha_Nacimiento date not null,
 	Rol_Universidad varchar(100) not null,
-	constraint fk_admin foreign key (Cedula) references Usuario(Cedula)
 );
 
 create table Alumno(
 	Cedula int primary key,
+  Nombre varchar(20) not null,
+	Apellido varchar(20) not null,
+	Fecha_Nacimiento date not null,
 	Anio_Ingreso int not null,
 	Semestre_Ingreso int not null,
 	Puntaje_Total int,
 	Campeon varchar(3) not null,
 	Subcampeon varchar(3) not null,
-	constraint fk_alumno foreign key (Cedula) references Usuario(Cedula),
 	constraint fk_campeon foreign key (Campeon) references Equipo(Abreviatura),
 	constraint fk_subcampeon foreign key (Subcampeon) references Equipo(Abreviatura)
 	--hay que hacer un trigger para controlar que campeon y subcampeon sean diferentes

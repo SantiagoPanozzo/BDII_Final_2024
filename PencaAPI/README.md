@@ -8,13 +8,13 @@ Si se corren las dos cosas juntas, si se reinicia la api se borra la bd.
 ## Para correr:
 ### Base de datos (Postgres):
 
-`docker compose docker-compose-db.yml up --build`
+`docker compose -f docker-compose-db.yml up --build`
 
 ### API (.NET):
 
-`docker compose docker-compose-api.yml up --build`
+`docker compose -f docker-compose-api.yml up --build`
 
 ### Las dos cosas:
 Si reinicias este se borra la base de datos también.
 
-`docker compose docker-compose-all.yml up --build`
+`docker compose -f docker-compose-all.yml up --build`

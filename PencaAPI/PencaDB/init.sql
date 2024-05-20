@@ -37,15 +37,15 @@ create table Partido(
 
 create table Administrador(
 	Cedula int primary key,
-  Nombre varchar(20) not null,
+    Nombre varchar(20) not null,
 	Apellido varchar(20) not null,
 	Fecha_Nacimiento date not null,
-	Rol_Universidad varchar(100) not null,
+	Rol_Universidad varchar(100) not null
 );
 
 create table Alumno(
 	Cedula int primary key,
-  Nombre varchar(20) not null,
+    Nombre varchar(20) not null,
 	Apellido varchar(20) not null,
 	Fecha_Nacimiento date not null,
 	Anio_Ingreso int not null,

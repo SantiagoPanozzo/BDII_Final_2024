@@ -11,16 +11,19 @@ var connString = "Server=pencadb;Port=5432;Database=pencadb;User Id=postgres;Pas
 
 PgDatabaseConnection dbConnection = new PgDatabaseConnection(connString);
 
-await dbConnection.QueryAsync("CREATE TABLE IF NOT EXISTS test (id serial PRIMARY KEY, name VARCHAR(50))");
+await dbConnection.QueryAsync("INSERT INTO equipo (abreviatura, pais) VALUES ('uyu', 'Uruguay')");
+await dbConnection.QueryAsync("INSERT INTO equipo (abreviatura, pais) VALUES ('arg', 'Argentina')");
 
-// @p es un parámetro que le pusimos de nombre p
-await dbConnection.QueryAsync(
-    "INSERT INTO test (name) VALUES (@p)",
-    new Dictionary<string, object>() {
-        {"p", "Hello World"}
-    });
+await dbConnection.QueryAsync("INSERT INTO Alumno (nombre, apellido, cedula, fecha_nacimiento, anio_ingreso, semestre_ingreso, puntaje_total, campeon, subcampeon) VALUES ('nombre', 'apellido', 123456789, '2021-01-01', 2021, 1, 0, 'uyu', 'arg')");
+await dbConnection.QueryAsync("INSERT INTO Alumno (nombre, apellido, cedula, fecha_nacimiento, anio_ingreso, semestre_ingreso, puntaje_total, campeon, subcampeon) VALUES ('nombre', 'apellido', 123456798, '2021-01-01', 2021, 1, 0, 'uyu', 'arg')");
 
-foreach (var result in await dbConnection.QueryAsync("SELECT name from test"))
+var result = await dbConnection.QueryAsync("SELECT * FROM alumno");
+
+foreach (var row in result)
 {
-    Console.WriteLine(result);
+    foreach (var column in row)
+    {
+        Console.WriteLine($"Column: {column.Key}, Value: {column.Value}");
+    }
+    Console.WriteLine();
 }

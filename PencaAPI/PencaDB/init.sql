@@ -1,12 +1,12 @@
 
 create table Carrera(
 	Id serial primary key,
-	Nombre varchar(100) not null
+	Nombre varchar(100) not null UNIQUE
 );
 
 create table Equipo(
 	Abreviatura varchar(3) primary key ,
-	Pais varchar(50) not null
+	Pais varchar(50) not null UNIQUE
 );
 
 create table Equipo_Compite(
@@ -20,8 +20,7 @@ create table Equipo_Compite(
 
 create table Etapa(
 	Id serial primary key,
-	Nombre varchar(20) not null,
-	constraint pk_etapa primary key (Id, Nombre)
+	Nombre varchar(20) not null UNIQUE
 );
 
 create table Partido(

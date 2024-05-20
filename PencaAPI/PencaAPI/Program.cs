@@ -1,4 +1,4 @@
-﻿using Npgsql;
+using Npgsql;
 using PencaAPI.DatabaseConnection;
 using PencaAPI.Models;
 using PencaAPI.Services;
@@ -13,30 +13,38 @@ var connString = "Server=pencadb;Port=5432;Database=pencadb;User Id=postgres;Pas
 
 PgDatabaseConnection dbConnection = new PgDatabaseConnection(connString);
 
-await dbConnection.QueryAsync("INSERT INTO equipo (abreviatura, pais) VALUES ('uyu', 'Uruguay')");
-await dbConnection.QueryAsync("INSERT INTO equipo (abreviatura, pais) VALUES ('arg', 'Argentina')");
+//await dbConnection.QueryAsync("INSERT INTO equipo (abreviatura, pais) VALUES ('uyu', 'Uruguay')");
+//await dbConnection.QueryAsync("INSERT INTO equipo (abreviatura, pais) VALUES ('arg', 'Argentina')");
 
-await dbConnection.QueryAsync("INSERT INTO Alumno (nombre, apellido, cedula, fecha_nacimiento, anio_ingreso, semestre_ingreso, puntaje_total, campeon, subcampeon) VALUES ('nombre', 'apellido', 123456789, '2021-01-01', 2021, 1, 0, 'uyu', 'arg')");
-await dbConnection.QueryAsync("INSERT INTO Alumno (nombre, apellido, cedula, fecha_nacimiento, anio_ingreso, semestre_ingreso, puntaje_total, campeon, subcampeon) VALUES ('nombre', 'apellido', 123456798, '2021-01-01', 2021, 1, 0, 'uyu', 'arg')");
+//await dbConnection.QueryAsync("INSERT INTO Alumno (nombre, apellido, cedula, fecha_nacimiento, anio_ingreso, semestre_ingreso, puntaje_total, campeon, subcampeon) VALUES ('nombre', 'apellido', 123456789, '2021-01-01', 2021, 1, 0, 'uyu', 'arg')");
+//await dbConnection.QueryAsync("INSERT INTO Alumno (nombre, apellido, cedula, fecha_nacimiento, anio_ingreso, semestre_ingreso, puntaje_total, campeon, subcampeon) VALUES ('nombre', 'apellido', 123456798, '2021-01-01', 2021, 1, 0, 'uyu', 'arg')");
 
-// var result = await dbConnection.QueryAsync("SELECT * FROM alumno");
-//
-// foreach (var row in result)
-// {
-//     foreach (var column in row)
-//     {
-//         Console.WriteLine($"Column: {column.Key}, Value: {column.Value}");
-//     }
-//     Console.WriteLine();
-// }
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
 
 AlumnoService alumnoService = new(dbConnection);
 
-Alumno[] alumnos = await alumnoService.GetAllAsync();
+app.MapGet("/alumnos", async () =>
+    {
+        Alumno[] alumnos = await alumnoService.GetAllAsync();
+        return alumnos;
+    })
+    .WithName("Get Alumnos")
+    .WithOpenApi();
 
-foreach (var alumno in alumnos)
-{
-    Console.WriteLine(alumno);
-}
-
-Console.WriteLine(await alumnoService.GetByIdAsync(123456789));
+app.Run();

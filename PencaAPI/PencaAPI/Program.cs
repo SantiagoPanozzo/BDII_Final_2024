@@ -13,11 +13,11 @@ var connString = "Server=pencadb;Port=5432;Database=pencadb;User Id=postgres;Pas
 
 PgDatabaseConnection dbConnection = new PgDatabaseConnection(connString);
 
-//await dbConnection.QueryAsync("INSERT INTO equipo (abreviatura, pais) VALUES ('uyu', 'Uruguay')");
-//await dbConnection.QueryAsync("INSERT INTO equipo (abreviatura, pais) VALUES ('arg', 'Argentina')");
+await dbConnection.QueryAsync("INSERT INTO equipo (abreviatura, pais) VALUES ('uyu', 'Uruguay')");
+await dbConnection.QueryAsync("INSERT INTO equipo (abreviatura, pais) VALUES ('arg', 'Argentina')");
 
-//await dbConnection.QueryAsync("INSERT INTO Alumno (nombre, apellido, cedula, fecha_nacimiento, anio_ingreso, semestre_ingreso, puntaje_total, campeon, subcampeon) VALUES ('nombre', 'apellido', 123456789, '2021-01-01', 2021, 1, 0, 'uyu', 'arg')");
-//await dbConnection.QueryAsync("INSERT INTO Alumno (nombre, apellido, cedula, fecha_nacimiento, anio_ingreso, semestre_ingreso, puntaje_total, campeon, subcampeon) VALUES ('nombre', 'apellido', 123456798, '2021-01-01', 2021, 1, 0, 'uyu', 'arg')");
+await dbConnection.QueryAsync("INSERT INTO Alumno (nombre, apellido, cedula, fecha_nacimiento, anio_ingreso, semestre_ingreso, puntaje_total, campeon, subcampeon) VALUES ('nombre', 'apellido', 123456789, '2021-01-01', 2021, 1, 0, 'uyu', 'arg')");
+await dbConnection.QueryAsync("INSERT INTO Alumno (nombre, apellido, cedula, fecha_nacimiento, anio_ingreso, semestre_ingreso, puntaje_total, campeon, subcampeon) VALUES ('nombre', 'apellido', 123456798, '2021-01-01', 2021, 1, 0, 'uyu', 'arg')");
 
 // var result = await dbConnection.QueryAsync("SELECT * FROM alumno");
 //

@@ -1,6 +1,6 @@
 namespace PencaAPI.Models;
 
-public class Alumno(
+public class Alumno (
     string nombre, string apellido, int cedula, DateTime fechaNacimiento, int anioIngreso, int semestreIngreso,
     int? puntajeTotal, string campeon, string subCampeon)
     : IUsuario, IEntity<int>
@@ -15,4 +15,10 @@ public class Alumno(
     public int? PuntajeTotal { get; set; } = puntajeTotal;
     public string Campeon { get; set; } = campeon;
     public string SubCampeon { get; set; } = subCampeon;
+
+    public override string ToString()
+    {
+        return $"Nombre: {Nombre}, Apellido: {Apellido}, Cedula: {Cedula}, Id: {Id}, FechaNacimiento: {FechaNacimiento}, AnioIngreso: {AnioIngreso}, SemestreIngreso: {SemestreIngreso}, PuntajeTotal: {PuntajeTotal}, Campeon: {Campeon}, SubCampeon: {SubCampeon}";
+    }
+
 }

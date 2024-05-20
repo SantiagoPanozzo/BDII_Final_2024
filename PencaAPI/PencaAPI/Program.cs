@@ -1,5 +1,7 @@
 ﻿using Npgsql;
 using PencaAPI.DatabaseConnection;
+using PencaAPI.Models;
+using PencaAPI.Services;
 
 // String de conexión a la base de datos
 // Server: Nombre del contenedor de Docker de la base de datos
@@ -11,19 +13,30 @@ var connString = "Server=pencadb;Port=5432;Database=pencadb;User Id=postgres;Pas
 
 PgDatabaseConnection dbConnection = new PgDatabaseConnection(connString);
 
-await dbConnection.QueryAsync("INSERT INTO equipo (abreviatura, pais) VALUES ('uyu', 'Uruguay')");
-await dbConnection.QueryAsync("INSERT INTO equipo (abreviatura, pais) VALUES ('arg', 'Argentina')");
+//await dbConnection.QueryAsync("INSERT INTO equipo (abreviatura, pais) VALUES ('uyu', 'Uruguay')");
+//await dbConnection.QueryAsync("INSERT INTO equipo (abreviatura, pais) VALUES ('arg', 'Argentina')");
 
-await dbConnection.QueryAsync("INSERT INTO Alumno (nombre, apellido, cedula, fecha_nacimiento, anio_ingreso, semestre_ingreso, puntaje_total, campeon, subcampeon) VALUES ('nombre', 'apellido', 123456789, '2021-01-01', 2021, 1, 0, 'uyu', 'arg')");
-await dbConnection.QueryAsync("INSERT INTO Alumno (nombre, apellido, cedula, fecha_nacimiento, anio_ingreso, semestre_ingreso, puntaje_total, campeon, subcampeon) VALUES ('nombre', 'apellido', 123456798, '2021-01-01', 2021, 1, 0, 'uyu', 'arg')");
+//await dbConnection.QueryAsync("INSERT INTO Alumno (nombre, apellido, cedula, fecha_nacimiento, anio_ingreso, semestre_ingreso, puntaje_total, campeon, subcampeon) VALUES ('nombre', 'apellido', 123456789, '2021-01-01', 2021, 1, 0, 'uyu', 'arg')");
+//await dbConnection.QueryAsync("INSERT INTO Alumno (nombre, apellido, cedula, fecha_nacimiento, anio_ingreso, semestre_ingreso, puntaje_total, campeon, subcampeon) VALUES ('nombre', 'apellido', 123456798, '2021-01-01', 2021, 1, 0, 'uyu', 'arg')");
 
-var result = await dbConnection.QueryAsync("SELECT * FROM alumno");
+// var result = await dbConnection.QueryAsync("SELECT * FROM alumno");
+//
+// foreach (var row in result)
+// {
+//     foreach (var column in row)
+//     {
+//         Console.WriteLine($"Column: {column.Key}, Value: {column.Value}");
+//     }
+//     Console.WriteLine();
+// }
 
-foreach (var row in result)
+AlumnoService alumnoService = new(dbConnection);
+
+Alumno[] alumnos = await alumnoService.GetAllAsync();
+
+foreach (var alumno in alumnos)
 {
-    foreach (var column in row)
-    {
-        Console.WriteLine($"Column: {column.Key}, Value: {column.Value}");
-    }
-    Console.WriteLine();
+    Console.WriteLine(alumno);
 }
+
+Console.WriteLine(await alumnoService.GetByIdAsync(123456789));

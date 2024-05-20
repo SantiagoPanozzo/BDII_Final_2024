@@ -4,9 +4,20 @@ namespace PencaAPI.Services;
 
 public interface IService<T, TId> where T: IEntity<TId>
 {
-    public Task<T> GetByIdAsync(TId id);
-    public Task<T[]> GetAllAsync();
-    public Task<T> CreateAsync(T entity);
-    public Task<T> UpdateAsync(TId id, T entity);
-    public Task<T> DeleteAsync(int id);
+    public async Task<T> GetByIdAsync(TId id) {
+        throw new NotImplementedException();
+    }
+
+    public Task<T[]> GetAllAsync() {
+        throw new NotImplementedException();
+    }
+    public Task<T> CreateAsync(T entity) {
+        throw new NotImplementedException();
+    }
+    public Task<T> UpdateAsync(TId id, T entity) {
+        throw new NotImplementedException();
+    }
+    public Task<T> DeleteAsync(int id) {
+        throw new NotImplementedException();
+    }
 }

@@ -1,6 +1,0 @@
-@PencaAPI_HostAddress = http://localhost:5192
-
-GET {{PencaAPI_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

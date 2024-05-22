@@ -1,50 +1,61 @@
-using Npgsql;
 using PencaAPI.DatabaseConnection;
-using PencaAPI.Models;
 using PencaAPI.Services;
 
-// String de conexión a la base de datos
-// Server: Nombre del contenedor de Docker de la base de datos
-// Port: Puerto interno de la base de datos (5432, el puerto 8001 lo usamos solo para DBeaver)
-// Database: Nombre de la base de datos
-// User Id: Usuario de la base de datos
-// Password: Contraseña del usuario de la base de datos
-var connString = "Server=pencadb;Port=5432;Database=pencadb;User Id=postgres;Password=postgres;";
+namespace PencaAPI;
 
-PgDatabaseConnection dbConnection = new PgDatabaseConnection(connString);
-
-//await dbConnection.QueryAsync("INSERT INTO equipo (abreviatura, pais) VALUES ('uyu', 'Uruguay')");
-//await dbConnection.QueryAsync("INSERT INTO equipo (abreviatura, pais) VALUES ('arg', 'Argentina')");
-
-//await dbConnection.QueryAsync("INSERT INTO Alumno (nombre, apellido, cedula, fecha_nacimiento, anio_ingreso, semestre_ingreso, puntaje_total, campeon, subcampeon) VALUES ('nombre', 'apellido', 123456789, '2021-01-01', 2021, 1, 0, 'uyu', 'arg')");
-//await dbConnection.QueryAsync("INSERT INTO Alumno (nombre, apellido, cedula, fecha_nacimiento, anio_ingreso, semestre_ingreso, puntaje_total, campeon, subcampeon) VALUES ('nombre', 'apellido', 123456798, '2021-01-01', 2021, 1, 0, 'uyu', 'arg')");
-
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+public static class Program
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
-
-AlumnoService alumnoService = new(dbConnection);
-
-app.MapGet("/alumnos", async () =>
+    public static void Main(string[] args)
     {
-        Alumno[] alumnos = await alumnoService.GetAllAsync();
-        return alumnos;
-    })
-    .WithName("Get Alumnos")
-    .WithOpenApi();
+        // String de conexión a la base de datos
+        // Server: Nombre del contenedor de Docker de la base de datos
+        // Port: Puerto interno de la base de datos (5432, el puerto 8001 lo usamos solo para DBeaver)
+        // Database: Nombre de la base de datos
+        // User Id: Usuario de la base de datos
+        // Password: Contraseña del usuario de la base de datos
+        var connString = "Server=pencadb;Port=5432;Database=pencadb;User Id=postgres;Password=postgres;";
 
-app.Run();
+        // Conexión con la base de datos
+        PgDatabaseConnection dbConnection = new PgDatabaseConnection(connString);
+        
+        // Creo el builder de la api web
+        var builder = WebApplication.CreateBuilder(args);
+        
+        // Los builder.Services son una forma de tener singletons de todos los services y cosas útiles
+        // En este caso agrego la dbConnection a los services para que siempre que se necesite una dbConnection use
+        // esa misma instancia. Lo mismo pasa con los services para los controllers y etc.
+        builder.Services.AddScoped<PgDatabaseConnection>(__ => dbConnection); // Agrego la dbConnection a los services
+        builder.Services.AddScoped<AlumnoService>(); // Registro los services, la dbConnection se inyecta automáticamente
+        builder.Services.AddControllers(); // Registro los controllers, los services se inyectan automáticamente
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+
+        var app = builder.Build();
+        Configure(app, app.Environment);
+        
+        app.Run();
+
+    }
+    
+    public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        // swagger
+        if (env.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+
+        // cosas de .NET, de la documentación 
+        app.UseHttpsRedirection();
+        app.UseRouting();
+        app.UseAuthorization();
+
+        // Habilitar los endpoints y los controllers para cada uno
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers(); // Mappear controllers
+            endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello World!"); });
+        });
+    }
+}

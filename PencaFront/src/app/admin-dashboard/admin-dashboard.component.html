@@ -1,0 +1,20 @@
+<div class="alumnos-container">
+  <div *ngIf="alumnos.length > 0">
+    <h3>Usuarios Registrados</h3>
+    <ul class="alumnos-list">
+      <li *ngFor="let alumno of alumnos" class="alumno-item">
+        <span class="alumno-info"><strong>Cédula:</strong> {{ alumno.cedula }}</span>
+        <span class="alumno-info"><strong>Usuario:</strong> {{ alumno.username }}</span>
+        <span class="alumno-info"><strong>Nombre:</strong> {{ alumno.nombre }}</span>
+        <span class="alumno-info"><strong>Apellido:</strong> {{ alumno.apellido }}</span>
+        <span class="alumno-info"><strong>Fecha de Nacimiento:</strong> {{ alumno.fechanacimiento }}</span>
+        <span class="alumno-info"><strong>Carrera:</strong> {{ alumno.carrera }}</span>
+        <span class="alumno-info"><strong>Año de Ingreso:</strong> {{ alumno.anodeingreso }}</span>
+        <span class="alumno-info"><strong>Semestre de Ingreso:</strong> {{ alumno.semestredeingreso }}</span>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="alumnos.length === 0" class="no-alumnos">
+    <p>No hay usuarios registrados.</p>
+  </div>
+</div>

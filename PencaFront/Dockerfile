@@ -20,4 +20,4 @@ RUN npm run build
 EXPOSE 4200
 
 # Start the Angular app
-CMD ["npm", "start"]
+CMD ["npm", "run", "dockerstart"]

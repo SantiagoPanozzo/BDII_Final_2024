@@ -26,7 +26,7 @@ public class AlumnoService(PgDatabaseConnection dbConnection)
                 fechaNacimiento: (DateTime)x["fecha_nacimiento"],
                 anioIngreso: (int)x["anio_ingreso"],
                 semestreIngreso: (int)x["semestre_ingreso"],
-                puntajeTotal: (int?)x["puntaje_total"],
+                puntajeTotal: (int)x["puntaje_total"],
                 campeon: (string)x["campeon"],
                 subCampeon: (string)x["subcampeon"]
             )
@@ -63,7 +63,7 @@ public class AlumnoService(PgDatabaseConnection dbConnection)
             fechaNacimiento: (DateTime)alumno["fecha_nacimiento"],
             anioIngreso: (int)alumno["anio_ingreso"],
             semestreIngreso: (int)alumno["semestre_ingreso"],
-            puntajeTotal: (int?)alumno["puntaje_total"],
+            puntajeTotal: (int)alumno["puntaje_total"],
             campeon: (string)alumno["campeon"],
             subCampeon: (string)alumno["subcampeon"]
         );

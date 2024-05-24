@@ -14,7 +14,7 @@ namespace PencaAPI.Models;
 /// <param name="subCampeon">Subcampeón elegido por el alumno</param>
 public class Alumno (
     string nombre, string apellido, int cedula, DateTime fechaNacimiento, int anioIngreso, int semestreIngreso,
-    int? puntajeTotal, string campeon, string subCampeon)
+    int puntajeTotal, string campeon, string subCampeon)
     : IUsuario, IEntity<int>
 {
     public string Nombre { get; set; } = nombre;
@@ -24,7 +24,7 @@ public class Alumno (
     public DateTime FechaNacimiento { get; set; } = fechaNacimiento;
     public int AnioIngreso { get; set; } = anioIngreso;
     public int SemestreIngreso { get; set; } = semestreIngreso;
-    public int? PuntajeTotal { get; set; } = puntajeTotal;
+    public int PuntajeTotal { get; set; } = puntajeTotal;
     public string Campeon { get; set; } = campeon;
     public string SubCampeon { get; set; } = subCampeon;
 

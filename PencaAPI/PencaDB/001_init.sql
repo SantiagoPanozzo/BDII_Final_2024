@@ -50,7 +50,7 @@ create table Alumno(
 	Fecha_Nacimiento date not null,
 	Anio_Ingreso int not null,
 	Semestre_Ingreso int not null,
-	Puntaje_Total int,
+	Puntaje_Total int not null,
 	Campeon varchar(3) not null,
 	Subcampeon varchar(3) not null,
 	constraint fk_campeon foreign key (Campeon) references Equipo(Abreviatura),

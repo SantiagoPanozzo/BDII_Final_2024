@@ -71,7 +71,40 @@ public class AlumnoService(PgDatabaseConnection dbConnection)
 
     public async Task<Alumno> CreateAsync(Alumno entity)
     {
-        throw new NotImplementedException();
+        var result = (
+            await _dbConnection.QueryAsync(
+                "INSERT INTO alumno (" +
+                "nombre, apellido, cedula, fecha_nacimiento, anio_ingreso, semestre_ingreso, puntaje_total, campeon, subcampeon)" +
+                "VALUES (@n, @a, @c, @f, @ai, @si, @pt ,@cam, @scam) RETURNING *",
+
+                new Dictionary<string, object>()
+                {
+                    { "n", entity.Nombre },
+                    { "a", entity.Apellido },
+                    { "c", entity.Cedula },
+                    { "f", entity.FechaNacimiento },
+                    { "pt", entity.PuntajeTotal },
+                    { "ai", entity.AnioIngreso },
+                    { "si", entity.SemestreIngreso },
+                    { "cam", entity.Campeon },
+                    { "scam", entity.SubCampeon }
+                }
+            )
+        );
+        
+        var alumno = result.FirstOrDefault();
+        
+        return new Alumno(
+            nombre: (string)alumno["nombre"],
+            apellido: (string)alumno["apellido"],
+            cedula: (int)alumno["cedula"],
+            fechaNacimiento: (DateTime)alumno["fecha_nacimiento"],
+            anioIngreso: (int)alumno["anio_ingreso"],
+            semestreIngreso: (int)alumno["semestre_ingreso"],
+            puntajeTotal: (int)alumno["puntaje_total"],
+            campeon: (string)alumno["campeon"],
+            subCampeon: (string)alumno["subcampeon"]
+        );
     }
 
     public async Task<Alumno> UpdateAsync(int id, Alumno entity)

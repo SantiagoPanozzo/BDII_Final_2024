@@ -41,5 +41,5 @@ public interface IService<T>
     /// </summary>
     /// <param name="id">Id del objeto a eliminar.</param>
     /// <returns></returns>
-    public Task<T> DeleteAsync(object id);
+    public Task DeleteAsync(object id);
 }

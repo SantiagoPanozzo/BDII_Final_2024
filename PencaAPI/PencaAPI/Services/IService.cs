@@ -6,8 +6,7 @@ namespace PencaAPI.Services;
 /// Interfaz que representa un servicio genérico.
 /// </summary>
 /// <typeparam name="T">Tipo de la entidad que maneja el servicio.</typeparam>
-/// <typeparam name="TId">Tipo de la id/primary_key que tiene la entidad que maneja el servicio.</typeparam>
-public interface IService<T, TId> where T: IEntity<TId>
+public interface IService<T>
 {
     /// <summary>
     /// Obtener todas las instancias de objetos de tipo T.
@@ -18,9 +17,9 @@ public interface IService<T, TId> where T: IEntity<TId>
     /// <summary>
     /// Obtener un objeto de tipo T utilizando su id de tipo TId correspondiente.
     /// </summary>
-    /// <param name="id">Id de tipo TId correspondiente al objeto a obtener.</param>
+    /// <param name="id">Id correspondiente al objeto a obtener.</param>
     /// <returns></returns>
-    public Task<T> GetByIdAsync(TId id);
+    public Task<T> GetByIdAsync(object id);
 
     /// <summary>
     /// Persistir un nuevo objeto de tipo T.
@@ -32,15 +31,15 @@ public interface IService<T, TId> where T: IEntity<TId>
     /// <summary>
     /// Modificar un objeto de tipo T según su id de tipo TId.
     /// </summary>
-    /// <param name="id">Id de tipo TId del objeto de tipo T.</param>
+    /// <param name="id">Id del objeto de tipo T.</param>
     /// <param name="entity">Objeto de tipo T modificado.</param>
     /// <returns></returns>
-    public Task<T> UpdateAsync(TId id, T entity);
+    public Task<T> UpdateAsync(object id, T entity);
     
     /// <summary>
-    /// Eliminar un objeto según su id de tipo TId.
+    /// Eliminar un objeto según su id.
     /// </summary>
-    /// <param name="id">Id de tipo TId del objeto a eliminar.</param>
+    /// <param name="id">Id del objeto a eliminar.</param>
     /// <returns></returns>
-    public Task<T> DeleteAsync(int id);
+    public Task<T> DeleteAsync(object id);
 }

@@ -8,7 +8,7 @@ namespace PencaAPI.Services;
 /// </summary>
 /// <param name="dbConnection">Instancia de PgDatabaseConnection correspondiente a la base de datos.</param>
 public class AlumnoService(PgDatabaseConnection dbConnection)
-    : IService<Alumno, int>
+    : IService<Alumno>
 {
     private readonly PgDatabaseConnection _dbConnection = dbConnection;
     
@@ -40,7 +40,7 @@ public class AlumnoService(PgDatabaseConnection dbConnection)
     /// <param name="id">Cédula del alumno.</param>
     /// <returns>El alumno correspondiente a la cédula introducida.</returns>
     /// <exception cref="ArgumentException">No existe un alumno para la cédula introducida.</exception>
-    public async Task<Alumno> GetByIdAsync(int id)
+    public async Task<Alumno> GetByIdAsync(object id)
     {
         var result = (
             await _dbConnection.QueryAsync(
@@ -107,12 +107,12 @@ public class AlumnoService(PgDatabaseConnection dbConnection)
         );
     }
 
-    public async Task<Alumno> UpdateAsync(int id, Alumno entity)
+    public async Task<Alumno> UpdateAsync(object id, Alumno entity)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<Alumno> DeleteAsync(int id)
+    public async Task<Alumno> DeleteAsync(object id)
     {
         throw new NotImplementedException();
     }

@@ -3,10 +3,9 @@ namespace PencaAPI.Models;
 /// Implementación de la relacion de los alumnos con las carreras que estudian en el sistema.
 /// </summary>
 /// <param name="cedula">Cedula del alumno</param>
-/// <param name="id_carrera">Identificador de la carrera</param>
-public class Estudia(int cedula, int id_carrera)
+/// <param name="idCarrera">Identificador de la carrera</param>
+public class Estudia(int cedula, int idCarrera)
 {
     public int Cedula { get; set; } = cedula;
-    public int Id_Carrera { get; set; } = id_carrera;
-    
+    public int IdCarrera { get; set; } = idCarrera;
 }

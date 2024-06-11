@@ -1,6 +1,6 @@
 export interface Alumno {
     username:string;
-    cedula : string;
+    cedula : number;
     contrasena: string;
     nombre: string;
     apellido: string;

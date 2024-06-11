@@ -13,7 +13,7 @@ import { Equipo } from '../interfaces/equipo';
 export class RegistroComponent implements OnInit {
   alumno: Alumno = {
     username: '',
-    cedula: '',
+    cedula: 0,
     contrasena: '',
     nombre: '',
     apellido: '',

@@ -6,7 +6,7 @@ import { EquipoService } from './equiposervice.service';
   providedIn: 'root'
 })
 export class PartidoService {
-  private partidos: Partido[] = [
+   partidos: Partido[] = [
     
     {
     Id: 1,
@@ -42,17 +42,30 @@ export class PartidoService {
     }));
   }
 
-  actualizarResultado(index: number, resultado_E1: number, resultado_E2: number): void {
-    this.partidos[index].Resultado_E1 = resultado_E1;
-    this.partidos[index].Resultado_E2 = resultado_E2;
+  actualizarResultado(id: number, resultado_E1: number, resultado_E2: number): void {
+    const partido = this.partidos.find(p => p.Id === id);
+    if (partido) {
+      partido.Resultado_E1 = resultado_E1;
+      partido.Resultado_E2 = resultado_E2;
+    }
   }
   obtenerPartidoPorId(id: number): Partido | undefined {
-    return this.partidos.find(partido => partido.Id === id);
-    
+    return this.partidos.find(partido => partido.Id === id)  
   }
 
-  
+  obtenerEquipoE1PorPartidoId(id: number): string | undefined {
+    const partido = this.obtenerPartidoPorId(id);
+    if (partido) {
+      return this.equipoService.obtenerNombreEquipo(partido.Equipo_E1);
+    }
+    return undefined;
   }
+
+}
+ 
+
+  
+  
   
  
   

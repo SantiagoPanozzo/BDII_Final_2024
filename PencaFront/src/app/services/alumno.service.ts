@@ -8,7 +8,7 @@ export class AlumnoService {
   private alumnos: Alumno[] = [
     {
       username: 'alumno1',
-      cedula: '123',
+      cedula: 123,
       contrasena: 'clave123',
       nombre: 'Juan',
       apellido: 'Pérez',
@@ -16,12 +16,12 @@ export class AlumnoService {
       anioIngreso: 2020,
       semestreIngreso: 'Agosto',
       puntajeTotal: 100,
-      campeon: 'Equipo A',
-      subcampeon: 'Equipo B'
+      campeon: 'ARG',
+      subcampeon: 'BRA'
     },
     {
       username: 'alumno2',
-      cedula: '987',
+      cedula: 987,
       contrasena: 'abc123',
       nombre: 'María',
       apellido: 'García',
@@ -29,8 +29,8 @@ export class AlumnoService {
       anioIngreso: 2019,
       semestreIngreso: 'Marzo',
       puntajeTotal: 85,
-      campeon: 'Equipo C',
-      subcampeon: 'Equipo D'
+      campeon: 'BRA',
+      subcampeon: 'ARG'
     }
   ];
 

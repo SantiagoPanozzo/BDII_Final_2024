@@ -18,15 +18,14 @@ export class ListaAlumnosComponent implements OnInit {
   }
   buscarAlumnosPorCedula(): void {
     if (this.cedulaABuscar.trim() !== '') {
+      const cedulaABuscarNumber = Number(this.cedulaABuscar);
       this.alumnosFiltrados = this.alumnos.filter(alumno =>
-        alumno.cedula.includes(this.cedulaABuscar)
+        alumno.cedula === cedulaABuscarNumber
       );
     } else {
-      
       this.alumnosFiltrados = [...this.alumnos];
     }
   }
-
   ngOnInit(): void {
     this.alumnos = this.alumnoService.obtenerUsuarios();
   }

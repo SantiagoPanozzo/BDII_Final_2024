@@ -23,6 +23,7 @@ const routes: Routes = [
   { path: 'student-dashboard/predicciones', component: PrediccionesComponent },
   { path: 'student-dashboard/puntaje', component: PuntajeComponent },
   { path: 'admin-dashboard/admin-partidos/:id', component: AdminPartidosComponent },
+  { path: '', redirectTo: '/admin-dashboard/lista-partidos', pathMatch: 'full' }
 ];
 
 @NgModule({

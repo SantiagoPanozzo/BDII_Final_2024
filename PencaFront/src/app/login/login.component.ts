@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,14 +13,21 @@ export class LoginComponent {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  login() {
-    const resultado = this.authService.login(this.username, this.password);
-    if (resultado === 'admin') {
-      this.router.navigate(['/admin-dashboard']); // Redirige al admin dashboard
-    } else if (resultado === 'alumno') {
-      this.router.navigate(['/student-dashboard']); // Redirige al student dashboard
+  login(): void {
+    const resultado = this.authService.autenticarUsuario(this.username, this.password);
+    if (resultado) {
+      if (resultado.esAdmin) {
+        this.router.navigate(['/admin-dashboard'], { state: { usuario: resultado.usuario } });
+      } else {
+        this.router.navigate(['/student-dashboard'], { state: { usuario: resultado.usuario } });
+      }
     } else {
-      alert('Datos incorrectos'); // Muestra un mensaje de error si las credenciales son incorrectas
+      alert('Credenciales incorrectas');
     }
   }
+  
+
+  registrar(): void {
+    this.router.navigate(['/register']);
   }
+}

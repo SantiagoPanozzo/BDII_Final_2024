@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -7,22 +7,21 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./admin-dashboard.component.css']
 })
 export class AdminDashboardComponent implements OnInit {
-
-
-  alumnos: any[] = [];
-
-  constructor(private authService: AuthService) {}
-
-  ngOnInit(): void {
-    this.alumnos = this.authService.getUsers();
-    
+  usuario: any; 
+  seccionActiva: string = 'alumnos';
+  constructor(private router: Router) {
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation?.extras.state as { usuario: any };
+    this.usuario = state?.usuario || {};
   }
 
-  
-  logout(): void {
-    this.authService.logout();
+  ngOnInit(): void {}
+  mostrarSeccion(seccion: string): void {
+    this.seccionActiva = seccion;
   }
+
 }
+
 
   
 

@@ -1,5 +1,8 @@
-<div class="student-dashboard">
-  <h2>Student Dashboard</h2>
-  <p>Bienvenido</p>
-  <button (click)="logout()" class="logout-button">Logout</button>
+<div class="alumno-dashboard">
+  <h2>Bienvenido, {{ alumno?.nombre || 'Usuario' }}</h2>
+  <div class="botones">
+    <button [routerLink]="['/student-dashboard/predicciones']">predicciones</button>
+    <button [routerLink]="['/student-dashboard/datos']">Mis datos</button>
+    <button [routerLink]="['/student-dashboard/puntaje']">Mi puntaje</button>
+  </div>
 </div>

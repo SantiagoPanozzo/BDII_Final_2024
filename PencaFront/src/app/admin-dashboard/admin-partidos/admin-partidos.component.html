@@ -1,0 +1,31 @@
+
+<div *ngIf="partido" class="container">
+    <h2>Editar Partido</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Equipo A</th>
+          <th>Equipo B</th>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Resultado E1</th>
+          <th>Resultado E2</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ partido.Equipo_E1 }}</td>
+          <td>{{ partido.Equipo_E2 }}</td>
+          <td>{{ partido.Fecha | date }}</td>
+          <td>{{ partido.Hora }}</td>
+          <td><input type="number" [(ngModel)]="partido.Resultado_E1"></td>
+          <td><input type="number" [(ngModel)]="partido.Resultado_E2"></td>
+          <td>
+            <button (click)="guardarResultado()" [disabled]="partido.Fecha > today || partido.Resultado_E1 === null || partido.Resultado_E2 === null">Guardar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

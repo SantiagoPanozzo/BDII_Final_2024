@@ -1,33 +1,49 @@
 <div class="registro-container">
-    <h2>Registrar Nuevo Usuario</h2>
-    <form (ngSubmit)="registrar()">
-      <div class="form-group">
-        <input type="text" placeholder="Usuario" [(ngModel)]="username" name="usuario" required>
-      </div>
-      <div class="form-group">
-        <input type="password" placeholder="Contraseña" [(ngModel)]="password" name="contrasena" required>
-      </div>
-      <div class="form-group">
-        <input type="text" placeholder="Cédula" [(ngModel)]="cedula" name="cedula" required>
-      </div>
-      <div class="form-group">
-        <input type="text" placeholder="Nombre" [(ngModel)]="nombre" name="nombre" required>
-      </div>
-      <div class="form-group">
-        <input type="text" placeholder="Apellido" [(ngModel)]="apellido" name="apellido" required>
-      </div>
-      <div class="form-group">
-        <input type="date" placeholder="Fecha de Nacimiento" [(ngModel)]="fechanacimiento" name="fechanacimiento" required>
-      </div>
-      <div class="form-group">
-        <input type="text" placeholder="Carrera" [(ngModel)]="carrera" name="carrera" required>
-      </div>
-      <div class="form-group">
-        <input type="number" placeholder="Año de Ingreso" [(ngModel)]="anodeingreso" name="anodeingreso" required>
-      </div>
-      <div class="form-group">
-        <input type="number" placeholder="Semestre de Ingreso" [(ngModel)]="semestredeingreso" name="semestredeingreso" required>
-      </div>
-      <button type="submit" class="btn">Registrar</button>
-    </form>
-  </div>
+  <h2>Registro de Alumno</h2>
+  <form (ngSubmit)="registrar()">
+    <div class="form-group">
+      <label for="cedula">Cédula:</label>
+      <input type="text" id="cedula" name="cedula" [(ngModel)]="alumno.cedula" required>
+    </div>
+    <div class="form-group">
+      <label for="contrasena">Contraseña:</label>
+      <input type="password" id="contrasena" name="contrasena" [(ngModel)]="alumno.contrasena" required>
+    </div>
+    <div class="form-group">
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" [(ngModel)]="alumno.nombre" required>
+    </div>
+    <div class="form-group">
+      <label for="apellido">Apellido:</label>
+      <input type="text" id="apellido" name="apellido" [(ngModel)]="alumno.apellido" required>
+    </div>
+    <div class="form-group">
+      <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+      <input type="date" id="fechaNacimiento" name="fechaNacimiento" [(ngModel)]="alumno.fechaNacimiento" required>
+    </div>
+    <div class="form-group">
+      <label for="anioIngreso">Año de Ingreso:</label>
+      <input type="number" id="anioIngreso" name="anioIngreso" [(ngModel)]="alumno.anioIngreso" required>
+    </div>
+    <div class="form-group">
+      <label for="semestreIngreso">Semestre de Ingreso:</label>
+      <select id="semestreIngreso" name="semestreIngreso" [(ngModel)]="alumno.semestreIngreso" required>
+        <option value="1">Marzo</option>
+        <option value="2">Agosto</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="campeon">Campeón:</label>
+      <select id="campeon" name="campeon" [(ngModel)]="alumno.campeon" required>
+        <option *ngFor="let equipo of equipos" [value]="equipo.abreviatura">{{ equipo.nombre }}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="subcampeon">Subcampeón:</label>
+      <select id="subcampeon" name="subcampeon" [(ngModel)]="alumno.subcampeon" required>
+        <option *ngFor="let equipo of equipos" [value]="equipo.abreviatura">{{ equipo.nombre }}</option>
+      </select>
+    </div>
+    <button type="submit">Registrar</button>
+  </form>
+</div>

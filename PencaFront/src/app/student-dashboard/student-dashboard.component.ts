@@ -1,16 +1,17 @@
-import { Component } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { Component, OnInit } from '@angular/core';
+import { Alumno } from '../interfaces/alumnoInterface';
 
 @Component({
   selector: 'app-student-dashboard',
   templateUrl: './student-dashboard.component.html',
   styleUrls: ['./student-dashboard.component.css']
 })
-export class StudentDashboardComponent {
+export class StudentDashboardComponent implements OnInit {
+  alumno: Alumno | undefined; 
 
-  constructor(private authService: AuthService) {}
+  constructor() { }
 
-  logout() {
-    this.authService.logout();
+  ngOnInit(): void {
+   
   }
 }

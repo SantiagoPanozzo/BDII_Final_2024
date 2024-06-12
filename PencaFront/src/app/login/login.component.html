@@ -2,8 +2,8 @@
   <h2>Login</h2>
   <form (ngSubmit)="login()">
     <div class="form-group">
-      <label for="username">Username:</label>
-      <input type="text" id="username" [(ngModel)]="username" name="username" required>
+      <label for="cedula">Cedula:</label>
+      <input type="number" id="cedula" [(ngModel)]="cedula" name="cedula" required min="1000000" max="99999999">
     </div>
     <div class="form-group">
       <label for="password">Password:</label>

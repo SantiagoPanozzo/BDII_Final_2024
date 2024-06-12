@@ -1,45 +1,38 @@
-
-import { Component } from '@angular/core';
-import { AuthService } from '../auth.service';
-import { Router } from '@angular/router'; // Importar el Router
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AlumnoService } from '../services/alumno.service';
+import { EquipoService } from '../services/equiposervice.service';
+import { Alumno } from '../interfaces/alumnoInterface';
+import { Equipo } from '../interfaces/equipo';
 
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.css']
 })
-export class RegistroComponent {
-  username: string = '';
-password: string = '';
-  cedula: string = '';
-  nombre: string = '';
-  apellido: string = '';
-  fechanacimiento: string = '';
-  carrera: string = '';
-  anodeingreso: string = '';
-  semestredeingreso: string = '';
+export class RegistroComponent implements OnInit {
+  alumno: Alumno = {
+    cedula: 0,
+    contrasena: '',
+    nombre: '',
+    apellido: '',
+    fechaNacimiento: new Date(),
+    anioIngreso: 0,
+    semestreIngreso: '',
+    puntajeTotal: 0,
+    campeon: '', 
+    subcampeon: '' 
+  };
+  equipos: Equipo[] = [];
 
+  constructor(private alumnoService: AlumnoService, private equipoService: EquipoService, private router: Router) {}
 
-  constructor(private authService: AuthService, private router: Router) {}
+  ngOnInit(): void {
+    this.equipos = this.equipoService.obtenerEquipos();
+  }
 
-  registrar() {
-    // Crear un objeto con los datos del alumno
-    const alumno = {
-      username: this.username,
-      password: this.password,
-      cedula: this.cedula,
-      nombre: this.nombre,
-      apellido: this.apellido,
-      fechanacimiento: this.fechanacimiento,
-      carrera: this.carrera,
-      anodeingreso: this.anodeingreso,
-      semestredeingreso: this.semestredeingreso
-
-    };
-    // Registrar al alumno llamando al método en el servicio AuthService
-    this.authService.registrarAlumno(alumno);
-
-    // Después de registrar, navegar de vuelta a la página de inicio de sesión
+  registrar(): void {
+    this.alumnoService.registrarUsuario(this.alumno);
     this.router.navigate(['/login']);
   }
 }

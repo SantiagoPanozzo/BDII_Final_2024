@@ -15,7 +15,7 @@ export class PuntajeComponent implements OnInit {
   ngOnInit(): void {
     const usuarioAutenticado = this.authService.obtenerUsuarioAutenticado();
     if (usuarioAutenticado) {
-      const puntaje = this.alumnoService.obtenerPuntajePorUsername(usuarioAutenticado.username);
+      const puntaje = this.alumnoService.obtenerPuntajePorCedula(usuarioAutenticado.cedula);
       if (puntaje !== null) {
         this.puntajeAlumno = puntaje;
       }

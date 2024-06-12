@@ -52,7 +52,7 @@ public class EquipoService(PgDatabaseConnection dbConnection)
         
         return new Equipo(
             abreviatura: (string)equipo["abreviatura"],
-            pais: (string)alumno["pais"],
+            pais: (string)equipo["pais"],
         );
     }
 

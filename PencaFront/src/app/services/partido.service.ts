@@ -21,14 +21,25 @@ export class PartidoService {
     },
     {
     Id: 2,
-    Fecha: new Date('2024-06-9'),
+    Fecha: new Date('2023-06-9'),
 	  Equipo_E1:'ARG',
 	  Equipo_E2 : 'BRA',
 	  Resultado_E1: null,
 	  Resultado_E2 : null,
 	  Etapa : 1,
     Hora: '17:00'
-    }
+    },
+    {
+      Id: 3,
+      Fecha: new Date('2024-07-7'),
+      Equipo_E1:'ARG',
+      Equipo_E2 : 'BRA',
+      Resultado_E1: null,
+      Resultado_E2 : null,
+      Etapa : 1,
+      Hora: '18:00'
+       
+      }
   ];
   
 
@@ -51,14 +62,6 @@ export class PartidoService {
   }
   obtenerPartidoPorId(id: number): Partido | undefined {
     return this.partidos.find(partido => partido.Id === id)  
-  }
-
-  obtenerEquipoE1PorPartidoId(id: number): string | undefined {
-    const partido = this.obtenerPartidoPorId(id);
-    if (partido) {
-      return this.equipoService.obtenerNombreEquipo(partido.Equipo_E1);
-    }
-    return undefined;
   }
 
 }

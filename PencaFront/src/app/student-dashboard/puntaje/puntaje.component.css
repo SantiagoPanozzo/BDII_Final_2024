@@ -1,20 +1,27 @@
+/* Estilos para el contenedor del puntaje */
 .puntaje {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh; 
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 20px;
     text-align: center;
-}
-
-.puntaje h2 {
-    margin-bottom: 16px;
-}
-
-.encasillado {
-    border: 2px solid #007bff; 
-    padding: 10px 20px; 
-    border-radius: 5px; 
-    font-size: 1.5em;
-    font-weight: bold; 
-}
+    max-width: 300px;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilos para el título del puntaje */
+  .puntaje h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #343a40;
+  }
+  
+  /* Estilos para el párrafo del puntaje */
+  .puntaje p {
+    font-size: 36px;
+    color: #007bff;
+    margin: 10px 0 0 0;
+    font-weight: bold;
+  }
+  

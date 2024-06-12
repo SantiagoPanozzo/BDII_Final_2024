@@ -9,15 +9,6 @@ create table Equipo(
 	Pais varchar(50) not null UNIQUE
 );
 
-create table Equipo_Compite(
-	Abreviatura_E1 varchar(3),
-	Abreviatura_E2 varchar(3),
-	constraint pk_equipo_compite primary key (Abreviatura_E1, Abreviatura_E2),
-	constraint fk_equipo_compite_e1 foreign key (Abreviatura_E1) references Equipo(Abreviatura),
-	constraint fk_equipo_compite_e2 foreign key (Abreviatura_E2) references Equipo(Abreviatura)
-	--hay que hacer un trigger para controlar que no sean el mismo equipo.
-);
-
 create table Etapa(
 	Id serial primary key,
 	Nombre varchar(20) not null UNIQUE
@@ -31,8 +22,10 @@ create table Partido(
 	Resultado_E2 int,
 	Etapa int not null,
 	constraint pk_partido primary key (Fecha, Equipo_E1, Equipo_E2),
-	constraint fk_partido_equipos foreign key (Equipo_E1, Equipo_E2) references Equipo_Compite(Abreviatura_E1,Abreviatura_E2),
+	constraint fk_partido_equipo_1 foreign key (Equipo_E1) references Equipo(Abreviatura),
+	constraint fk_partido_equipo_2 foreign key (Equipo_E2) references Equipo(Abreviatura),
 	constraint fk_partido_etapa foreign key (Etapa) references Etapa(Id)	
+	--hay que hacer un trigger para controlar que no sean el mismo equipo.
 );
 
 create table Administrador(
@@ -50,7 +43,7 @@ create table Alumno(
 	Fecha_Nacimiento date not null,
 	Anio_Ingreso int not null,
 	Semestre_Ingreso int not null,
-	Puntaje_Total int,
+	Puntaje_Total int not null,
 	Campeon varchar(3) not null,
 	Subcampeon varchar(3) not null,
 	constraint fk_campeon foreign key (Campeon) references Equipo(Abreviatura),

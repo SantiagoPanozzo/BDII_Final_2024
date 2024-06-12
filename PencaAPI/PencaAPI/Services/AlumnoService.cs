@@ -8,7 +8,7 @@ namespace PencaAPI.Services;
 /// </summary>
 /// <param name="dbConnection">Instancia de PgDatabaseConnection correspondiente a la base de datos.</param>
 public class AlumnoService(PgDatabaseConnection dbConnection)
-    : IService<Alumno, int>
+    : IService<Alumno>
 {
     private readonly PgDatabaseConnection _dbConnection = dbConnection;
     
@@ -26,7 +26,7 @@ public class AlumnoService(PgDatabaseConnection dbConnection)
                 fechaNacimiento: (DateTime)x["fecha_nacimiento"],
                 anioIngreso: (int)x["anio_ingreso"],
                 semestreIngreso: (int)x["semestre_ingreso"],
-                puntajeTotal: (int?)x["puntaje_total"],
+                puntajeTotal: (int)x["puntaje_total"],
                 campeon: (string)x["campeon"],
                 subCampeon: (string)x["subcampeon"]
             )
@@ -40,7 +40,7 @@ public class AlumnoService(PgDatabaseConnection dbConnection)
     /// <param name="id">Cédula del alumno.</param>
     /// <returns>El alumno correspondiente a la cédula introducida.</returns>
     /// <exception cref="ArgumentException">No existe un alumno para la cédula introducida.</exception>
-    public async Task<Alumno> GetByIdAsync(int id)
+    public async Task<Alumno> GetByIdAsync(object id)
     {
         var result = (
             await _dbConnection.QueryAsync(
@@ -63,7 +63,7 @@ public class AlumnoService(PgDatabaseConnection dbConnection)
             fechaNacimiento: (DateTime)alumno["fecha_nacimiento"],
             anioIngreso: (int)alumno["anio_ingreso"],
             semestreIngreso: (int)alumno["semestre_ingreso"],
-            puntajeTotal: (int?)alumno["puntaje_total"],
+            puntajeTotal: (int)alumno["puntaje_total"],
             campeon: (string)alumno["campeon"],
             subCampeon: (string)alumno["subcampeon"]
         );
@@ -71,16 +71,94 @@ public class AlumnoService(PgDatabaseConnection dbConnection)
 
     public async Task<Alumno> CreateAsync(Alumno entity)
     {
-        throw new NotImplementedException();
+        var result = (
+            await _dbConnection.QueryAsync(
+                "INSERT INTO alumno (" +
+                "nombre, apellido, cedula, fecha_nacimiento, anio_ingreso, semestre_ingreso, puntaje_total, campeon, subcampeon)" +
+                "VALUES (@n, @a, @c, @f, @ai, @si, @pt ,@cam, @scam) RETURNING *",
+
+                new Dictionary<string, object>()
+                {
+                    { "n", entity.Nombre },
+                    { "a", entity.Apellido },
+                    { "c", entity.Cedula },
+                    { "f", entity.FechaNacimiento },
+                    { "pt", entity.PuntajeTotal },
+                    { "ai", entity.AnioIngreso },
+                    { "si", entity.SemestreIngreso },
+                    { "cam", entity.Campeon },
+                    { "scam", entity.SubCampeon }
+                }
+            )
+        );
+        
+        var alumno = result.FirstOrDefault();
+        
+        if (alumno == null) throw new ArgumentException("No se pudo crear el alumno.");
+        
+        return new Alumno(
+            nombre: (string)alumno["nombre"],
+            apellido: (string)alumno["apellido"],
+            cedula: (int)alumno["cedula"],
+            fechaNacimiento: (DateTime)alumno["fecha_nacimiento"],
+            anioIngreso: (int)alumno["anio_ingreso"],
+            semestreIngreso: (int)alumno["semestre_ingreso"],
+            puntajeTotal: (int)alumno["puntaje_total"],
+            campeon: (string)alumno["campeon"],
+            subCampeon: (string)alumno["subcampeon"]
+        );
     }
 
-    public async Task<Alumno> UpdateAsync(int id, Alumno entity)
+    public async Task<Alumno> UpdateAsync(object id, Alumno entity)
     {
-        throw new NotImplementedException();
+        var result = (
+            await _dbConnection.QueryAsync(
+                "UPDATE alumno SET " +
+                "nombre = @n, apellido = @a, fecha_nacimiento = @f, anio_ingreso = @ai, semestre_ingreso = @si, puntaje_total = @pt, campeon = @cam, subcampeon = @scam " +
+                "WHERE cedula = @c RETURNING *",
+
+                new Dictionary<string, object>()
+                {
+                    { "n", entity.Nombre },
+                    { "a", entity.Apellido },
+                    { "c", entity.Cedula },
+                    { "f", entity.FechaNacimiento },
+                    { "pt", entity.PuntajeTotal },
+                    { "ai", entity.AnioIngreso },
+                    { "si", entity.SemestreIngreso },
+                    { "cam", entity.Campeon },
+                    { "scam", entity.SubCampeon }
+                }
+            )
+        );
+        
+        var alumno = result.FirstOrDefault();
+        
+        if (alumno == null) throw new ArgumentException("No se pudo actualizar el alumno.");
+        
+        return new Alumno(
+            nombre: (string)alumno["nombre"],
+            apellido: (string)alumno["apellido"],
+            cedula: (int)alumno["cedula"],
+            fechaNacimiento: (DateTime)alumno["fecha_nacimiento"],
+            anioIngreso: (int)alumno["anio_ingreso"],
+            semestreIngreso: (int)alumno["semestre_ingreso"],
+            puntajeTotal: (int)alumno["puntaje_total"],
+            campeon: (string)alumno["campeon"],
+            subCampeon: (string)alumno["subcampeon"]
+        );
     }
 
-    public async Task<Alumno> DeleteAsync(int id)
+    public async Task DeleteAsync(object id)
     {
-        throw new NotImplementedException();
+        var result = (
+            await _dbConnection.QueryAsync(
+                "DELETE FROM alumno WHERE cedula = @c RETURNING *",
+                new Dictionary<string, object>()
+                {
+                    { "c", id }
+                }
+            )
+        );
     }
 }

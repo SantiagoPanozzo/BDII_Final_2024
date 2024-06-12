@@ -8,13 +8,13 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  username: string = '';
+  cedula: number = 0;
   password: string = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
   login(): void {
-    const resultado = this.authService.autenticarUsuario(this.username, this.password);
+    const resultado = this.authService.autenticarUsuario(this.cedula, this.password);
     if (resultado) {
       if (resultado.esAdmin) {
         this.router.navigate(['/admin-dashboard'], { state: { usuario: resultado.usuario } });

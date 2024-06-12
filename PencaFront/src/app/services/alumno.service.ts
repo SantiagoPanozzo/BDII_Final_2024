@@ -7,7 +7,6 @@ import { Alumno } from '../interfaces/alumnoInterface';
 export class AlumnoService {
   private alumnos: Alumno[] = [
     {
-      username: 'alumno1',
       cedula: 123,
       contrasena: 'clave123',
       nombre: 'Juan',
@@ -20,7 +19,6 @@ export class AlumnoService {
       subcampeon: 'BRA'
     },
     {
-      username: 'alumno2',
       cedula: 987,
       contrasena: 'abc123',
       nombre: 'María',
@@ -42,8 +40,8 @@ export class AlumnoService {
     this.alumnos.push(alumno);
   }
 
-  obtenerUsuarioPorUsuarioYContrasena(username: string, contrasena: string): Alumno | null {
-    const usuario = this.alumnos.find(u => u.username === username && u.contrasena === contrasena) || null;
+  obtenerUsuarioPorCedulaYContrasena(cedula: number, contrasena: string): Alumno | null {
+    const usuario = this.alumnos.find(u => u.cedula === cedula && u.contrasena === contrasena) || null;
     if (usuario) {
       this.alumnoAutenticado = usuario;
     }
@@ -54,8 +52,8 @@ export class AlumnoService {
     return this.alumnos;
   }
 
-  obtenerPuntajePorUsername(username: string): number | null {
-    const alumno = this.alumnos.find(u => u.username === username);
+  obtenerPuntajePorCedula(cedula: number): number | null {
+    const alumno = this.alumnos.find(u => u.cedula === cedula);
     return alumno ? alumno.puntajeTotal : null;
   }
 

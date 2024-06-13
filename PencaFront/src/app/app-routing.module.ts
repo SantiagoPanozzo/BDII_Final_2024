@@ -10,6 +10,7 @@ import { DatosComponent } from './student-dashboard/datos/datos.component';
 import { PrediccionesComponent } from './student-dashboard/predicciones/predicciones.component';
 import { PuntajeComponent } from './student-dashboard/puntaje/puntaje.component';
 import { AdminPartidosComponent } from './admin-dashboard/admin-partidos/admin-partidos.component';
+import { RegistrarPartidoComponent } from './admin-dashboard/registrar-partido/registrar-partido.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -23,7 +24,9 @@ const routes: Routes = [
   { path: 'student-dashboard/predicciones', component: PrediccionesComponent },
   { path: 'student-dashboard/puntaje', component: PuntajeComponent },
   { path: 'admin-dashboard/admin-partidos/:id', component: AdminPartidosComponent },
-  { path: '', redirectTo: '/admin-dashboard/lista-partidos', pathMatch: 'full' }
+  { path: '', redirectTo: '/admin-dashboard/lista-partidos', pathMatch: 'full' },
+  { path: 'registrar-partido', component: RegistrarPartidoComponent }
+
 ];
 
 @NgModule({

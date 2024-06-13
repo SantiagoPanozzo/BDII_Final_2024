@@ -22,6 +22,12 @@
       <input type="date" id="fechaNacimiento" name="fechaNacimiento" [(ngModel)]="alumno.fechaNacimiento" required>
     </div>
     <div class="form-group">
+      <label for="carrera">Carrera:</label>
+      <select id="carrera" name="carrera" [(ngModel)]="alumno.carrera" required>
+        <option *ngFor="let carrera of carreras" [value]="carrera.id">{{ carrera.nombre }}</option>
+      </select>
+    </div>
+    <div class="form-group">
       <label for="anioIngreso">Año de Ingreso:</label>
       <input type="number" id="anioIngreso" name="anioIngreso" [(ngModel)]="alumno.anioIngreso" required>
     </div>
@@ -44,6 +50,7 @@
         <option *ngFor="let equipo of equipos" [value]="equipo.abreviatura">{{ equipo.nombre }}</option>
       </select>
     </div>
+    
     <button type="submit">Registrar</button>
   </form>
 </div>

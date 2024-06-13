@@ -26,6 +26,7 @@ public static class Program
         // esa misma instancia. Lo mismo pasa con los services para los controllers y etc.
         builder.Services.AddScoped<PgDatabaseConnection>(__ => dbConnection); // Agrego la dbConnection a los services
         builder.Services.AddScoped<AlumnoService>(); // Registro los services, la dbConnection se inyecta automáticamente
+        builder.Services.AddScoped<EtapaService>();
         builder.Services.AddControllers(); // Registro los controllers, los services se inyectan automáticamente
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();

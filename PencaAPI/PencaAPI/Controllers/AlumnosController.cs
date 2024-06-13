@@ -32,8 +32,8 @@ public class AlumnosController(AlumnoService alumnoService) : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Alumno>> Post(Alumno alumno)
     {
-        await _alumnoService.CreateAsync(alumno);
-        return CreatedAtAction(nameof(Get), new { id = alumno.Cedula }, alumno);
+        var nuevoAlumno = await _alumnoService.CreateAsync(alumno);
+        return CreatedAtAction(nameof(Get), new { id = alumno.Cedula }, nuevoAlumno);
     }
     
     [HttpPut("{id}")]

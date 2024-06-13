@@ -42,11 +42,10 @@ public class EtapaService(PgDatabaseConnection dbConnection)
     public async Task<Etapa> CreateAsync(Etapa entity)
     {
 
-        var queryString = "INSERT INTO etapa (id, nombre) VALUES (@i, @n) RETURNING *";
+        var queryString = "INSERT INTO etapa (nombre) VALUES (@n) RETURNING *";
         var parameters = new Dictionary<string, object>()
         {
-            { "id", entity.Id },
-            { "nombre", entity.Nombre }
+            { "n", entity.Nombre }
         };
         
         var result = await _dbConnection.QueryAsync(queryString, parameters);
@@ -56,6 +55,8 @@ public class EtapaService(PgDatabaseConnection dbConnection)
         if (etapa == null)
             throw new ArgumentException("No se pudo crear la etapa.");
 
+        Console.WriteLine("Id de la etapa:" + (int)(etapa["id"]));
+        
         return new Etapa(
             id: (int)etapa["id"],
             nombre: (string)etapa["nombre"]
@@ -67,8 +68,8 @@ public class EtapaService(PgDatabaseConnection dbConnection)
         var queryString = "UPDATE etapa SET id = @i, nombre = @n WHERE id = @i";
         var parameters = new Dictionary<string, object>()
         {
-            { "id", entity.Id },
-            { "nombre", entity.Nombre }
+            { "i", entity.Id },
+            { "n", entity.Nombre }
         };
         
         var result = await _dbConnection.QueryAsync(queryString, parameters);

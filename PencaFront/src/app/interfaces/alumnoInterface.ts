@@ -4,6 +4,7 @@ export interface Alumno {
     nombre: string;
     apellido: string;
     fechaNacimiento: Date;
+    carrera: number;
     anioIngreso: number;
     semestreIngreso: string;
     puntajeTotal: number;

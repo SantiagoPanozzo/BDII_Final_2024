@@ -4,6 +4,8 @@ import { AlumnoService } from '../services/alumno.service';
 import { EquipoService } from '../services/equiposervice.service';
 import { Alumno } from '../interfaces/alumnoInterface';
 import { Equipo } from '../interfaces/equipo';
+import { CarreraService } from '../services/carrera.service';
+import { Carrera } from '../interfaces/carrera';
 
 @Component({
   selector: 'app-registro',
@@ -17,6 +19,7 @@ export class RegistroComponent implements OnInit {
     nombre: '',
     apellido: '',
     fechaNacimiento: new Date(),
+    carrera: 0,
     anioIngreso: 0,
     semestreIngreso: '',
     puntajeTotal: 0,
@@ -24,11 +27,18 @@ export class RegistroComponent implements OnInit {
     subcampeon: '' 
   };
   equipos: Equipo[] = [];
+  carreras: Carrera[] = [];
 
-  constructor(private alumnoService: AlumnoService, private equipoService: EquipoService, private router: Router) {}
+  constructor(
+    private alumnoService: AlumnoService, 
+    private equipoService: EquipoService, 
+    private router: Router, 
+    private carreraService: CarreraService // Inyección correcta del servicio
+  ) {}
 
   ngOnInit(): void {
     this.equipos = this.equipoService.obtenerEquipos();
+    this.carreras = this.carreraService.obtenerCarreras();
   }
 
   registrar(): void {

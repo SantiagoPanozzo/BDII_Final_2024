@@ -24,13 +24,23 @@ public static class Program
         // Los builder.Services son una forma de tener singletons de todos los services y cosas útiles
         // En este caso agrego la dbConnection a los services para que siempre que se necesite una dbConnection use
         // esa misma instancia. Lo mismo pasa con los services para los controllers y etc.
-        builder.Services.AddScoped<PgDatabaseConnection>(__ => dbConnection); // Agrego la dbConnection a los services
-        builder.Services.AddScoped<AlumnoService>(); // Registro los services, la dbConnection se inyecta automáticamente
+        
+        // Agrego la dbConnection a los services
+        builder.Services.AddScoped<PgDatabaseConnection>(__ => dbConnection); 
+        
+        // Registro los services, la dbConnection se inyecta automáticamente
+        builder.Services.AddScoped<AlumnoService>(); 
         builder.Services.AddScoped<EtapaService>();
-        builder.Services.AddControllers(); // Registro los controllers, los services se inyectan automáticamente
+        builder.Services.AddScoped<CarreraService>();
+        
+        // Registro los controllers, los services se inyectan automáticamente
+        builder.Services.AddControllers(); 
+        
+        // Generar endpoints a partir de los controlers y swagger
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
+        // Buildear la app
         var app = builder.Build();
         Configure(app, app.Environment);
         

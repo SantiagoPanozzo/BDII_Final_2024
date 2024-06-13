@@ -26,7 +26,7 @@ export class PartidoService {
 	  Equipo_E2 : 'BRA',
 	  Resultado_E1: null,
 	  Resultado_E2 : null,
-	  Etapa : 1,
+	  Etapa : 2,
     Hora: '17:00'
     },
     {

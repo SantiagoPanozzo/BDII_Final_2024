@@ -14,6 +14,7 @@ export class PrediccionesComponent implements OnInit {
   partidos: Partido[] = [];
   predicciones: { [key: number]: { prediccionE1: number, prediccionE2: number } } = {};
   alumno: any;
+  partidosPorEtapa: { etapa: number, partidos: Partido[] }[] = [];
 
   constructor(
     private partidoService: PartidoService,
@@ -24,6 +25,7 @@ export class PrediccionesComponent implements OnInit {
   ngOnInit(): void {
     this.partidos = this.partidoService.obtenerPartidos();
     this.alumno = this.authService.obtenerUsuarioAutenticado();
+    this.partidosPorEtapa = this.agruparPartidosPorEtapa(this.partidos);
   }
 
   guardarPrediccion(partido: Partido): void {
@@ -42,4 +44,17 @@ export class PrediccionesComponent implements OnInit {
       alert('Predicción guardada con éxito!');
     }
   }
+  private agruparPartidosPorEtapa(partidos: Partido[]): { etapa: number, partidos: Partido[] }[] {
+    const partidosAgrupados: { etapa: number, partidos: Partido[] }[] = [];
+    partidos.forEach(partido => {
+      const index = partidosAgrupados.findIndex(item => item.etapa === partido.Etapa);
+      if (index !== -1) {
+        partidosAgrupados[index].partidos.push(partido);
+      } else {
+        partidosAgrupados.push({ etapa: partido.Etapa, partidos: [partido] });
+      }
+    });
+
+    return partidosAgrupados;
+}
 }

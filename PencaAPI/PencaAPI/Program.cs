@@ -32,6 +32,7 @@ public static class Program
         builder.Services.AddScoped<AlumnoService>(); 
         builder.Services.AddScoped<EtapaService>();
         builder.Services.AddScoped<CarreraService>();
+        builder.Services.AddScoped<EquipoService>();
         
         // Registro los controllers, los services se inyectan automáticamente
         builder.Services.AddControllers(); 

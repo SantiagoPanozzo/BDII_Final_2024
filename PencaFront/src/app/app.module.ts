@@ -13,6 +13,7 @@ import { PrediccionesComponent } from './student-dashboard/predicciones/predicci
 import { DatosComponent } from './student-dashboard/datos/datos.component';
 import { PuntajeComponent } from './student-dashboard/puntaje/puntaje.component';
 import { AdminPartidosComponent } from './admin-dashboard/admin-partidos/admin-partidos.component';
+import { RegistrarPartidoComponent } from './admin-dashboard/registrar-partido/registrar-partido.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { AdminPartidosComponent } from './admin-dashboard/admin-partidos/admin-p
     PrediccionesComponent,
     DatosComponent,
     PuntajeComponent,
-    AdminPartidosComponent
+    AdminPartidosComponent,
+    RegistrarPartidoComponent
   ],
   imports: [
     BrowserModule,

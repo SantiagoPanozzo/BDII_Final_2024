@@ -63,6 +63,12 @@ export class PartidoService {
   obtenerPartidoPorId(id: number): Partido | undefined {
     return this.partidos.find(partido => partido.Id === id)  
   }
+  registrarPartido(nuevoPartido: Partido): void {
+    const nuevoId = this.partidos.length > 0 ? this.partidos[this.partidos.length - 1].Id + 1 : 1;
+    nuevoPartido.Id = nuevoId;
+    this.partidos.push(nuevoPartido);
+}
+
 
 }
  

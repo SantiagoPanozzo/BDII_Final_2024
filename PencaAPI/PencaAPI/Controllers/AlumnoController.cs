@@ -7,7 +7,7 @@ namespace PencaAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class AlumnosController(AlumnoService alumnoService) : ControllerBase
+public class AlumnoController(AlumnoService alumnoService) : ControllerBase
 {
     private readonly AlumnoService _alumnoService = alumnoService;
     

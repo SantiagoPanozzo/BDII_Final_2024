@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class AdministradorService {
-  // FIXME esto no se utiliza en ningún momento?
+
   private adminDatos = {
 
     cedula: 999,

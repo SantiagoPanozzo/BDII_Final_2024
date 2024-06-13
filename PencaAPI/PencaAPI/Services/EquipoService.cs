@@ -20,9 +20,8 @@ public class EquipoService(PgDatabaseConnection dbConnection)
     {
         var result = await _dbConnection.QueryAsync("SELECT * FROM Equipo");
         var equipos = result.Select(x => new Equipo(
-                abreviatura : (string)x["abreviatura"]
-                pais: (string)x["pais"],
-                
+                abreviatura : (string)x["abreviatura"],
+                pais: (string)x["pais"]
             )
         ).ToList();
         return equipos.ToArray();
@@ -52,7 +51,58 @@ public class EquipoService(PgDatabaseConnection dbConnection)
         
         return new Equipo(
             abreviatura: (string)equipo["abreviatura"],
-            pais: (string)equipo["pais"],
+            pais: (string)equipo["pais"]
+        );
+    }
+    
+    public async Task<Equipo> CreateAsync(Equipo entity)
+    {
+        var result = await _dbConnection.QueryAsync(
+            "INSERT INTO equipo (abreviatura, pais) VALUES (@a, @p) RETURNING *",
+            new Dictionary<string, object>()
+            {
+                { "a", entity.Abreviatura },
+                { "p", entity.Pais }
+            }
+        );
+
+        var equipo = result.FirstOrDefault();
+        
+        return new Equipo(
+            abreviatura: (string)equipo["abreviatura"],
+            pais: (string)equipo["pais"]
+        );
+    }
+    
+    public async Task<Equipo> UpdateAsync(object id, Equipo entity)
+    {
+        var result = await _dbConnection.QueryAsync(
+            "UPDATE equipo SET abreviatura = @a, pais = @p WHERE abreviatura = @i RETURNING *",
+            new Dictionary<string, object>()
+            {
+                { "a", entity.Abreviatura },
+                { "p", entity.Pais },
+                { "i", id }
+            }
+        );
+
+        var equipo = result.FirstOrDefault();
+
+        return new Equipo(
+            abreviatura: (string)equipo["abreviatura"],
+            pais: (string)equipo["pais"]
+        );
+
+    }
+
+    public async Task DeleteAsync(object id)
+    {
+        var result = await _dbConnection.QueryAsync(
+            "DELETE FROM equipo WHERE abreviatura = @a",
+            new Dictionary<string, object>()
+            {
+                { "a", id }
+            }
         );
     }
 

@@ -8,7 +8,7 @@ namespace PencaAPI.Services;
 /// Service para realizar acciones en la base de datos realacionadas a la tabla de Carera.
 /// </summary>
 /// <param name="dbConnection">Instancia de PgDatabaseConnection correspondiente a la base de datos.</param>
-public class CareraService(PgDatabaseConnection dbConnection)
+public class CarreraService(PgDatabaseConnection dbConnection)
     : IService<Carrera>
 {
     private readonly PgDatabaseConnection _dbConnection = dbConnection;

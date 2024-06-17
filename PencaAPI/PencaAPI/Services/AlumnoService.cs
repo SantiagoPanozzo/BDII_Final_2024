@@ -23,6 +23,7 @@ public class AlumnoService(PgDatabaseConnection dbConnection)
                 nombre: (string)x["nombre"],
                 apellido: (string)x["apellido"],
                 cedula: (int)x["cedula"],
+                contrasena: (string)x["contrasena"],
                 fechaNacimiento: (DateTime)x["fecha_nacimiento"],
                 anioIngreso: (int)x["anio_ingreso"],
                 semestreIngreso: (int)x["semestre_ingreso"],
@@ -60,6 +61,7 @@ public class AlumnoService(PgDatabaseConnection dbConnection)
             nombre: (string)alumno["nombre"],
             apellido: (string)alumno["apellido"],
             cedula: (int)alumno["cedula"],
+            contrasena: (string)alumno["contrasena"],
             fechaNacimiento: (DateTime)alumno["fecha_nacimiento"],
             anioIngreso: (int)alumno["anio_ingreso"],
             semestreIngreso: (int)alumno["semestre_ingreso"],
@@ -71,17 +73,20 @@ public class AlumnoService(PgDatabaseConnection dbConnection)
 
     public async Task<Alumno> CreateAsync(Alumno entity)
     {
+        // Hash de la contraseña
+        var hashedContrasena = ContrasenaHasher.HashContrasena(entity.Contrasena);
         var result = (
             await _dbConnection.QueryAsync(
                 "INSERT INTO alumno (" +
-                "nombre, apellido, cedula, fecha_nacimiento, anio_ingreso, semestre_ingreso, puntaje_total, campeon, subcampeon)" +
-                "VALUES (@n, @a, @c, @f, @ai, @si, @pt ,@cam, @scam) RETURNING *",
+                "nombre, apellido, cedula, contrasena ,fecha_nacimiento, anio_ingreso, semestre_ingreso, puntaje_total, campeon, subcampeon)" +
+                "VALUES (@n, @a, @c,@p, @f, @ai, @si, @pt ,@cam, @scam) RETURNING *",
 
                 new Dictionary<string, object>()
                 {
                     { "n", entity.Nombre },
                     { "a", entity.Apellido },
                     { "c", entity.Cedula },
+                    { "p", hashedContrasena },
                     { "f", entity.FechaNacimiento },
                     { "pt", entity.PuntajeTotal },
                     { "ai", entity.AnioIngreso },
@@ -100,6 +105,7 @@ public class AlumnoService(PgDatabaseConnection dbConnection)
             nombre: (string)alumno["nombre"],
             apellido: (string)alumno["apellido"],
             cedula: (int)alumno["cedula"],
+            contrasena: (string)alumno["contrasena"],
             fechaNacimiento: (DateTime)alumno["fecha_nacimiento"],
             anioIngreso: (int)alumno["anio_ingreso"],
             semestreIngreso: (int)alumno["semestre_ingreso"],
@@ -140,6 +146,7 @@ public class AlumnoService(PgDatabaseConnection dbConnection)
             nombre: (string)alumno["nombre"],
             apellido: (string)alumno["apellido"],
             cedula: (int)alumno["cedula"],
+            contrasena: (string)alumno["contrasena"],
             fechaNacimiento: (DateTime)alumno["fecha_nacimiento"],
             anioIngreso: (int)alumno["anio_ingreso"],
             semestreIngreso: (int)alumno["semestre_ingreso"],

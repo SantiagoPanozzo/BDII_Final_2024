@@ -33,7 +33,8 @@ create table Administrador(
     Nombre varchar(20) not null,
 	Apellido varchar(20) not null,
 	Fecha_Nacimiento date not null,
-	Rol_Universidad varchar(100) not null
+	Rol_Universidad varchar(100) not null,
+	Contrasena varchar not null
 );
 
 create table Alumno(
@@ -46,6 +47,7 @@ create table Alumno(
 	Puntaje_Total int not null,
 	Campeon varchar(3) not null,
 	Subcampeon varchar(3) not null,
+	Contrasena varchar not null,
 	constraint fk_campeon foreign key (Campeon) references Equipo(Abreviatura),
 	constraint fk_subcampeon foreign key (Subcampeon) references Equipo(Abreviatura)
 	--hay que hacer un trigger para controlar que campeon y subcampeon sean diferentes

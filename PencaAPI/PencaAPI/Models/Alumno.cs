@@ -1,3 +1,5 @@
+using PencaAPI.DTOs;
+
 namespace PencaAPI.Models;
 
 /// <summary>
@@ -13,13 +15,14 @@ namespace PencaAPI.Models;
 /// <param name="campeon">Campeón elegido por el alumno</param>
 /// <param name="subCampeon">Subcampeón elegido por el alumno</param>
 public class Alumno (
-    string nombre, string apellido, int cedula, DateTime fechaNacimiento, int anioIngreso, int semestreIngreso,
+    string nombre, string apellido, int cedula, string contrasena, DateTime fechaNacimiento, int anioIngreso, int semestreIngreso,
     int puntajeTotal, string campeon, string subCampeon)
     : IUsuario
 {
     public string Nombre { get; set; } = nombre;
     public string Apellido { get; set; } = apellido;
     public int Cedula { get; set; } = cedula;
+    public string Contrasena { get; set; } = contrasena;
     public DateTime FechaNacimiento { get; set; } = fechaNacimiento;
     public int AnioIngreso { get; set; } = anioIngreso;
     public int SemestreIngreso { get; set; } = semestreIngreso;
@@ -32,4 +35,8 @@ public class Alumno (
         return $"Nombre: {Nombre}, Apellido: {Apellido}, Cédula: {Cedula}, Fecha de Nacimiento: {FechaNacimiento}, Año de ingreso: {AnioIngreso}, Semestre de ingreso: {SemestreIngreso}, Puntaje total: {PuntajeTotal}, Campeón: {Campeon}, Subcampeón: {SubCampeon}";
     }
 
+    public static explicit operator Alumno(UserRegisterDto v)
+    {
+        throw new NotImplementedException();
+    }
 }

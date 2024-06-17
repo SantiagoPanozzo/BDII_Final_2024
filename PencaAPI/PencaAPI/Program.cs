@@ -21,25 +21,39 @@ public static class Program
         // Creo el builder de la api web
         var builder = WebApplication.CreateBuilder(args);
         
-        // Los builder.Services son una forma de tener singletons de todos los services y cosas útiles
-        // En este caso agrego la dbConnection a los services para que siempre que se necesite una dbConnection use
-        // esa misma instancia. Lo mismo pasa con los services para los controllers y etc.
+        // Configuración de servicios
+        var key = Encoding.ASCII.GetBytes("your_secret_key");
+
+        builder.Services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(options =>
+        {
+            options.RequireHttpsMetadata = false;
+            options.SaveToken = true;
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuer = false,
+                ValidateAudience = false
+            };
+        });
+
         
-        // Agrego la dbConnection a los services
-        builder.Services.AddScoped<PgDatabaseConnection>(__ => dbConnection); 
-        
-        // Registro los services, la dbConnection se inyecta automáticamente
-        builder.Services.AddScoped<AlumnoService>(); 
+
+        builder.Services.AddScoped<PgDatabaseConnection>(__ => dbConnection);
+        builder.Services.AddScoped<AlumnoService>();
+        builder.Services.AddSingleton<IUsuarioService, UsuarioService>();
         builder.Services.AddScoped<EtapaService>();
         builder.Services.AddScoped<CarreraService>();
         builder.Services.AddScoped<EquipoService>();
-        
-        // Registro los controllers, los services se inyectan automáticamente
-        builder.Services.AddControllers(); 
-        
-        // Generar endpoints a partir de los controlers y swagger
+        builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        builder.Services.AddTransient<IAuthService, AuthService>();
 
         // Buildear la app
         var app = builder.Build();
@@ -61,12 +75,11 @@ public static class Program
         // cosas de .NET, de la documentación 
         app.UseHttpsRedirection();
         app.UseRouting();
-        app.UseAuthorization();
 
         // Habilitar los endpoints y los controllers para cada uno
         app.UseEndpoints(endpoints =>
         {
-            endpoints.MapControllers(); // Mappear controllers
+            endpoints.MapControllers();
             endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello World!"); });
         });
     }

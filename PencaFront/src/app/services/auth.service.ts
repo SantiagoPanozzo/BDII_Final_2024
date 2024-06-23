@@ -15,8 +15,11 @@ import {UserLogin} from "../interfaces/UserLogin";
 export class AuthService {
   private adminCredentials = { cedula: 999, contrasena: 'admin' };
   private usuarioAutenticado: Alumno | null = null;
+<<<<<<< HEAD
   private token: string | null = null;
 
+=======
+>>>>>>> 1fd6e41 (Guardar usuario en el browser storage)
   public isLoggedIn() {
     return this.usuarioAutenticado != null;
   }

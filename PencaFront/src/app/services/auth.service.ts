@@ -12,6 +12,9 @@ import { Carrera } from '../interfaces/carrera';
 export class AuthService {
   private adminCredentials = { cedula: 999, contrasena: 'admin' };
   private usuarioAutenticado: Alumno | null = null;
+  public isLoggedIn() {
+    return this.usuarioAutenticado != null;
+  }
 
   constructor(
     private alumnoService: AlumnoService, 
@@ -27,6 +30,7 @@ export class AuthService {
       const usuario = this.alumnoService.obtenerUsuarioPorCedulaYContrasena(cedula, contrasena);
       if (usuario) {
         this.usuarioAutenticado = usuario;
+        localStorage.setItem('user', JSON.stringify(usuario)); // Save user data
         return { esAdmin: false, usuario };
       } else {
         return null;
@@ -35,14 +39,18 @@ export class AuthService {
   }
 
   obtenerUsuarioAutenticado(): Alumno {
-    if (!this.usuarioAutenticado) {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      this.usuarioAutenticado = JSON.parse(storedUser);
+      return this.usuarioAutenticado!;
+    } else {
       throw new Error('No hay un usuario autenticado actualmente');
     }
-    return this.usuarioAutenticado;
   }
 
   logout(): void {
     this.usuarioAutenticado = null;
+    localStorage.removeItem('user'); // Remove user data
     this.router.navigate(['/login']);
   }
 }

@@ -1,0 +1,9 @@
+﻿services:
+  pencaapi:
+    image: pencafront
+    build:
+      context: .
+      dockerfile: DockerfileYarn
+    ports:
+      - "4200:4200"
+

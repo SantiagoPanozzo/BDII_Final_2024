@@ -310,11 +310,18 @@ public class PartidoService(PgDatabaseConnection dbConnection)
     
     public async Task DeleteAsync(object id)
     {
+        PartidoDTO partidoDto = (PartidoDTO)id;
+        var sqlQuery = @"DELETE FROM Partido
+                        Where Fecha = @fw
+                        and Equipo_E1 = @e1w
+                        and Equipo_E2 = @e2w";
         var result = await _dbConnection.QueryAsync(
-            "DELETE FROM carrera WHERE id = @i RETURNING *",
+            sqlQuery,
             new Dictionary<string, object>()
             {
-                { "i", id }
+                { "fw", partidoDto.Fecha },
+                { "e1w", partidoDto.Equipo_E1},
+                { "e2w", partidoDto.Equipo_E2}
             }
         );
     }

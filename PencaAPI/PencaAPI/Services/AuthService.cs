@@ -49,7 +49,7 @@ namespace PencaAPI.Services
                 Subject = new ClaimsIdentity(new[]
                 {
                     new Claim(ClaimTypes.NameIdentifier, user.Cedula.ToString()),
-                    new Claim(ClaimTypes.Name, user.Nombre)
+                    new Claim(ClaimTypes.Role, user.Rol)
                 }),
                 Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

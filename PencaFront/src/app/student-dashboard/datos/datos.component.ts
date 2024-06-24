@@ -27,8 +27,6 @@ export class DatosComponent implements OnInit {
   }
 
   async obtenerNombreCarrera() {
-    if (this.usuarioAutenticado) {
-      this.nombreCarrera = await this.carreraService.obtenerNombreCarrera(this.usuarioAutenticado.carrera);
-    }
+    return this.usuarioAutenticado!.carreraPrincipal.nombre; // TODO deprecar esto
   }
 }

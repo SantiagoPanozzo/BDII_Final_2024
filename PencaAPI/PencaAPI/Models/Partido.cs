@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace PencaAPI.Models;
 /// <summary>
 /// Implementación de un Partido en el sistema.
@@ -15,7 +17,7 @@ public class Partido
     public int? Resultado_E2 { get; set; } 
     public Etapa Etapa{ get; set; } 
 
-    public Partido (DateTime fecha, Equipo equipoE1, Equipo equipoE2, Etapa etapa)
+    /*public Partido (DateTime fecha, Equipo equipoE1, Equipo equipoE2, Etapa etapa)
     {
         Fecha  = fecha;
         Equipo_E1 = equipoE1;
@@ -23,14 +25,14 @@ public class Partido
         Resultado_E1 = null;
         Resultado_E2 = null;
         Etapa = etapa;
-    }
-    public Partido (DateTime fecha, Equipo equipoE1, Equipo equipoE2, int resultadoE1, int resultadoE2, Etapa etapa)
+    }*/
+    public Partido (DateTime fecha, Equipo equipo_E1, Equipo equipo_E2, int? resultado_E1, int? resultado_E2, Etapa etapa)
     {
         Fecha  = fecha;
-        Equipo_E1 = equipoE1;
-        Equipo_E2 = equipoE2;
-        Resultado_E1 = resultadoE1;
-        Resultado_E2 = resultadoE2;
+        Equipo_E1 = equipo_E1;
+        Equipo_E2 = equipo_E2;
+        Resultado_E1 = resultado_E1;
+        Resultado_E2 = resultado_E2;
         Etapa = etapa;
     }
             

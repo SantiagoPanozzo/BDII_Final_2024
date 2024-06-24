@@ -53,6 +53,7 @@ public static class Program
         builder.Services.AddScoped<EtapaService>();
         builder.Services.AddScoped<CarreraService>();
         builder.Services.AddScoped<EquipoService>();
+        builder.Services.AddScoped<PartidoService>();
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
@@ -69,11 +70,11 @@ public static class Program
     public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
         // swagger
-        if (env.IsDevelopment())
-        {
+        //if (env.IsDevelopment())
+        //{
             app.UseSwagger();
             app.UseSwaggerUI();
-        }
+        //}
 
         // cosas de .NET, de la documentación 
         app.UseHttpsRedirection();

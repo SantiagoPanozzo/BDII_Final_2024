@@ -1,6 +1,7 @@
 using PencaAPI.DatabaseConnection;
 using PencaAPI.Models;
 using PencaAPI.DTOs;
+using System.Runtime.InteropServices;
 
 namespace PencaAPI.Services;
 
@@ -25,8 +26,8 @@ public class PartidoService(PgDatabaseConnection dbConnection)
                             e1.Pais as E1_Pais,
                             e2.Abreviatura as E2_Abreviatura,
                             e2.Pais as E2_Pais,
-                            IFNULL(p.Resultado_E1, -1) as Resultado_E1,
-                            IFNULL(p.Resultado_E2, -1) as Resultado_E2,
+                            coalesce(p.Resultado_E1, -1) as Resultado_E1,
+                            coalesce(p.Resultado_E2, -1) as Resultado_E2,
                             e.Id as Etapa_Id,
                             e.Nombre as Etapa_Nombre
                          From Partido p
@@ -38,20 +39,20 @@ public class PartidoService(PgDatabaseConnection dbConnection)
                          on p.Equipo_E2 = e2.Abreviatura";
         var result = await _dbConnection.QueryAsync(sqlQuery);
         var partidos = result.Select(x => new Partido(
-                fecha: (DateTime)x["Fecha"],
-                equipoE1: new Equipo(
-                    abreviatura: (string)x["E1_Abreviatura"],
-                    pais: (string)x["E1_Pais"]
+                fecha: (DateTime)x["fecha"],
+                equipo_E1: new Equipo(
+                    abreviatura: (string)x["e1_abreviatura"],
+                    pais: (string)x["e1_pais"]
                 ),
-                equipoE2: new Equipo(
-                    abreviatura: (string)x["E2_Abreviatura"],
-                    pais: (string)x["E2_Pais"]
+                equipo_E2: new Equipo(
+                    abreviatura: (string)x["e2_abreviatura"],
+                    pais: (string)x["e2_pais"]
                 ),
-                resultadoE1:(int)x["Resultado_E1"],
-                resultadoE2:(int)x["Resultado_E2"],
+                resultado_E1:(int)x["resultado_e1"],
+                resultado_E2:(int)x["resultado_e2"],
                 etapa: new Etapa(
-                    id: (int)x["Etapa_Id"],
-                    nombre: (string)x["Etapa_Nombre"]
+                    id: (int)x["etapa_id"],
+                    nombre: (string)x["etapa_nombre"]
                 )
             )
         ).ToList();
@@ -73,8 +74,8 @@ public class PartidoService(PgDatabaseConnection dbConnection)
                             e1.Pais as E1_Pais,
                             e2.Abreviatura as E2_Abreviatura,
                             e2.Pais as E2_Pais,
-                            IFNULL(p.Resultado_E1, -1) as Resultado_E1,
-                            IFNULL(p.Resultado_E2, -1) as Resultado_E2,
+                            coalesce(p.Resultado_E1, -1) as Resultado_E1,
+                            coalesce(p.Resultado_E2, -1) as Resultado_E2,
                             e.Id as Etapa_Id,
                             e.Nombre as Etapa_Nombre
                          From Partido p
@@ -110,67 +111,93 @@ public class PartidoService(PgDatabaseConnection dbConnection)
         
         var equipo1 = new Equipo
         (
-            abreviatura: (string)partido["E1_Abreviatura"],
-            pais: (string)partido["E1_Pais"]
+            abreviatura: (string)partido["e1_abreviatura"],
+            pais: (string)partido["e1_pais"]
         );
         var equipo2 = new Equipo
         (
-            abreviatura: (string)partido["E2_Abreviatura"],
-            pais: (string)partido["E2_Pais"]
+            abreviatura: (string)partido["e2_abreviatura"],
+            pais: (string)partido["e2_pais"]
         );
         var et = new Etapa
         (
-            id: (int)partido["Etapa_Id"],
-            nombre: (string)partido["Etapa_Nombre"]
+            id: (int)partido["etapa_id"],
+            nombre: (string)partido["etapa_nombre"]
         );
         return new Partido(
-            fecha: (DateTime)partido["Fecha"],
-            equipoE1: equipo1,
-            equipoE2: equipo2,
-            resultadoE1:(int)partido["Resultado_E1"],
-            resultadoE2:(int)partido["Resultado_E2"],
+            fecha: (DateTime)partido["fecha"],
+            equipo_E1: equipo1,
+            equipo_E2: equipo2,
+            resultado_E1:(int)partido["resultado_e1"],
+            resultado_E2:(int)partido["resultado_e2"],
             etapa: et
         );
     }
     
     public async Task<Partido> CreateAsync(Partido entity)
     {
-         var sqlQuery = @"INSERT INTO Partido (Fecha, Equipo_E1, Equipo_E2, Etapa)
-                         VALUES (@f, @e1, @e2, @e)";
+        var sqlQuery = @"
+                        WITH inserted as (
+                        INSERT INTO Partido 
+                        (Fecha, Equipo_E1, Equipo_E2, Etapa)
+                        VALUES (@f, @e1, @e2, @e) 
+                        RETURNING *
+                        )
+                        Select 
+                            p.Fecha,
+                            p.Equipo_E1 as E1_Abreviatura,
+                            e1.Pais as E1_Pais,
+                            p.Equipo_E2 as E2_Abreviatura,
+                            e2.Pais as E2_Pais,
+                            coalesce(p.Resultado_E1, -1) as Resultado_E1,
+                            coalesce(p.Resultado_E2, -1) as Resultado_E2,
+                            p.Etapa as Etapa_Id,
+                            e.Nombre as Etapa_Nombre
+                         From inserted p
+                         join Etapa e
+                         on p.Etapa = e.Id
+                         join Equipo e1
+                         on p.Equipo_E1 = e1.Abreviatura
+                         join Equipo e2
+                         on p.Equipo_E2 = e2.Abreviatura
+                        ";
         var result = await _dbConnection.QueryAsync(
             sqlQuery,
             new Dictionary<string, object>()
             {
                 { "f", entity.Fecha },
-                { "e1", entity.Equipo_E1 },
-                { "e2", entity.Equipo_E2},
-                { "e", entity.Etapa}
+                { "e1", entity.Equipo_E1.Abreviatura },
+                { "e2", entity.Equipo_E2.Abreviatura},
+                { "e", entity.Etapa.Id}
             }
         );
+        Console.WriteLine(result.FirstOrDefault().ToString());
 
         var partido = result.FirstOrDefault();
         if (partido == null) throw new ArgumentException("Partido no creado con exito.");
 
         var equipo1 = new Equipo
         (
-            abreviatura: (string)partido["E1_Abreviatura"],
-            pais: (string)partido["E1_Pais"]
+            abreviatura: (string)partido["e1_abreviatura"],
+            pais: (string)partido["e1_pais"]
         );
         var equipo2 = new Equipo
         (
-            abreviatura: (string)partido["E2_Abreviatura"],
-            pais: (string)partido["E2_Pais"]
+            abreviatura: (string)partido["e2_abreviatura"],
+            pais: (string)partido["e2_pais"]
         );
         var et = new Etapa
         (
-            id: (int)partido["Etapa_Id"],
-            nombre: (string)partido["Etapa_Nombre"]
+            id: (int)partido["etapa_id"],
+            nombre: (string)partido["etapa_nombre"]
         );
 
         return new Partido(
-            fecha: (DateTime)partido["Fecha"],
-            equipoE1: equipo1,
-            equipoE2: equipo2,
+            fecha: (DateTime)partido["fecha"],
+            equipo_E1: equipo1,
+            equipo_E2: equipo2,
+            resultado_E1: (int)partido["resultado_e1"],
+            resultado_E2: (int)partido["resultado_e2"],
             etapa: et
         );
     }
@@ -178,7 +205,9 @@ public class PartidoService(PgDatabaseConnection dbConnection)
     public async Task<Partido> UpdateAsync(object id, Partido entity)
     {
         PartidoDTO partidoDto = (PartidoDTO)id;
-        var sqlQuerySinResultados = @"UPDATE Partido 
+        var sqlQuery = @"
+                        WITH updated as (
+                        UPDATE Partido 
                         set Fecha = @f , 
                         Equipo_E1 = @e1, 
                         Equipo_E2 = @e2, 
@@ -188,10 +217,30 @@ public class PartidoService(PgDatabaseConnection dbConnection)
                         Where Fecha = @f 
                         and Equipo_E1 = @e1
                         and Equipo_E2 = @e2
-                        RETURNING *";
+                        RETURNING *
+                        )
+                        Select 
+                            p.Fecha,
+                            p.Equipo_E1 as E1_Abreviatura,
+                            e1.Pais as E1_Pais,
+                            p.Equipo_E2 as E2_Abreviatura,
+                            e2.Pais as E2_Pais,
+                            coalesce (p.Resultado_E1, -1) as Resultado_E1,
+                            coalesce (p.Resultado_E2, -1) as Resultado_E2,
+                            p.Etapa as Etapa_Id,
+                            e.Nombre as Etapa_Nombre
+                         From updated p
+                         join Etapa e
+                         on p.Etapa = e.Id
+                         join Equipo e1
+                         on p.Equipo_E1 = e1.Abreviatura
+                         join Equipo e2
+                         on p.Equipo_E2 = e2.Abreviatura";
 
-        var sqlQuery = 
-                        @"UPDATE Partido 
+        var sqlQuerySinResultados = 
+                        @"
+                        WITH updated as (
+                        UPDATE Partido 
                         set Fecha = @f , 
                         Equipo_E1 = @e1, 
                         Equipo_E2 = @e2,
@@ -199,7 +248,25 @@ public class PartidoService(PgDatabaseConnection dbConnection)
                         Where Fecha = @fw
                         and Equipo_E1 = @e1w
                         and Equipo_E2 = @e2w
-                        RETURNING *";
+                        RETURNING *
+                        )
+                        Select 
+                            p.Fecha,
+                            p.Equipo_E1 as E1_Abreviatura,
+                            e1.Pais as E1_Pais,
+                            p.Equipo_E2 as E2_Abreviatura,
+                            e2.Pais as E2_Pais,
+                            coalesce (p.Resultado_E1, -1) as Resultado_E1,
+                            coalesce (p.Resultado_E2, -1) as Resultado_E2,
+                            p.Etapa as Etapa_Id,
+                            e.Nombre as Etapa_Nombre
+                         From updated p
+                         join Etapa e
+                         on p.Etapa = e.Id
+                         join Equipo e1
+                         on p.Equipo_E1 = e1.Abreviatura
+                         join Equipo e2
+                         on p.Equipo_E2 = e2.Abreviatura";
         if ((entity.Resultado_E1 != null ||entity.Resultado_E1 >= 0) && 
             (entity.Resultado_E2 != null ||entity.Resultado_E2 >= 0))
         {
@@ -219,29 +286,29 @@ public class PartidoService(PgDatabaseConnection dbConnection)
                 }
             );
             var partido = result.FirstOrDefault();
-            if (partido == null) throw new ArgumentException("Partido no creado con exito.");
+            if (partido == null) throw new ArgumentException("Partido con resultados no se actualizó.");
 
             var equipo1 = new Equipo
             (
-                abreviatura: (string)partido["E1_Abreviatura"],
-                pais: (string)partido["E1_Pais"]
+                abreviatura: (string)partido["e1_abreviatura"],
+                pais: (string)partido["e1_pais"]
             );
             var equipo2 = new Equipo
             (
-                abreviatura: (string)partido["E2_Abreviatura"],
-                pais: (string)partido["E2_Pais"]
+                abreviatura: (string)partido["e2_abreviatura"],
+                pais: (string)partido["e2_pais"]
             );
             var et = new Etapa
             (
-                id: (int)partido["Etapa_Id"],
-                nombre: (string)partido["Etapa_Nombre"]
+                id: (int)partido["etapa_id"],
+                nombre: (string)partido["etapa_nombre"]
             );
             return new Partido(
-                    fecha: (DateTime)partido["Fecha"],
-                    equipoE1: equipo1,
-                    equipoE2: equipo2,
-                    resultadoE1:(int)partido["Resultado_E1"],
-                    resultadoE2:(int)partido["Resultado_E2"],
+                    fecha: (DateTime)partido["fecha"],
+                    equipo_E1: equipo1,
+                    equipo_E2: equipo2,
+                    resultado_E1:(int)partido["resultado_e1"],
+                    resultado_E2:(int)partido["resultado_e2"],
                     etapa: et
             );
         }
@@ -260,49 +327,31 @@ public class PartidoService(PgDatabaseConnection dbConnection)
                     { "e2w", partidoDto.Equipo_E2}
                 }
             );
-            var selectQuery = @"
-                            SELECT Fecha,
-                                Equipo_E1,
-                                Equipo_E2,
-                                IFNULL(Resultado_E1, -1) AS Resultado_E1,
-                                IFNULL(Resultado_E2, -1) AS Resultado_E2,
-                                Etapa
-                            FROM Partido
-                            WHERE Fecha = @f
-                            AND Equipo_E1 = @e1
-                            AND Equipo_E2 = @e2";
-            
-            var resultSelect = await _dbConnection.QueryAsync(
-                sqlQuerySinResultados,
-                new Dictionary<string, object>()
-                {
-                    { "f", entity.Fecha},
-                    { "e1", entity.Equipo_E1.Abreviatura},
-                    { "e2", entity.Equipo_E2.Abreviatura}
-                }
-            );
-            var partido = resultSelect.FirstOrDefault();
-            if (partido == null) throw new ArgumentException("Partido no creado con exito.");
+         
+            var partido = result.FirstOrDefault();
+            if (partido == null) throw new ArgumentException("Partido SIN resultados no se actualizó");
 
             var equipo1 = new Equipo
             (
-                abreviatura: (string)partido["E1_Abreviatura"],
-                pais: (string)partido["E1_Pais"]
+                abreviatura: (string)partido["e1_abreviatura"],
+                pais: (string)partido["e1_pais"]
             );
             var equipo2 = new Equipo
             (
-                abreviatura: (string)partido["E2_Abreviatura"],
-                pais: (string)partido["E2_Pais"]
+                abreviatura: (string)partido["e2_abreviatura"],
+                pais: (string)partido["e2_pais"]
             );
             var et = new Etapa
             (
-                id: (int)partido["Etapa_Id"],
-                nombre: (string)partido["Etapa_Nombre"]
+                id: (int)partido["etapa_id"],
+                nombre: (string)partido["etapa_nombre"]
             );
             return new Partido(
-                    fecha: (DateTime)partido["Fecha"],
-                    equipoE1: equipo1,
-                    equipoE2: equipo2,
+                    fecha: (DateTime)partido["fecha"],
+                    equipo_E1: equipo1,
+                    equipo_E2: equipo2,
+                    resultado_E1:(int)partido["resultado_e1"],
+                    resultado_E2:(int)partido["resultado_e2"],
                     etapa: et
             );
         }

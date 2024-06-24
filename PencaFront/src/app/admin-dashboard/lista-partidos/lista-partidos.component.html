@@ -1,14 +1,13 @@
 <h3>Lista de todos los partidos</h3>
 
 <div *ngFor="let grupo of partidosPorEtapa">
-  <h4>Etapa {{ grupo.etapa }}</h4>
+  <h4>Etapa {{ grupo.etapa.nombre }}</h4>
   <table>
     <thead>
       <tr>
         <th>Equipo A</th>
         <th>Equipo B</th>
         <th>Fecha</th>
-        <th></th>
         <th>Resultado E1</th>
         <th>Resultado E2</th>
         <th>Acción</th>
@@ -16,12 +15,12 @@
     </thead>
     <tbody>
       <tr *ngFor="let partido of grupo.partidos">
-        <td>{{ partido.Equipo_E1 }}</td>
-        <td>{{ partido.Equipo_E2 }}</td>
-        <td>{{ partido.Fecha | date }}</td>
-        <td>{{ partido.Resultado_E1 }}</td>
-        <td>{{ partido.Resultado_E2 }}</td>
-        <td><button (click)="editarPartido(partido.Id)">Editar</button></td>
+        <td>{{ partido.equipo_E1.pais }}</td>
+        <td>{{ partido.equipo_E2.pais }}</td>
+        <td>{{ partido.fecha | date }}</td>
+        <td>{{ ((partido.resultado_E1 != null) && (partido.resultado_E1 >= 0)) ? partido.resultado_E1 : '-' }}</td>
+        <td>{{ ((partido.resultado_E2 != null) && (partido.resultado_E2 >= 0)) ? partido.resultado_E2 : '-' }}</td>
+        <td><button (click)="editarPartido(partido.fecha, partido.equipo_E1.abreviatura, partido.equipo_E2.abreviatura)">Editar {{partido.id}}</button></td>
       </tr>
     </tbody>
   </table>

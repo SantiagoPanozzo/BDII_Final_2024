@@ -23,21 +23,22 @@ export class PrediccionesComponent implements OnInit {
     private authService: AuthService
   ) {}
 
-  ngOnInit(): void {
-    this.partidos = this.partidoService.obtenerPartidos();
-    console.log("PrediccionesComponent: Obteniendo usuario autenticado");
+  async ngOnInit() {
+    this.partidos = await this.partidoService.obtenerPartidos();
+    console.log(this.partidos[0])
     this.alumno = this.authService.obtenerUsuarioAutenticado();
     this.partidosPorEtapa = this.agruparPartidosPorEtapa(this.partidos);
+    console.log(this.partidosPorEtapa[0])
   }
 
   guardarPrediccion(partido: Partido): void {
-    const prediccion = this.predicciones[partido.Id];
+    const prediccion = this.predicciones[partido.id];
     if (prediccion) {
       const nuevaPrediccion: predicciones = {
         Cedula: this.alumno.cedula,
-        Equipo_E1: partido.Equipo_E1,
-        Equipo_E2: partido.Equipo_E2,
-        Fecha_partido: partido.Fecha,
+        Equipo_E1: partido.equipo_E1,
+        Equipo_E2: partido.equipo_E2,
+        Fecha_partido: partido.fecha,
         Prediccion_E1: prediccion.prediccionE1,
         Prediccion_E2: prediccion.prediccionE2,
         Puntaje: this.alumno.puntajeTotal
@@ -51,11 +52,15 @@ export class PrediccionesComponent implements OnInit {
   private agruparPartidosPorEtapa(partidos: Partido[]): { etapa: Etapa, partidos: Partido[] }[] {
     const partidosAgrupados: { etapa: Etapa, partidos: Partido[] }[] = [];
     partidos.forEach(partido => {
-      const index = partidosAgrupados.findIndex(item => item.etapa === partido.Etapa);
+      console.log(partido);
+      console.log("etapa: ")
+      // @ts-ignore
+      console.log(partido.etapa);
+      const index = partidosAgrupados.findIndex(item => item.etapa === partido.etapa);
       if (index !== -1) {
         partidosAgrupados[index].partidos.push(partido);
       } else {
-        partidosAgrupados.push({ etapa: partido.Etapa, partidos: [partido] });
+        partidosAgrupados.push({ etapa: partido.etapa, partidos: [partido] });
       }
     });
 

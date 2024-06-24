@@ -1,25 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Etapa } from '../interfaces/etapa';
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class EtapaService {
-  private etapas: Etapa[] = [
-    { Id: 1, nombre: 'Fase de Grupos' },
-    { Id: 2, nombre: 'Cuartos de Final' },
-    { Id: 3, nombre: 'Semifinal' },
-    { Id: 4, nombre: 'Final' }
-  ];
+  private etapas: Etapa[] = [];
 
-  constructor() { }
+  constructor(
+      private http: HttpClient
+  ) { }
 
-  obtenerEtapas(): Etapa[] {
+  async obtenerEtapas(): Promise<Etapa[]> {
+    this.etapas = (await this.http.get<Etapa[]>('http://localhost:8080/etapa').toPromise())!;
     return this.etapas;
   }
 
+  async obtenerEtapaPorId(id: number) : Promise<Etapa> {
+    return (await this.http.get<Etapa>('http://localhost:8080/etapa/' + id).toPromise())!;
+  }
+
   obtenerNombreEtapa(Id: number): string {
-    const etapa = this.etapas.find(etapa => etapa.Id === Id);
+    const etapa = this.etapas.find(etapa => etapa.id === Id);
     return etapa ? etapa.nombre : 'Etapa Desconocida';
   }
 }

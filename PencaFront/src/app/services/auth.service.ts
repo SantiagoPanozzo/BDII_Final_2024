@@ -16,9 +16,14 @@ export class AuthService {
   private adminCredentials = { cedula: 999, contrasena: 'admin' };
   private usuarioAutenticado: Alumno | null = null;
   private token: string | null = null;
+  private esAdmin: boolean = false;
 
   public isLoggedIn() {
-    return this.usuarioAutenticado != null;
+    return this.token != null;
+  }
+
+  public isAdmin() {
+    return this.esAdmin;
   }
 
   constructor(
@@ -40,25 +45,11 @@ export class AuthService {
     this.token = response.token.result;
     localStorage.setItem('userToken', JSON.stringify(this.token));
     // @ts-ignore
-    let esAdmin = jwtDecode(this.token).role !== "alumno";
+    this.esAdmin = jwtDecode(this.token).role !== "alumno";
     // @ts-ignore
-    if(!esAdmin) console.log("no es admin!!!!!");
-    return { esAdmin: esAdmin, usuario: null };
+    if(!this.esAdmin) console.log("no es admin!!!!!");
+    return { esAdmin: this.esAdmin, usuario: null };
   }
-
-    /*if (cedula === this.adminCredentials.cedula && contrasena === this.adminCredentials.contrasena) {
-      return { esAdmin: true, usuario: this.administradorService.obtenerDatosAdmin() };
-    } else {
-      const usuario = this.alumnoService.obtenerUsuarioPorCedulaYContrasena(cedula, contrasena);
-      if (usuario) {
-        this.usuarioAutenticado = usuario;
-        localStorage.setItem('user', JSON.stringify(usuario)); // Save user data
-        return { esAdmin: false, usuario };
-      } else {
-        return null;
-      }
-    }*/
-
 
  
   obtenerUsuarioAutenticado(): Alumno {

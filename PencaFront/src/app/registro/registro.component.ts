@@ -37,7 +37,7 @@ export class RegistroComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.equipos = this.equipoService.obtenerEquipos();
+    this.equipos = await this.equipoService.obtenerEquipos();
     this.carreras = await this.carreraService.obtenerCarreras();
   }
 

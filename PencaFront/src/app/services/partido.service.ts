@@ -1,56 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Partido } from '../interfaces/partidoInterface';
+import { Partido } from '../interfaces/partido';
 import { EquipoService } from './equiposervice.service';
+import {Equipo} from "../interfaces/equipo";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PartidoService {
-   partidos: Partido[] = [
-    
-    {
-    Id: 1,
-    Fecha: new Date('2024-06-7'),
-	  Equipo_E1:'arg',
-	  Equipo_E2 : 'bra',
-	  Resultado_E1: null,
-	  Resultado_E2 : null,
-	  Etapa : 1,
-    Hora: '18:00'
-     
-    },
-    {
-    Id: 2,
-    Fecha: new Date('2023-06-9'),
-	  Equipo_E1:'arg',
-	  Equipo_E2 : 'bra',
-	  Resultado_E1: null,
-	  Resultado_E2 : null,
-	  Etapa : 2,
-    Hora: '17:00'
-    },
-    {
-      Id: 3,
-      Fecha: new Date('2024-07-7'),
-      Equipo_E1:'arg',
-      Equipo_E2 : 'bra',
-      Resultado_E1: null,
-      Resultado_E2 : null,
-      Etapa : 1,
-      Hora: '18:00'
-       
-      }
-  ];
+   partidos: Partido[] = [];
   
 
   constructor(private equipoService: EquipoService) { }
 
   obtenerPartidos(): Partido[] {
-    return this.partidos.map(partido => ({
-      ...partido,
-      Equipo_E1: this.equipoService.obtenerNombreEquipo(partido.Equipo_E1), 
-      Equipo_E2: this.equipoService.obtenerNombreEquipo(partido.Equipo_E2)  
-    }));
+    return this.partidos;
   }
 
   actualizarResultado(id: number, resultado_E1: number, resultado_E2: number): void {

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { PartidoService } from 'src/app/services/partido.service';
-import { Partido } from 'src/app/interfaces/partidoInterface';
+import { Partido } from 'src/app/interfaces/partido';
 import { PrediccionesService } from 'src/app/services/predicciones.service';
 import { predicciones } from 'src/app/interfaces/predicciones';
 import { AuthService } from 'src/app/services/auth.service';
+import {Etapa} from "../../interfaces/etapa";
 
 @Component({
   selector: 'app-predicciones',
@@ -14,7 +15,7 @@ export class PrediccionesComponent implements OnInit {
   partidos: Partido[] = [];
   predicciones: { [key: number]: { prediccionE1: number, prediccionE2: number } } = {};
   alumno: any;
-  partidosPorEtapa: { etapa: number, partidos: Partido[] }[] = [];
+  partidosPorEtapa: { etapa: Etapa, partidos: Partido[] }[] = [];
 
   constructor(
     private partidoService: PartidoService,
@@ -47,8 +48,8 @@ export class PrediccionesComponent implements OnInit {
       alert('Predicción guardada con éxito!');
     }
   }
-  private agruparPartidosPorEtapa(partidos: Partido[]): { etapa: number, partidos: Partido[] }[] {
-    const partidosAgrupados: { etapa: number, partidos: Partido[] }[] = [];
+  private agruparPartidosPorEtapa(partidos: Partido[]): { etapa: Etapa, partidos: Partido[] }[] {
+    const partidosAgrupados: { etapa: Etapa, partidos: Partido[] }[] = [];
     partidos.forEach(partido => {
       const index = partidosAgrupados.findIndex(item => item.etapa === partido.Etapa);
       if (index !== -1) {
@@ -59,5 +60,5 @@ export class PrediccionesComponent implements OnInit {
     });
 
     return partidosAgrupados;
-}
+  }
 }

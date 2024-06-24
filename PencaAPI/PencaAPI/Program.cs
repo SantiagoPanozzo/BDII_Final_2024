@@ -29,7 +29,7 @@ public static class Program
 
         builder.Services.AddCors();
 
-        
+
         builder.Services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -62,7 +62,7 @@ public static class Program
         builder.Services.AddSwaggerGen();
         builder.Services.AddTransient<IAuthService, AuthService>();
 
-        
+
 
         // Buildear la app
         var app = builder.Build();
@@ -74,10 +74,10 @@ public static class Program
     
     public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-
+        // swagger
             app.UseSwagger();
             app.UseSwaggerUI();
-        
+
 
         // cosas de .NET, de la documentación 
         app.UseHttpsRedirection();
@@ -87,7 +87,7 @@ public static class Program
             .AllowAnyOrigin()
             .AllowAnyMethod()
             .AllowAnyHeader());
-        
+
         // Habilitar los endpoints y los controllers para cada uno
         app.UseEndpoints(endpoints =>
         {

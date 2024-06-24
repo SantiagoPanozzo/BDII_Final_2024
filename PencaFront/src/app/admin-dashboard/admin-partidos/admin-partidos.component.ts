@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PartidoService } from 'src/app/services/partido.service';
-import { Partido } from 'src/app/interfaces/partidoInterface';
+import { Partido } from 'src/app/interfaces/partido';
 
 @Component({
   selector: 'app-admin-partidos',

@@ -10,7 +10,7 @@ namespace PencaAPI.Controllers
     /// <summary>
     /// Controlador para la autenticación de usuarios.
     /// </summary>
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {

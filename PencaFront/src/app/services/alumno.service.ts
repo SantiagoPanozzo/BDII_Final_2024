@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Alumno } from '../interfaces/alumnoInterface';
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -36,10 +37,12 @@ export class AlumnoService {
 
   private alumnoAutenticado: Alumno | null = null;
 
-  constructor() { }
+  constructor(
+      private http: HttpClient
+  ) { }
 
   registrarUsuario(alumno: Alumno): void {
-    this.alumnos.push(alumno);
+    this.http.post('http://localhost:8080/auth/register', alumno).subscribe( x => console.log(x));
   }
 
   obtenerUsuarioPorCedulaYContrasena(cedula: number, contrasena: string): Alumno | null {

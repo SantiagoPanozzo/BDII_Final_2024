@@ -8,8 +8,8 @@ import { Equipo } from '../interfaces/equipo';
 })
 export class EquipoService {
   private equipos: Equipo[] = [
-    { abreviatura: 'ARG', nombre: 'Argentina' },
-    { abreviatura: 'BRA', nombre: 'Brasil' },
+    { abreviatura: 'arg', nombre: 'Argentina' },
+    { abreviatura: 'bra', nombre: 'Brasil' },
    
   ];
 

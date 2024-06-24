@@ -216,9 +216,9 @@ public class PartidoService(PgDatabaseConnection dbConnection)
                         Resultado_E1 = @r1,
                         Resultado_E2 = @r2,
                         Etapa = @e
-                        Where Fecha = @f 
-                        and Equipo_E1 = @e1
-                        and Equipo_E2 = @e2
+                        Where Fecha = @fw
+                        and Equipo_E1 = @e1w
+                        and Equipo_E2 = @e2w
                         RETURNING *
                         )
                         Select 

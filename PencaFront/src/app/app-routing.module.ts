@@ -27,7 +27,7 @@ const routes: Routes = [
             { path: 'admin-partidos/:abreviatura_1/:abreviatura_2/:fecha', component: AdminPartidosComponent, pathMatch: 'full' },
             { path: 'lista-partidos', component: ListaPartidosComponent, pathMatch: 'full' },
             { path: 'alumnos', component: ListaAlumnosComponent, pathMatch: 'full' },
-            { path: 'registrar-partido', component: RegistrarPartidoComponent, pathMatch: 'full'}
+            { path: 'registrar-partido', component: RegistrarPartidoComponent, pathMatch: 'full'},
         ],
     },
     {

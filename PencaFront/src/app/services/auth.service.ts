@@ -5,6 +5,9 @@ import { Router } from '@angular/router';
 import { Alumno } from '../interfaces/alumnoInterface';
 import { CarreraService } from './carrera.service';
 import { Carrera } from '../interfaces/carrera';
+import {HttpClient} from "@angular/common/http";
+import {jwtDecode} from "jwt-decode";
+import {UserLogin} from "../interfaces/UserLogin";
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +15,8 @@ import { Carrera } from '../interfaces/carrera';
 export class AuthService {
   private adminCredentials = { cedula: 999, contrasena: 'admin' };
   private usuarioAutenticado: Alumno | null = null;
+  private token: string | null = null;
+
   public isLoggedIn() {
     return this.usuarioAutenticado != null;
   }
@@ -20,10 +25,26 @@ export class AuthService {
     private alumnoService: AlumnoService, 
     private administradorService: AdministradorService, 
     private carreraService: CarreraService,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) {}
 
   autenticarUsuario(cedula: number, contrasena: string): { esAdmin: boolean, usuario?: any } | null {
+
+    const userLogin: UserLogin = { Cedula: cedula, Contrasena: contrasena };
+    console.log("Loggin in as:")
+    console.log(userLogin)
+    this.http.post('http://localhost:8080/api/auth/login', userLogin)
+        .subscribe(
+            (response: any) => {
+              this.token = response.data.token;
+              localStorage.setItem('userToken', JSON.stringify(this.token));
+              // @ts-ignore
+              let esAdmin = jwtDecode(response.data.token).unique_name == "juan";
+              if(esAdmin) console.log("JUAN!!!!!");
+            }
+        );
+
     if (cedula === this.adminCredentials.cedula && contrasena === this.adminCredentials.contrasena) {
       return { esAdmin: true, usuario: this.administradorService.obtenerDatosAdmin() };
     } else {
@@ -38,6 +59,7 @@ export class AuthService {
     }
   }
 
+ 
   obtenerUsuarioAutenticado(): Alumno {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {

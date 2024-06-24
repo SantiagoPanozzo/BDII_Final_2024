@@ -27,6 +27,9 @@ public static class Program
         // Configuración de servicios
         var key = Encoding.ASCII.GetBytes("your_secret_key");
 
+        builder.Services.AddCors();
+
+
         builder.Services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -79,6 +82,11 @@ public static class Program
         // cosas de .NET, de la documentación 
         app.UseHttpsRedirection();
         app.UseRouting();
+
+        app.UseCors(options => options
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
 
         // Habilitar los endpoints y los controllers para cada uno
         app.UseEndpoints(endpoints =>

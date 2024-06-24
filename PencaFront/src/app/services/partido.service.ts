@@ -7,7 +7,45 @@ import {Equipo} from "../interfaces/equipo";
   providedIn: 'root'
 })
 export class PartidoService {
+<<<<<<< HEAD
    partidos: Partido[] = [];
+=======
+   partidos: Partido[] = [
+    
+    {
+    Id: 1,
+    Fecha: new Date('2024-06-7'),
+	  Equipo_E1:'arg',
+	  Equipo_E2 : 'bra',
+	  Resultado_E1: null,
+	  Resultado_E2 : null,
+	  Etapa : 1,
+    Hora: '18:00'
+     
+    },
+    {
+    Id: 2,
+    Fecha: new Date('2023-06-9'),
+	  Equipo_E1:'arg',
+	  Equipo_E2 : 'bra',
+	  Resultado_E1: null,
+	  Resultado_E2 : null,
+	  Etapa : 2,
+    Hora: '17:00'
+    },
+    {
+      Id: 3,
+      Fecha: new Date('2024-07-7'),
+      Equipo_E1:'arg',
+      Equipo_E2 : 'bra',
+      Resultado_E1: null,
+      Resultado_E2 : null,
+      Etapa : 1,
+      Hora: '18:00'
+       
+      }
+  ];
+>>>>>>> 1d7c430 (Register funciona)
   
 
   constructor(private equipoService: EquipoService) { }

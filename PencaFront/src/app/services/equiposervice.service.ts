@@ -8,7 +8,15 @@ import {HttpClient} from "@angular/common/http";
   providedIn: 'root'
 })
 export class EquipoService {
+<<<<<<< HEAD
   private equipos: Equipo[] = [];
+=======
+  private equipos: Equipo[] = [
+    { abreviatura: 'arg', nombre: 'Argentina' },
+    { abreviatura: 'bra', nombre: 'Brasil' },
+   
+  ];
+>>>>>>> 1d7c430 (Register funciona)
 
   constructor(
       private http: HttpClient

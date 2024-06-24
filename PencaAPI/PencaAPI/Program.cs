@@ -67,9 +67,12 @@ public static class Program
         builder.Services.AddTransient<IAuthService, AuthService>();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
         var DEJAMEENTRAR = "DEJAMEENTRAR";
+=======
+>>>>>>> 1d7c430 (Register funciona)
         
 >>>>>>> ed39fa5 (ALGO DE ESTO ARREGLO EL CORS)
 
@@ -87,9 +90,12 @@ public static class Program
             app.UseSwagger();
             app.UseSwaggerUI();
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
         }
+=======
+>>>>>>> 1d7c430 (Register funciona)
         
 >>>>>>> ed39fa5 (ALGO DE ESTO ARREGLO EL CORS)
 

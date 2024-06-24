@@ -16,7 +16,7 @@ namespace PencaAPI.Models;
 /// <param name="subCampeon">Subcampeón elegido por el alumno</param>
 public class Alumno (
     string nombre, string apellido, int cedula, string contrasena, DateTime fechaNacimiento, int anioIngreso, int semestreIngreso,
-    int puntajeTotal, string campeon, string subCampeon)
+    int puntajeTotal, Equipo campeon, Equipo subCampeon, Carrera carreraPrincipal )
     : IUsuario
 {
     public string Nombre { get; set; } = nombre;
@@ -27,16 +27,15 @@ public class Alumno (
     public int AnioIngreso { get; set; } = anioIngreso;
     public int SemestreIngreso { get; set; } = semestreIngreso;
     public int PuntajeTotal { get; set; } = puntajeTotal;
-    public string Campeon { get; set; } = campeon;
-    public string SubCampeon { get; set; } = subCampeon;
+    public Equipo Campeon { get; set; } = campeon;
+    public Equipo SubCampeon { get; set; } = subCampeon;
+
+    public Carrera CarreraPrincipal { get; set; } = carreraPrincipal;
 
     public override string ToString()
     {
-        return $"Nombre: {Nombre}, Apellido: {Apellido}, Cédula: {Cedula}, Fecha de Nacimiento: {FechaNacimiento}, Año de ingreso: {AnioIngreso}, Semestre de ingreso: {SemestreIngreso}, Puntaje total: {PuntajeTotal}, Campeón: {Campeon}, Subcampeón: {SubCampeon}";
+        return $"Nombre: {Nombre}, Apellido: {Apellido}, Cédula: {Cedula}, Fecha de Nacimiento: {FechaNacimiento}, Año de ingreso: {AnioIngreso}, Semestre de ingreso: {SemestreIngreso}, Puntaje total: {PuntajeTotal}, Campeón: {Campeon.Pais}, Subcampeón: {SubCampeon.Pais}";
     }
 
-    public static explicit operator Alumno(UserRegisterDto v)
-    {
-        throw new NotImplementedException();
-    }
+
 }

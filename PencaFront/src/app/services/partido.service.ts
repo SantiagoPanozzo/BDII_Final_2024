@@ -41,6 +41,8 @@ export class PartidoService {
 
   async modificarPartido(abreviatura_1: string, abreviatura_2: string, fecha: Date, partido: Partido){
     const ruta = `http://localhost:8080/partido/${abreviatura_1}/${abreviatura_2}/${fecha}`;
+    console.log("PUT a: " + ruta);
+    console.log(partido);
     await this.http.put(ruta, partido).toPromise();
   }
 

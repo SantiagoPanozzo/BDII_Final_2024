@@ -19,8 +19,10 @@ export class ListaPartidosComponent implements OnInit {
     this.partidosPorEtapa = this.agruparPartidosPorEtapa(partidos);
   }
 
-  editarPartido(partidoId: number): void {
-    this.router.navigate(['/admin-dashboard/admin-partidos', partidoId]);
+  editarPartido(fecha: Date, abreviatura_1: string, abreviatura_2: string): void {
+    const ruta = `/admin-dashboard/admin-partidos/${abreviatura_1}/${abreviatura_2}/${fecha}`;
+    console.log("Editando partido " + ruta)
+    this.router.navigate([ruta]);
   }
 
   private agruparPartidosPorEtapa(partidos: Partido[]): { etapa: Etapa, partidos: Partido[] }[] {

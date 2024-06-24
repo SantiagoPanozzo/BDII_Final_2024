@@ -66,10 +66,10 @@ namespace PencaAPI.Services
                 var row = result[0];
           
                 var admin = new UsuarioDTO(
-                    nombre: row["Nombre"].ToString(),
-                    apellido: row["Apellido"].ToString(),
-                    cedula: Convert.ToInt32(row["Cedula"]),
-                    fechaNacimiento: Convert.ToDateTime(row["Fecha_Nacimiento"]), 
+                    nombre: row["nombre"].ToString(),
+                    apellido: row["apellido"].ToString(),
+                    cedula: Convert.ToInt32(row["cedula"]),
+                    fechaNacimiento: Convert.ToDateTime(row["fecha_nacimiento"]), 
                     rol: "admnin"        
                 );
                 string contrasenaBase = (string)row["contrasena"];

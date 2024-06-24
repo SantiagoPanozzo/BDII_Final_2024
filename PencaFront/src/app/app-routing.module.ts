@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'student-dashboard/datos', component: DatosComponent },
   { path: 'student-dashboard/predicciones', component: PrediccionesComponent },
   { path: 'student-dashboard/puntaje', component: PuntajeComponent },
-  { path: 'admin-dashboard/admin-partidos/:id', component: AdminPartidosComponent },
+  { path: 'admin-dashboard/admin-partidos/:abreviatura_1/:abreviatura_2/:fecha', component: AdminPartidosComponent },
   { path: '', redirectTo: '/admin-dashboard/lista-partidos', pathMatch: 'full' },
   { path: 'registrar-partido', component: RegistrarPartidoComponent }
 

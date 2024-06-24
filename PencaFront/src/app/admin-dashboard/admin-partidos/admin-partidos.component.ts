@@ -18,20 +18,22 @@ export class AdminPartidosComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
-    const partidoId = +this.route.snapshot.params['id']; 
-    if (!isNaN(partidoId)) { 
-      this.partido = this.partidoService.obtenerPartidoPorId(partidoId);
-      console.log('Partido obtenido:', this.partido);
-    } else {
-      console.error('ID de partido no válido:', partidoId);
-    }
+  async ngOnInit() {
+    const fecha = this.route.snapshot.params['fecha'];
+    const abreviatura_1 = this.route.snapshot.params['abreviatura_1'];
+    const abreviatura_2 = this.route.snapshot.params['abreviatura_2'];
+    this.partido = await this.partidoService.obtenerPartidoPorId(fecha, abreviatura_1, abreviatura_2);
+    if(this.partido.resultado_E1 == null || this.partido.resultado_E1 < 0) this.partido.resultado_E1 = 0;
+    if(this.partido.resultado_E2 == null || this.partido.resultado_E2 < 0) this.partido.resultado_E2 = 0;
+    console.log('Partido obtenido:', this.partido);
   }
 
-  guardarResultado(): void {
+  async guardarResultado() {
     if (this.partido && this.partido.resultado_E1 !== null && this.partido.resultado_E2 !== null) {
-      this.partidoService.actualizarResultado(this.partido.id, this.partido.resultado_E1, this.partido.resultado_E2);
-      this.router.navigate(['/admin-dashboard/lista-partidos']);
+      this.partidoService.actualizarResultado(this.partido.equipo_E1.abreviatura, this.partido.equipo_E2.abreviatura, this.partido.fecha, this.partido.resultado_E1, this.partido.resultado_E2)
+          .then(async () => {
+            await this.router.navigate(['/admin-dashboard/partidos'])
+          });
     } else {
       console.error('Resultados no válidos.');
     }

@@ -205,7 +205,7 @@ public class PartidoService(PgDatabaseConnection dbConnection)
     public async Task<Partido> UpdateAsync(object id, Partido entity)
     {
         await this.GetByIdAsync(id);
-        //if (partidoExistente == null) throw new ArgumentException("No existe");
+        
         PartidoDTO partidoDto = (PartidoDTO)id;
         var sqlQuery = @"
                         WITH updated as (

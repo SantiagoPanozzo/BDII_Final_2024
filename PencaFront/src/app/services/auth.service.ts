@@ -51,20 +51,6 @@ export class AuthService {
     return { esAdmin: this.esAdmin, usuario: null };
   }
 
-    /*if (cedula === this.adminCredentials.cedula && contrasena === this.adminCredentials.contrasena) {
-      return { esAdmin: true, usuario: this.administradorService.obtenerDatosAdmin() };
-    } else {
-      const usuario = this.alumnoService.obtenerUsuarioPorCedulaYContrasena(cedula, contrasena);
-      if (usuario) {
-        this.usuarioAutenticado = usuario;
-        localStorage.setItem('user', JSON.stringify(usuario)); // Save user data
-        return { esAdmin: false, usuario };
-      } else {
-        return null;
-      }
-    }*/
-
-
  
   obtenerUsuarioAutenticado(): Alumno {
     const storedUser = localStorage.getItem('user');

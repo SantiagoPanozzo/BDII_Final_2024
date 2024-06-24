@@ -7,6 +7,7 @@
           <th>Equipo A</th>
           <th>Equipo B</th>
           <th>Fecha</th>
+          <th>Etapa</th>
           <th>Resultado E1</th>
           <th>Resultado E2</th>
           <th>Acción</th>
@@ -21,6 +22,9 @@
             <option *ngFor="let equipo of equipos" [value]="equipo.abreviatura">{{ equipo.pais }}</option>
           </select></td>
           <td><input type="datetime-local" [(ngModel)]="partido.fecha"></td>
+          <td><select id="etapa" name="etapa" [(ngModel)]="partido.etapa.id" required>
+            <option *ngFor="let etapa of etapas" [value]="etapa.id">{{ etapa.nombre }}</option>
+          </select></td>
           <td><input type="number" [(ngModel)]="partido.resultado_E1"></td>
           <td><input type="number" [(ngModel)]="partido.resultado_E2"></td>
           <td>

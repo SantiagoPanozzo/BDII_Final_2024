@@ -4,6 +4,8 @@ import { PartidoService } from 'src/app/services/partido.service';
 import { Partido } from 'src/app/interfaces/partido';
 import {EquipoService} from "../../services/equiposervice.service";
 import {Equipo} from "../../interfaces/equipo";
+import {EtapaService} from "../../services/etapa.service";
+import {Etapa} from "../../interfaces/etapa";
 
 @Component({
   selector: 'app-admin-partidos',
@@ -14,6 +16,7 @@ export class AdminPartidosComponent implements OnInit {
   partido: Partido | undefined;
   today: Date = new Date();
   equipos: Equipo[] = [];
+  etapas: Etapa[] = [];
   abreviatura_1: string = "";
   abreviatura_2: string = "";
   fecha: Date = {} as Date;
@@ -22,7 +25,8 @@ export class AdminPartidosComponent implements OnInit {
     private partidoService: PartidoService,
     private route: ActivatedRoute,
     private router: Router,
-    private equipoService: EquipoService
+    private equipoService: EquipoService,
+    private etapaService: EtapaService
   ) {}
 
   async ngOnInit() {
@@ -33,14 +37,20 @@ export class AdminPartidosComponent implements OnInit {
     if(this.partido.resultado_E1 == null || this.partido.resultado_E1 < 0) this.partido.resultado_E1 = 0;
     if(this.partido.resultado_E2 == null || this.partido.resultado_E2 < 0) this.partido.resultado_E2 = 0;
     this.equipos = await this.equipoService.obtenerEquipos();
+    this.etapas = await this.etapaService.obtenerEtapas();
     console.log('Partido obtenido:', this.partido);
   }
 
   async guardarResultado() {
     if (this.partido && this.abreviatura_1 != "" && this.abreviatura_2 != this.abreviatura_1 && this.abreviatura_2 != "") {
+      this.partido.etapa = await this.etapaService.obtenerEtapaPorId(this.partido.etapa.id);
+      this.partido.equipo_E1 = await this.equipoService.obtenerEquipoPorAbreviatura(this.partido.equipo_E1.abreviatura);
+      this.partido.equipo_E2 = await this.equipoService.obtenerEquipoPorAbreviatura(this.partido.equipo_E1.abreviatura);
       await this.partidoService.modificarPartido(this.abreviatura_1, this.abreviatura_2, this.fecha, this.partido);
+      await this.router.navigate(['/admin-dashboard/partidos'])
+    } else {
+      alert("Error")
     }
-    this.router.navigate(['/admin-dashboard/partidos'])
   }
 }
 

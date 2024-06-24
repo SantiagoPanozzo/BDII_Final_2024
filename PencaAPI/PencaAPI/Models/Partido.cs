@@ -17,15 +17,6 @@ public class Partido
     public int? Resultado_E2 { get; set; } 
     public Etapa Etapa{ get; set; } 
 
-    /*public Partido (DateTime fecha, Equipo equipoE1, Equipo equipoE2, Etapa etapa)
-    {
-        Fecha  = fecha;
-        Equipo_E1 = equipoE1;
-        Equipo_E2 = equipoE2;
-        Resultado_E1 = null;
-        Resultado_E2 = null;
-        Etapa = etapa;
-    }*/
     public Partido (DateTime fecha, Equipo equipo_E1, Equipo equipo_E2, int? resultado_E1, int? resultado_E2, Etapa etapa)
     {
         Fecha  = fecha;

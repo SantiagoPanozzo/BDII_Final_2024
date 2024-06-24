@@ -7,7 +7,6 @@
           <th>Equipo A</th>
           <th>Equipo B</th>
           <th>Fecha</th>
-          <th></th>
           <th>Resultado E1</th>
           <th>Resultado E2</th>
           <th>Acción</th>
@@ -15,8 +14,8 @@
       </thead>
       <tbody>
         <tr>
-          <td>{{ partido.equipo_E1 }}</td>
-          <td>{{ partido.equipo_E2 }}</td>
+          <td>{{ partido.equipo_E1.pais }}</td>
+          <td>{{ partido.equipo_E2.pais }}</td>
           <td>{{ partido.fecha | date }}</td>
           <td><input type="number" [(ngModel)]="partido.resultado_E1"></td>
           <td><input type="number" [(ngModel)]="partido.resultado_E2"></td>

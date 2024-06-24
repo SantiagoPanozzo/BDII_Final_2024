@@ -50,8 +50,11 @@ export class PartidoService {
 >>>>>>> 1d7c430 (Register funciona)
 =======
   partidos: Partido[] = [];
+<<<<<<< HEAD
 >>>>>>> 3054a36 (Lista de partidos en predicciones anda)
   
+=======
+>>>>>>> 308e0aa (Partido cambiar resultado)
 
   constructor(
       private equipoService: EquipoService,
@@ -63,16 +66,19 @@ export class PartidoService {
     return this.partidos;
   }
 
-  actualizarResultado(id: number, resultado_E1: number, resultado_E2: number): void {
-    const partido = this.partidos.find(p => p.id === id);
-    if (partido) {
-      partido.resultado_E1 = resultado_E1;
-      partido.resultado_E2 = resultado_E2;
-    }
+  async actualizarResultado(abreviatura_1: string, abreviatura_2: string, fecha: Date, resultado_E1: number, resultado_E2: number) {
+    const url = `http://localhost:8080/partido/${abreviatura_1}/${abreviatura_2}/${fecha}`;
+    const x = (await (this.http.get<Partido>(url)).toPromise())!;
+    x.resultado_E1 = resultado_E1;
+    x.resultado_E2 = resultado_E2;
+    console.log("Put to: " + url);
+    console.log(x);
+    await this.http.put(url, x).toPromise();
   }
-  obtenerPartidoPorId(id: number): Partido | undefined {
-    return this.partidos.find(partido => partido.id === id)
+  async obtenerPartidoPorId(fecha: Date, abreviatura_1: string, abreviatura_2: string): Promise<Partido> {
+    return (await this.http.get<Partido>(`http://localhost:8080/partido/${abreviatura_1}/${abreviatura_2}/${fecha}`).toPromise())!;
   }
+
   registrarPartido(nuevoPartido: Partido): void {
     const nuevoId = this.partidos.length > 0 ? this.partidos[this.partidos.length - 1].id + 1 : 1;
     nuevoPartido.id = nuevoId;

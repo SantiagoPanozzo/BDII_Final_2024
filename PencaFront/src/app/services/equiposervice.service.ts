@@ -26,6 +26,11 @@ export class EquipoService {
     this.equipos = (await this.http.get<Equipo[]>('http://localhost:8080/equipo').toPromise())!;
     return this.equipos;
   }
+
+  async obtenerEquipoPorAbreviatura(abreviatura: string) : Promise<Equipo> {
+    return (await this.http.get<Equipo>('http://localhost:8080/equipo/' + abreviatura).toPromise())!;
+  }
+
   async obtenerNombreEquipo(abreviatura: string): Promise<string> {
     const equipo = (await this.http.get<Equipo>('http://localhost:8080/equipo/' + abreviatura).toPromise())!;
     return equipo ? equipo.pais : 'Equipo Desconocido';

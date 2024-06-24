@@ -13,6 +13,7 @@ import { AdminPartidosComponent } from './admin-dashboard/admin-partidos/admin-p
 import { RegistrarPartidoComponent } from './admin-dashboard/registrar-partido/registrar-partido.component';
 import {AdminGuard} from "./guards/admin.guard";
 import {StudentGuard} from "./guards/student.guard";
+import {EditarPartidoComponent} from "./admin-dashboard/editar-partido/editar-partido.component";
 
 const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -27,7 +28,8 @@ const routes: Routes = [
             { path: 'admin-partidos/:abreviatura_1/:abreviatura_2/:fecha', component: AdminPartidosComponent, pathMatch: 'full' },
             { path: 'lista-partidos', component: ListaPartidosComponent, pathMatch: 'full' },
             { path: 'alumnos', component: ListaAlumnosComponent, pathMatch: 'full' },
-            { path: 'registrar-partido', component: RegistrarPartidoComponent, pathMatch: 'full'}
+            { path: 'registrar-partido', component: RegistrarPartidoComponent, pathMatch: 'full'},
+            { path: 'partidos/:abreviatura_1/:abreviatura_2/:fecha/editar', component: EditarPartidoComponent, pathMatch: 'full'}
         ],
     },
     {

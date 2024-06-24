@@ -39,6 +39,11 @@ export class PartidoService {
     this.http.post('http://localhost:8080/partido', nuevoPartido).subscribe();
   }
 
+  async modificarPartido(abreviatura_1: string, abreviatura_2: string, fecha: Date, partido: Partido){
+    const ruta = `http://localhost:8080/partido/${abreviatura_1}/${abreviatura_2}/${fecha}`;
+    await this.http.put(ruta, partido).toPromise();
+  }
+
 
 }
  

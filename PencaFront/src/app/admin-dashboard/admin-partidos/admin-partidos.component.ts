@@ -29,8 +29,8 @@ export class AdminPartidosComponent implements OnInit {
   }
 
   guardarResultado(): void {
-    if (this.partido && this.partido.Resultado_E1 !== null && this.partido.Resultado_E2 !== null) {
-      this.partidoService.actualizarResultado(this.partido.Id, this.partido.Resultado_E1, this.partido.Resultado_E2);
+    if (this.partido && this.partido.resultado_E1 !== null && this.partido.resultado_E2 !== null) {
+      this.partidoService.actualizarResultado(this.partido.id, this.partido.resultado_E1, this.partido.resultado_E2);
       this.router.navigate(['/admin-dashboard/lista-partidos']);
     } else {
       console.error('Resultados no válidos.');

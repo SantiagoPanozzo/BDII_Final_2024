@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import { Partido } from '../interfaces/partido';
 import { EquipoService } from './equiposervice.service';
 import {Equipo} from "../interfaces/equipo";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PartidoService {
+<<<<<<< HEAD
 <<<<<<< HEAD
    partidos: Partido[] = [];
 =======
@@ -46,27 +48,34 @@ export class PartidoService {
       }
   ];
 >>>>>>> 1d7c430 (Register funciona)
+=======
+  partidos: Partido[] = [];
+>>>>>>> 3054a36 (Lista de partidos en predicciones anda)
   
 
-  constructor(private equipoService: EquipoService) { }
+  constructor(
+      private equipoService: EquipoService,
+      private http: HttpClient
+  ) { }
 
-  obtenerPartidos(): Partido[] {
+  async obtenerPartidos(): Promise<Partido[]> {
+    this.partidos = (await this.http.get<Partido[]>('http://localhost:8080/partido').toPromise())!;
     return this.partidos;
   }
 
   actualizarResultado(id: number, resultado_E1: number, resultado_E2: number): void {
-    const partido = this.partidos.find(p => p.Id === id);
+    const partido = this.partidos.find(p => p.id === id);
     if (partido) {
-      partido.Resultado_E1 = resultado_E1;
-      partido.Resultado_E2 = resultado_E2;
+      partido.resultado_E1 = resultado_E1;
+      partido.resultado_E2 = resultado_E2;
     }
   }
   obtenerPartidoPorId(id: number): Partido | undefined {
-    return this.partidos.find(partido => partido.Id === id)  
+    return this.partidos.find(partido => partido.id === id)
   }
   registrarPartido(nuevoPartido: Partido): void {
-    const nuevoId = this.partidos.length > 0 ? this.partidos[this.partidos.length - 1].Id + 1 : 1;
-    nuevoPartido.Id = nuevoId;
+    const nuevoId = this.partidos.length > 0 ? this.partidos[this.partidos.length - 1].id + 1 : 1;
+    nuevoPartido.id = nuevoId;
     this.partidos.push(nuevoPartido);
 }
 

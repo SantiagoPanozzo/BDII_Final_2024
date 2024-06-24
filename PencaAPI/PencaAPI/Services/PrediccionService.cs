@@ -46,7 +46,7 @@ public class PrediccionService(PgDatabaseConnection dbConnection)
                          join Alumno a
                          on p.cedula = a.cedula
                          join Estudia e
-                         on a.cedula = e.cedula;
+                         on a.cedula = e.cedula
                          join Carrera c
                          on e.id_carrera = c.id
                          join Equipo camp
@@ -154,7 +154,7 @@ public class PrediccionService(PgDatabaseConnection dbConnection)
                          join Alumno a
                          on p.cedula = a.cedula
                          join Estudia e
-                         on a.cedula = e.cedula;
+                         on a.cedula = e.cedula
                          join Carrera c
                          on e.id_carrera = c.id
                          join Equipo camp
@@ -258,7 +258,7 @@ public class PrediccionService(PgDatabaseConnection dbConnection)
         var sqlQuery = @"
                         WITH inserted AS (
                             INSERT INTO Prediccion 
-                            (cedula, Equipo_E1, Equipo_E2, Fecha_partido, Prediccion_E1, Prediccion_E2)
+                            (cedula, Equipo_E1, Equipo_E2, Fecha_partido, Prediccion_E1, Prediccion_E2, Puntaje)
                             VALUES (@cedula, @equipoE1, @equipoE2, @fechaPartido, @prediccionE1, @prediccionE2, 0) 
                             RETURNING *
                         )
@@ -522,7 +522,7 @@ public class PrediccionService(PgDatabaseConnection dbConnection)
         PrediccionDTO prediccionDto = (PrediccionDTO)id;
         var sqlQuery = @"DELETE FROM Prediccion
                         Where cedula = @cedula
-                        and Fecha = @fw
+                        and Fecha_partido = @fw
                         and Equipo_E1 = @e1w
                         and Equipo_E2 = @e2w";
         var result = await _dbConnection.QueryAsync(

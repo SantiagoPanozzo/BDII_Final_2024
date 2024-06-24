@@ -57,6 +57,7 @@ public static class Program
         builder.Services.AddScoped<CarreraService>();
         builder.Services.AddScoped<EquipoService>();
         builder.Services.AddScoped<PartidoService>();
+        builder.Services.AddScoped<PrediccionService>();
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();

@@ -2,25 +2,25 @@
 
 import { Injectable } from '@angular/core';
 import { Equipo } from '../interfaces/equipo';
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class EquipoService {
-  private equipos: Equipo[] = [
-    { abreviatura: 'arg', nombre: 'Argentina' },
-    { abreviatura: 'bra', nombre: 'Brasil' },
-   
-  ];
+  private equipos: Equipo[] = [];
 
-  constructor() { }
+  constructor(
+      private http: HttpClient
+  ) { }
 
-  obtenerEquipos(): Equipo[] {
+  async obtenerEquipos(): Promise<Equipo[]> {
+    this.equipos = (await this.http.get<Equipo[]>('http://localhost:8080/equipo').toPromise())!;
     return this.equipos;
   }
-  obtenerNombreEquipo(abreviatura: string): string {
-    const equipo = this.equipos.find(equipo => equipo.abreviatura === abreviatura);
-    return equipo ? equipo.nombre : 'Equipo Desconocido'; 
+  async obtenerNombreEquipo(abreviatura: string): Promise<string> {
+    const equipo = (await this.http.get<Equipo>('http://localhost:8080/equipo/' + abreviatura).toPromise())!;
+    return equipo ? equipo.pais : 'Equipo Desconocido';
   }
 }
 

@@ -8,7 +8,7 @@
         <th>Equipo A</th>
         <th>Equipo B</th>
         <th>Fecha</th>
-        <th>Hora</th>
+        <th></th>
         <th>Resultado E1</th>
         <th>Resultado E2</th>
         <th>Acción</th>
@@ -19,7 +19,6 @@
         <td>{{ partido.Equipo_E1 }}</td>
         <td>{{ partido.Equipo_E2 }}</td>
         <td>{{ partido.Fecha | date }}</td>
-        <td>{{ partido.Hora }}</td>
         <td>{{ partido.Resultado_E1 }}</td>
         <td>{{ partido.Resultado_E2 }}</td>
         <td><button (click)="editarPartido(partido.Id)">Editar</button></td>

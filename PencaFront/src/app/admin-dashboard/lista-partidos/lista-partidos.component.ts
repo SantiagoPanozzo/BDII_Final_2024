@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PartidoService } from 'src/app/services/partido.service';
-import { Partido } from 'src/app/interfaces/partidoInterface';
+import { Partido } from 'src/app/interfaces/partido';
 import { Router } from '@angular/router';
+import {Etapa} from "../../interfaces/etapa";
 
 @Component({
   selector: 'app-lista-partidos',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./lista-partidos.component.css']
 })
 export class ListaPartidosComponent implements OnInit {
-  partidosPorEtapa: { etapa: number, partidos: Partido[] }[] = [];
+  partidosPorEtapa: { etapa: Etapa, partidos: Partido[] }[] = [];
 
   constructor(private partidoService: PartidoService, private router: Router) {}
 
@@ -22,8 +23,8 @@ export class ListaPartidosComponent implements OnInit {
     this.router.navigate(['/admin-dashboard/admin-partidos', partidoId]);
   }
 
-  private agruparPartidosPorEtapa(partidos: Partido[]): { etapa: number, partidos: Partido[] }[] {
-    const partidosAgrupados: { etapa: number, partidos: Partido[] }[] = [];
+  private agruparPartidosPorEtapa(partidos: Partido[]): { etapa: Etapa, partidos: Partido[] }[] {
+    const partidosAgrupados: { etapa: Etapa, partidos: Partido[] }[] = [];
 
 
     partidos.forEach(partido => {

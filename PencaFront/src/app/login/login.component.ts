@@ -13,8 +13,8 @@ export class LoginComponent {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  login(): void {
-    const resultado = this.authService.autenticarUsuario(this.cedula, this.password);
+  async login(): Promise<void> {
+    const resultado = await this.authService.autenticarUsuario(this.cedula, this.password);
     if (resultado) {
       if (resultado.esAdmin) {
         this.router.navigate(['/admin-dashboard'], { state: { usuario: resultado.usuario } });

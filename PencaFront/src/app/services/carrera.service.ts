@@ -1,25 +1,24 @@
 import { Injectable } from '@angular/core';
 import { Carrera } from '../interfaces/carrera';
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarreraService {
-  private carreras: Carrera[] = [
-    { id: 1, nombre: 'Ingeniería de Sistemas' },
-    { id: 2, nombre: 'Medicina' },
-    { id: 3, nombre: 'Derecho' },
-    { id: 4, nombre: 'Arquitectura' }
-  ];
+  private carreras: Carrera[] = [];
 
-  constructor() { }
+  constructor(
+      private http: HttpClient
+  ) { }
 
-  obtenerCarreras(): Carrera[] {
+  async obtenerCarreras(): Promise<Carrera[]> {
+    this.carreras = (await this.http.get<Carrera[]>('http://localhost:8080/carrera').toPromise())!;
     return this.carreras;
   }
 
-  obtenerNombreCarrera(id: number): string {
-    const carrera = this.carreras.find(carrera => carrera.id === id);
+  async obtenerNombreCarrera(id: number): Promise<string> {
+    let carrera = (await this.http.get<Carrera>('http://localhost:8080/carrera/' + id).toPromise());
     return carrera ? carrera.nombre : 'Carrera Desconocida';
   }
  

@@ -20,15 +20,15 @@ export class DatosComponent implements OnInit {
     private equipoService: EquipoService
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.usuarioAutenticado = this.authService.obtenerUsuarioAutenticado();
-    this.obtenerNombreCarrera(); 
+    await this.obtenerNombreCarrera();
      
   }
 
-  obtenerNombreCarrera(): void {
+  async obtenerNombreCarrera() {
     if (this.usuarioAutenticado) {
-      this.nombreCarrera = this.carreraService.obtenerNombreCarrera(this.usuarioAutenticado.carrera);
+      this.nombreCarrera = await this.carreraService.obtenerNombreCarrera(this.usuarioAutenticado.carrera);
     }
   }
 }

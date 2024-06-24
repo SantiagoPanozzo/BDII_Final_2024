@@ -34,10 +34,10 @@ export class PartidoService {
   }
 
   registrarPartido(nuevoPartido: Partido): void {
-    const nuevoId = this.partidos.length > 0 ? this.partidos[this.partidos.length - 1].id + 1 : 1;
-    nuevoPartido.id = nuevoId;
-    this.partidos.push(nuevoPartido);
-}
+    console.log("POST de:")
+    console.log(nuevoPartido)
+    this.http.post('http://localhost:8080/partido', nuevoPartido).subscribe();
+  }
 
 
 }

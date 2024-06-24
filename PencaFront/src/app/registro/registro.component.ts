@@ -36,9 +36,9 @@ export class RegistroComponent implements OnInit {
     private carreraService: CarreraService // Inyección correcta del servicio
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.equipos = this.equipoService.obtenerEquipos();
-    this.carreras = this.carreraService.obtenerCarreras();
+    this.carreras = await this.carreraService.obtenerCarreras();
   }
 
   registrar(): void {

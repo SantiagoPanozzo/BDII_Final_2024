@@ -11,6 +11,8 @@ import { PrediccionesComponent } from './student-dashboard/predicciones/predicci
 import { PuntajeComponent } from './student-dashboard/puntaje/puntaje.component';
 import { AdminPartidosComponent } from './admin-dashboard/admin-partidos/admin-partidos.component';
 import { RegistrarPartidoComponent } from './admin-dashboard/registrar-partido/registrar-partido.component';
+import {AdminGuard} from "./admin-dashboard/guards/admin.guard";
+import {StudentGuard} from "./admin-dashboard/guards/student.guard";
 
 const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -18,6 +20,7 @@ const routes: Routes = [
     { path: 'registro', component: RegistroComponent },
     {
         path: 'admin-dashboard',
+        canActivate: [AdminGuard],
         children: [
             { path: '', component: AdminDashboardComponent, pathMatch: 'full' }, // Default child route
             { path: 'partidos', component: ListaPartidosComponent, pathMatch: 'full'},
@@ -29,6 +32,7 @@ const routes: Routes = [
     },
     {
         path: 'student-dashboard',
+        canActivate: [StudentGuard],
         children: [
             { path: '', component: StudentDashboardComponent },
             { path: 'datos', component: DatosComponent, pathMatch: 'full'},

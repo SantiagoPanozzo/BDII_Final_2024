@@ -14,7 +14,7 @@ namespace PencaAPI.Services
         /// <param name="cedula">Cédula del usuario.</param>
         /// <param name="password">Contraseña del usuario.</param>
         /// <returns>El usuario autenticado, o null si la autenticación falla.</returns>
-        public Task<IUsuario> Authenticate(int cedula, string password);
+        public Task<UsuarioDTO> Authenticate(int cedula, string password);
 
     }
 }

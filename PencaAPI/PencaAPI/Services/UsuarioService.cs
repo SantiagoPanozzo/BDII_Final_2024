@@ -26,7 +26,7 @@ namespace PencaAPI.Services
         /// <param name="cedula">Cédula del usuario.</param>
         /// <param name="password">Contraseña del usuario.</param>
         /// <returns>El usuario autenticado, o null si la autenticación falla.</returns>
-        public async Task<IUsuario> Authenticate(int cedula, string contrasena)
+        public async Task<UsuarioDTO> Authenticate(int cedula, string contrasena)
         {
             Console.WriteLine($"{cedula}");
             Console.WriteLine($"{contrasena}");
@@ -42,21 +42,17 @@ namespace PencaAPI.Services
             if (result.Count > 0)
             {
                 var alumno= result[0];
-                var alumnoADevolver = new Alumno(
+                var alumnoADevolver = new UsuarioDTO(
                             nombre: (string)alumno["nombre"],
                             apellido: (string)alumno["apellido"],
                             cedula: (int)alumno["cedula"],
-                            contrasena: (string)alumno["contrasena"],
                             fechaNacimiento: (DateTime)alumno["fecha_nacimiento"],
-                            anioIngreso: (int)alumno["anio_ingreso"],
-                            semestreIngreso: (int)alumno["semestre_ingreso"],
-                            puntajeTotal: (int)alumno["puntaje_total"],
-                            campeon: (string)alumno["campeon"],
-                            subCampeon: (string)alumno["subcampeon"]
+                            rol: "alumno"
                         );
+                string contrasenaBase = (string)alumno["contrasena"];
 
                 //Verificar la contraseña
-                if (ContrasenaHasher.VerifyContrasena(contrasena,alumnoADevolver.Contrasena))
+                if (ContrasenaHasher.VerifyContrasena(contrasena,contrasenaBase))
                 {
                     return alumnoADevolver;
                 }
@@ -69,16 +65,16 @@ namespace PencaAPI.Services
             {
                 var row = result[0];
           
-                var admin = new Administrador(
+                var admin = new UsuarioDTO(
                     nombre: row["Nombre"].ToString(),
                     apellido: row["Apellido"].ToString(),
                     cedula: Convert.ToInt32(row["Cedula"]),
-                    contrasena: row["Contrasena"].ToString(),
                     fechaNacimiento: Convert.ToDateTime(row["Fecha_Nacimiento"]), 
-                    rolUniversidad: row["Rol_Universidad"].ToString()          
+                    rol: "admnin"        
                 );
+                string contrasenaBase = (string)row["contrasena"];
                  //Verificar la contraseña
-                if (ContrasenaHasher.VerifyContrasena(contrasena,admin.Contrasena))
+                if (ContrasenaHasher.VerifyContrasena(contrasena,contrasenaBase))
                 {
                     return admin;
                 }

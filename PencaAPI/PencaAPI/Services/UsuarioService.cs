@@ -66,10 +66,10 @@ namespace PencaAPI.Services
                 var row = result[0];
           
                 var admin = new UsuarioDTO(
-                    nombre: row["Nombre"].ToString(),
-                    apellido: row["Apellido"].ToString(),
-                    cedula: Convert.ToInt32(row["Cedula"]),
-                    fechaNacimiento: Convert.ToDateTime(row["Fecha_Nacimiento"]), 
+                    nombre: row["nombre"].ToString(),
+                    apellido: row["apellido"].ToString(),
+                    cedula: Convert.ToInt32(row["cedula"]),
+                    fechaNacimiento: Convert.ToDateTime(row["fecha_nacimiento"]), 
                     rol: "admnin"        
                 );
                 string contrasenaBase = (string)row["contrasena"];
@@ -90,60 +90,7 @@ namespace PencaAPI.Services
             throw new NotImplementedException();
         }
 
-        /*public async Task<IUsuario> CreateAsync(UserRegisterDto registerDto)
-        {
-             // Hash de la contraseña
-            var hashedContrasena = ContrasenaHasher.HashContrasena(registerDto.Contrasena);
-
-            // Crear un nuevo usuario (Alumno en este caso)
-            var alumno = new Alumno
-            (
-                nombre: registerDto.Nombre,
-                apellido: registerDto.Apellido,
-                cedula: registerDto.Cedula,
-                contrasena: hashedContrasena,
-                fechaNacimiento: registerDto.FechaNacimiento,
-                anioIngreso: registerDto.AnioIngreso,
-                semestreIngreso: registerDto.SemestreIngreso,
-                puntajeTotal: 0,  // Inicializar con valor predeterminado
-                campeon: string.Empty,  // Inicializar con valor predeterminado
-                subCampeon: string.Empty  // Inicializar con valor predeterminado
-            );
-
-            // Guardar en la base de datos
-            var query = @"
-                INSERT INTO Alumno (Nombre, Apellido, Cedula, Contrasena, Fecha_Nacimiento, Anio_Ingreso, Semestre_Ingreso, Puntaje_Total, Campeon, Sub_Campeon)
-                VALUES (@Nombre, @Apellido, @Cedula, @Contrasena, @FechaNacimiento, @AnioIngreso, @SemestreIngreso, @PuntajeTotal, @Campeon, @SubCampeon)";
-
-            var parameters = new Dictionary<string, object>
-            {
-                { "Nombre", alumno.Nombre },
-                { "Apellido", alumno.Apellido },
-                { "Cedula", alumno.Cedula },
-                { "Contrasena", alumno.Contrasena },
-                { "FechaNacimiento", alumno.FechaNacimiento },
-                { "AnioIngreso", alumno.AnioIngreso },
-                { "SemestreIngreso", alumno.SemestreIngreso },
-                { "PuntajeTotal", alumno.PuntajeTotal },
-                { "Campeon", alumno.Campeon },
-                { "SubCampeon", alumno.SubCampeon }
-            };
-
-            var result = await _dbConnection.QueryAsync(query, parameters);
-
-            if (result.Count > 0)
-            {
-                return alumno;
-            }
-
-            return null;
-        }
-
-        public Task<IUsuario> CreateAsync(IUsuario entity)
-        {
-            throw new NotImplementedException();
-        }*/
-
+        
         public Task DeleteAsync(object id)
         {
             throw new NotImplementedException();
@@ -155,10 +102,18 @@ namespace PencaAPI.Services
         /// <returns>Todas las instancias de usuarios.</returns>
         public async Task<IUsuario[]> GetAllAsync()
         {
-            var usuarios = new List<IUsuario>();
+            /*var usuarios = new List<IUsuario>();
 
             // Consultar todos los alumnos
-            var query = "SELECT * FROM Alumnos";
+            var query = @"SELECT a.*,
+                          c.Pais as Campeon_nombre,
+                          s.Pais as Subcampeon_nombre
+                            
+                        FROM Alumnos a
+                        join Equipo c
+                        on a.campeon = c.Abreviatura
+                        join Equipo s
+                        on a.subcampeon = s.Abreviatura ";
             var result = await _dbConnection.QueryAsync(query);
             foreach (var row in result)
             {
@@ -192,7 +147,8 @@ namespace PencaAPI.Services
                 ));
             }
 
-            return usuarios.ToArray();
+            return usuarios.ToArray();*/
+            throw new NotImplementedException();
         }
 
         public Task<IUsuario> GetByIdAsync(object id)

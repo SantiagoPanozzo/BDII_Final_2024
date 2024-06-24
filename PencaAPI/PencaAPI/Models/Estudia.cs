@@ -4,8 +4,8 @@ namespace PencaAPI.Models;
 /// </summary>
 /// <param name="cedula">Cedula del alumno</param>
 /// <param name="idCarrera">Identificador de la carrera</param>
-public class Estudia(int cedula, int idCarrera)
+public class Estudia(Alumno alumno, Carrera carrera)
 {
-    public int Cedula { get; set; } = cedula;
-    public int IdCarrera { get; set; } = idCarrera;
+    public Alumno Alumno { get; set; } = alumno;
+    public Carrera Carrera { get; set; } = carrera;
 }

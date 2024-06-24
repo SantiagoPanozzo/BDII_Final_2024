@@ -1,14 +1,14 @@
-# Use the official Node.js image as the base
+# Use an official Node runtime as the base
 FROM node:22-alpine
 
 # Set the working directory inside the container
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json to the container
-COPY package*.json ./
+# Copy package.json and yarn.lock to the container
+COPY package*.json yarn.lock ./
 
-# Install dependencies
-RUN npm install
+# Install dependencies using Yarn
+RUN yarn install
 
 # Copy the rest of the application code to the container
 COPY . .

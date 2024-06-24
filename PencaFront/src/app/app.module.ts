@@ -14,6 +14,7 @@ import { DatosComponent } from './student-dashboard/datos/datos.component';
 import { PuntajeComponent } from './student-dashboard/puntaje/puntaje.component';
 import { AdminPartidosComponent } from './admin-dashboard/admin-partidos/admin-partidos.component';
 import { RegistrarPartidoComponent } from './admin-dashboard/registrar-partido/registrar-partido.component';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { RegistrarPartidoComponent } from './admin-dashboard/registrar-partido/r
   imports: [
     BrowserModule,
     AppRoutingModule, 
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -16,7 +16,7 @@ public static class Program
         // Database: Nombre de la base de datos
         // User Id: Usuario de la base de datos
         // Password: Contraseña del usuario de la base de datos
-        var connString = "Server=pencadb;Port=5432;Database=pencadb;User Id=postgres;Password=postgres;";
+        var connString = "Include Error Detail=true;Server=pencadb;Port=5432;Database=pencadb;User Id=postgres;Password=postgres;";
 
         // Conexión con la base de datos
         PgDatabaseConnection dbConnection = new PgDatabaseConnection(connString);
@@ -27,6 +27,9 @@ public static class Program
         // Configuración de servicios
         var key = Encoding.ASCII.GetBytes("your_secret_key");
 
+        builder.Services.AddCors();
+
+        
         builder.Services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -59,6 +62,8 @@ public static class Program
         builder.Services.AddSwaggerGen();
         builder.Services.AddTransient<IAuthService, AuthService>();
 
+        
+
         // Buildear la app
         var app = builder.Build();
         Configure(app, app.Environment);
@@ -69,17 +74,20 @@ public static class Program
     
     public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-        // swagger
-        //if (env.IsDevelopment())
-        //{
+
             app.UseSwagger();
             app.UseSwaggerUI();
-        //}
+        
 
         // cosas de .NET, de la documentación 
         app.UseHttpsRedirection();
         app.UseRouting();
 
+        app.UseCors(options => options
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+        
         // Habilitar los endpoints y los controllers para cada uno
         app.UseEndpoints(endpoints =>
         {

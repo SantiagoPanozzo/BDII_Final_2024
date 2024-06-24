@@ -24,6 +24,7 @@ export class PrediccionesComponent implements OnInit {
 
   ngOnInit(): void {
     this.partidos = this.partidoService.obtenerPartidos();
+    console.log("PrediccionesComponent: Obteniendo usuario autenticado");
     this.alumno = this.authService.obtenerUsuarioAutenticado();
     this.partidosPorEtapa = this.agruparPartidosPorEtapa(this.partidos);
   }
@@ -40,6 +41,8 @@ export class PrediccionesComponent implements OnInit {
         Prediccion_E2: prediccion.prediccionE2,
         Puntaje: this.alumno.puntajeTotal
       };
+      console.log("Guardando prediccion:");
+      console.log(nuevaPrediccion);
       this.prediccionesService.agregarOActualizarPrediccion(nuevaPrediccion);
       alert('Predicción guardada con éxito!');
     }

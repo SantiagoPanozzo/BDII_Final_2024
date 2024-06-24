@@ -13,13 +13,13 @@ import {Etapa} from "../../interfaces/etapa";
 export class RegistrarPartidoComponent implements OnInit {
   equipos: Equipo[] = [];
   nuevoPartido: Partido = {
-    Id: 0,
-    Fecha: new Date(),
-    Equipo_E1: {} as Equipo,
-    Equipo_E2: {} as Equipo,
-    Resultado_E1: null,
-    Resultado_E2: null,
-    Etapa: {} as Etapa,
+    id: 0,
+    fecha: new Date(),
+    equipo_E1: {} as Equipo,
+    equipo_E2: {} as Equipo,
+    resultado_E1: null,
+    resultado_E2: null,
+    etapa: {} as Etapa,
   };
 
   constructor(private equipoService: EquipoService, private partidoService: PartidoService, private router: Router) {}
@@ -31,13 +31,13 @@ export class RegistrarPartidoComponent implements OnInit {
   registrarPartido(): void {
     this.partidoService.registrarPartido(this.nuevoPartido);
     this.nuevoPartido = {
-      Id: 0,
-      Fecha: new Date(),
-      Equipo_E1: {} as Equipo,
-      Equipo_E2: {} as Equipo,
-      Resultado_E1: null,
-      Resultado_E2: null,
-      Etapa: {} as Etapa,
+      id: 0,
+      fecha: new Date(),
+      equipo_E1: {} as Equipo,
+      equipo_E2: {} as Equipo,
+      resultado_E1: null,
+      resultado_E2: null,
+      etapa: {} as Etapa,
     };
     this.router.navigate(['../lista-partidos']); //no anda no se por que 
   }

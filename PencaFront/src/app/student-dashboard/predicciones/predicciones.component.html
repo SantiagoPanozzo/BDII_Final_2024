@@ -17,16 +17,16 @@
     </thead>
     <tbody>
       <tr *ngFor="let partido of grupo.partidos">
-        <td>{{ partido.Equipo_E1 }}</td>
-        <td>{{ partido.Equipo_E2 }}</td>
-        <td>{{ partido.Fecha | date }}</td>
-        <td>{{ partido.Resultado_E1 }}</td>
-        <td>{{ partido.Resultado_E2 }}</td>
+        <td>{{ partido.equipo_E1.pais }}</td>
+        <td>{{ partido.equipo_E2.pais }}</td>
+        <td>{{ partido.fecha | date }}</td>
+        <td>{{ ((partido.resultado_E1 != null) && (partido.resultado_E1 >= 0)) ? partido.resultado_E1 : '-' }}</td>
+        <td>{{ ((partido.resultado_E2 != null) && (partido.resultado_E2 >= 0)) ? partido.resultado_E2 : '-' }}</td>
         <td>
-          <input type="number" [(ngModel)]="predicciones[partido.Id].prediccionE1" placeholder="Predicción E1">
+          <input type="number" [(ngModel)]="predicciones[partido.id].prediccionE1" placeholder="Predicción E1">
         </td>
         <td>
-          <input type="number" [(ngModel)]="predicciones[partido.Id].prediccionE2" placeholder="Predicción E2">
+          <input type="number" [(ngModel)]="predicciones[partido.id].prediccionE2" placeholder="Predicción E2">
         </td>
         <td>
           <button (click)="guardarPrediccion(partido)">Guardar</button>

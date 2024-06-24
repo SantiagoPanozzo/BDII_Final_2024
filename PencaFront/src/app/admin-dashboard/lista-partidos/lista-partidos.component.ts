@@ -14,8 +14,8 @@ export class ListaPartidosComponent implements OnInit {
 
   constructor(private partidoService: PartidoService, private router: Router) {}
 
-  ngOnInit(): void {
-    const partidos = this.partidoService.obtenerPartidos();
+  async ngOnInit() {
+    const partidos = await this.partidoService.obtenerPartidos();
     this.partidosPorEtapa = this.agruparPartidosPorEtapa(partidos);
   }
 
@@ -28,11 +28,11 @@ export class ListaPartidosComponent implements OnInit {
 
 
     partidos.forEach(partido => {
-      const index = partidosAgrupados.findIndex(item => item.etapa === partido.Etapa);
+      const index = partidosAgrupados.findIndex(item => item.etapa === partido.etapa);
       if (index !== -1) {
         partidosAgrupados[index].partidos.push(partido);
       } else {
-        partidosAgrupados.push({ etapa: partido.Etapa, partidos: [partido] });
+        partidosAgrupados.push({ etapa: partido.etapa, partidos: [partido] });
       }
     });
 

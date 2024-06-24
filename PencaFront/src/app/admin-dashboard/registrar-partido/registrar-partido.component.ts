@@ -41,7 +41,7 @@ export class RegistrarPartidoComponent implements OnInit {
     this.nuevoPartido.etapa = await this.etapaService.obtenerEtapaPorId(this.nuevoPartido.etapa.id);
     this.nuevoPartido.equipo_E1 = await this.equipoService.obtenerEquipoPorAbreviatura(this.nuevoPartido.equipo_E1.abreviatura);
     this.nuevoPartido.equipo_E2 = await this.equipoService.obtenerEquipoPorAbreviatura(this.nuevoPartido.equipo_E2.abreviatura);
-    this.partidoService.registrarPartido(this.nuevoPartido);
+    await this.partidoService.registrarPartido(this.nuevoPartido);
     console.log(this.nuevoPartido);
     console.log(this.nuevoPartido.equipo_E2)
     await this.router.navigate(['../admin-dashboard/partidos']); //no anda no se por que

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Partido } from '../interfaces/partido';
 import { EquipoService } from './equiposervice.service';
-import {Equipo} from "../interfaces/equipo";
 import {HttpClient} from "@angular/common/http";
 
 @Injectable({
@@ -33,10 +32,10 @@ export class PartidoService {
     return (await this.http.get<Partido>(`http://localhost:8080/partido/${abreviatura_1}/${abreviatura_2}/${fecha}`).toPromise())!;
   }
 
-  registrarPartido(nuevoPartido: Partido): void {
+  async registrarPartido(nuevoPartido: Partido) {
     console.log("POST de:")
     console.log(nuevoPartido)
-    this.http.post('http://localhost:8080/partido', nuevoPartido).subscribe();
+    await this.http.post('http://localhost:8080/partido', nuevoPartido).toPromise();
   }
 
   async modificarPartido(abreviatura_1: string, abreviatura_2: string, fecha: Date, partido: Partido){

@@ -44,6 +44,6 @@ export class RegistrarPartidoComponent implements OnInit {
     this.partidoService.registrarPartido(this.nuevoPartido);
     console.log(this.nuevoPartido);
     console.log(this.nuevoPartido.equipo_E2)
-    this.router.navigate(['../admin-dashboard/partidos']); //no anda no se por que
+    await this.router.navigate(['../admin-dashboard/partidos']); //no anda no se por que
   }
 }

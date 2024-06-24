@@ -13,20 +13,29 @@ import { AdminPartidosComponent } from './admin-dashboard/admin-partidos/admin-p
 import { RegistrarPartidoComponent } from './admin-dashboard/registrar-partido/registrar-partido.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'admin-dashboard', component: AdminDashboardComponent},
-  { path: 'registro', component: RegistroComponent },
-  { path: 'student-dashboard', component: StudentDashboardComponent },
-  { path: 'admin-dashboard/alumnos', component: ListaAlumnosComponent },
-  { path: 'admin-dashboard/partidos', component: ListaPartidosComponent },
-  { path: 'student-dashboard/datos', component: DatosComponent },
-  { path: 'student-dashboard/predicciones', component: PrediccionesComponent },
-  { path: 'student-dashboard/puntaje', component: PuntajeComponent },
-  { path: 'admin-dashboard/admin-partidos/:abreviatura_1/:abreviatura_2/:fecha', component: AdminPartidosComponent },
-  { path: '', redirectTo: '/admin-dashboard/lista-partidos', pathMatch: 'full' },
-  { path: 'registrar-partido', component: RegistrarPartidoComponent }
-
+    { path: '', redirectTo: '/login', pathMatch: 'full' },
+    { path: 'login', component: LoginComponent },
+    { path: 'registro', component: RegistroComponent },
+    {
+        path: 'admin-dashboard',
+        children: [
+            { path: '', component: AdminDashboardComponent, pathMatch: 'full' }, // Default child route
+            { path: 'partidos', component: ListaPartidosComponent, pathMatch: 'full'},
+            { path: 'admin-partidos/:abreviatura_1/:abreviatura_2/:fecha', component: AdminPartidosComponent, pathMatch: 'full' },
+            { path: 'lista-partidos', component: ListaPartidosComponent, pathMatch: 'full' },
+            { path: 'alumnos', component: ListaAlumnosComponent, pathMatch: 'full' },
+            { path: 'registrar-partido', component: RegistrarPartidoComponent, pathMatch: 'full'}
+        ],
+    },
+    {
+        path: 'student-dashboard',
+        children: [
+            { path: '', component: StudentDashboardComponent },
+            { path: 'datos', component: DatosComponent, pathMatch: 'full'},
+            { path: 'predicciones', component: PrediccionesComponent, pathMatch: 'full'},
+            { path: 'puntaje', component: PuntajeComponent, pathMatch: 'full'},
+        ]
+    }
 ];
 
 @NgModule({

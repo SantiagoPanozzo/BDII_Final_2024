@@ -6,34 +6,7 @@ import {HttpClient} from "@angular/common/http";
   providedIn: 'root'
 })
 export class AlumnoService {
-  private alumnos: Alumno[] = [
-    {
-      cedula: 123,
-      contrasena: 'clave123',
-      nombre: 'Juan',
-      apellido: 'Pérez',
-      fechaNacimiento: new Date('1995-05-15'),
-      carrera:1,
-      anioIngreso: 2020,
-      semestreIngreso: 'Agosto',
-      puntajeTotal: 100,
-      campeon: 'ARG',
-      subcampeon: 'BRA'
-    },
-    {
-      cedula: 987,
-      contrasena: 'abc123',
-      nombre: 'María',
-      apellido: 'García',
-      fechaNacimiento: new Date('1998-10-20'),
-      carrera:2,
-      anioIngreso: 2019,
-      semestreIngreso: 'Marzo',
-      puntajeTotal: 85,
-      campeon: 'BRA',
-      subcampeon: 'ARG'
-    }
-  ];
+  private alumnos: Alumno[] = [];
 
   private alumnoAutenticado: Alumno | null = null;
 

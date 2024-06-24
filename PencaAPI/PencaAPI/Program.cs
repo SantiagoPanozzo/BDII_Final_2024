@@ -29,7 +29,11 @@ public static class Program
 
         builder.Services.AddCors();
 
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> ed39fa5 (ALGO DE ESTO ARREGLO EL CORS)
         builder.Services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -62,7 +66,12 @@ public static class Program
         builder.Services.AddSwaggerGen();
         builder.Services.AddTransient<IAuthService, AuthService>();
 
+<<<<<<< HEAD
 
+=======
+        var DEJAMEENTRAR = "DEJAMEENTRAR";
+        
+>>>>>>> ed39fa5 (ALGO DE ESTO ARREGLO EL CORS)
 
         // Buildear la app
         var app = builder.Build();
@@ -77,7 +86,12 @@ public static class Program
         // swagger
             app.UseSwagger();
             app.UseSwaggerUI();
+<<<<<<< HEAD
 
+=======
+        }
+        
+>>>>>>> ed39fa5 (ALGO DE ESTO ARREGLO EL CORS)
 
         // cosas de .NET, de la documentación 
         app.UseHttpsRedirection();
@@ -87,7 +101,11 @@ public static class Program
             .AllowAnyOrigin()
             .AllowAnyMethod()
             .AllowAnyHeader());
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> ed39fa5 (ALGO DE ESTO ARREGLO EL CORS)
         // Habilitar los endpoints y los controllers para cada uno
         app.UseEndpoints(endpoints =>
         {

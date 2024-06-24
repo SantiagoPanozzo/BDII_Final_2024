@@ -16,10 +16,15 @@ export class AuthService {
   private adminCredentials = { cedula: 999, contrasena: 'admin' };
   private usuarioAutenticado: Alumno | null = null;
 <<<<<<< HEAD
+<<<<<<< HEAD
   private token: string | null = null;
 
 =======
 >>>>>>> 1fd6e41 (Guardar usuario en el browser storage)
+=======
+  private token: string | null = null;
+
+>>>>>>> ed39fa5 (ALGO DE ESTO ARREGLO EL CORS)
   public isLoggedIn() {
     return this.usuarioAutenticado != null;
   }
@@ -32,11 +37,16 @@ export class AuthService {
     private http: HttpClient
   ) {}
 
+<<<<<<< HEAD
   async autenticarUsuario(cedula: number, contrasena: string): Promise<{ esAdmin: boolean, usuario?: any } | null> {
+=======
+  autenticarUsuario(cedula: number, contrasena: string): { esAdmin: boolean, usuario?: any } | null {
+>>>>>>> ed39fa5 (ALGO DE ESTO ARREGLO EL CORS)
 
     const userLogin: UserLogin = { Cedula: cedula, Contrasena: contrasena };
     console.log("Loggin in as:")
     console.log(userLogin)
+<<<<<<< HEAD
     const response = await this.http.post('http://localhost:8080/auth/login', userLogin).toPromise();
 
     // @ts-ignore
@@ -50,6 +60,20 @@ export class AuthService {
   }
 
     /*if (cedula === this.adminCredentials.cedula && contrasena === this.adminCredentials.contrasena) {
+=======
+    this.http.post('http://localhost:8080/api/auth/login', userLogin)
+        .subscribe(
+            (response: any) => {
+              this.token = response.data.token;
+              localStorage.setItem('userToken', JSON.stringify(this.token));
+              // @ts-ignore
+              let esAdmin = jwtDecode(response.data.token).unique_name == "juan";
+              if(esAdmin) console.log("JUAN!!!!!");
+            }
+        );
+
+    if (cedula === this.adminCredentials.cedula && contrasena === this.adminCredentials.contrasena) {
+>>>>>>> ed39fa5 (ALGO DE ESTO ARREGLO EL CORS)
       return { esAdmin: true, usuario: this.administradorService.obtenerDatosAdmin() };
     } else {
       const usuario = this.alumnoService.obtenerUsuarioPorCedulaYContrasena(cedula, contrasena);
@@ -62,7 +86,10 @@ export class AuthService {
       }
     }*/
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ed39fa5 (ALGO DE ESTO ARREGLO EL CORS)
  
   obtenerUsuarioAutenticado(): Alumno {
     const storedUser = localStorage.getItem('user');

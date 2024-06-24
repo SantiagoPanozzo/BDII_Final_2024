@@ -23,7 +23,7 @@
     </div>
     <div class="form-group">
       <label for="carrera">Carrera:</label>
-      <select id="carrera" name="carrera" [(ngModel)]="alumno.carrera" required>
+      <select id="carrera" name="carrera" [(ngModel)]="alumno.carreraPrincipal.id" required>
         <option *ngFor="let carrera of carreras" [value]="carrera.id">{{ carrera.nombre }}</option>
       </select>
     </div>
@@ -40,13 +40,13 @@
     </div>
     <div class="form-group">
       <label for="campeon">Campeón:</label>
-      <select id="campeon" name="campeon" [(ngModel)]="alumno.campeon" required>
+      <select id="campeon" name="campeon" [(ngModel)]="alumno.campeon.abreviatura" required>
         <option *ngFor="let equipo of equipos" [value]="equipo.abreviatura">{{ equipo.pais }}</option>
       </select>
     </div>
     <div class="form-group">
       <label for="subcampeon">Subcampeón:</label>
-      <select id="subcampeon" name="subcampeon" [(ngModel)]="alumno.subcampeon" required>
+      <select id="subcampeon" name="subcampeon" [(ngModel)]="alumno.subcampeon.abreviatura" required>
         <option *ngFor="let equipo of equipos" [value]="equipo.abreviatura">{{ equipo.pais }}</option>
       </select>
     </div>

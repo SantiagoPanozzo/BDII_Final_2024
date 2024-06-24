@@ -27,6 +27,9 @@ public static class Program
         // Configuración de servicios
         var key = Encoding.ASCII.GetBytes("your_secret_key");
 
+        builder.Services.AddCors();
+
+        
         builder.Services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -58,6 +61,9 @@ public static class Program
         builder.Services.AddSwaggerGen();
         builder.Services.AddTransient<IAuthService, AuthService>();
 
+        var DEJAMEENTRAR = "DEJAMEENTRAR";
+        
+
         // Buildear la app
         var app = builder.Build();
         Configure(app, app.Environment);
@@ -74,11 +80,17 @@ public static class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+        
 
         // cosas de .NET, de la documentación 
         app.UseHttpsRedirection();
         app.UseRouting();
 
+        app.UseCors(options => options
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+        
         // Habilitar los endpoints y los controllers para cada uno
         app.UseEndpoints(endpoints =>
         {

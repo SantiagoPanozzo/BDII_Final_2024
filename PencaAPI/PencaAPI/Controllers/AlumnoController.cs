@@ -40,8 +40,8 @@ public class AlumnoController(AlumnoService alumnoService) : ControllerBase
     public async Task<ActionResult<Alumno>> Put(int id, Alumno alumno)
     {
         try {
-            await _alumnoService.UpdateAsync(id, alumno);
-            return Ok(alumno);
+            //await _alumnoService.UpdateAsync(id, alumno);
+            return Ok(await _alumnoService.UpdateAsync(id, alumno));
         } catch (ArgumentException e) {
             return NotFound(e.Message);
         }

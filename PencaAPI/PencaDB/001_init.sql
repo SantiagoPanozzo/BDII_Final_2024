@@ -69,6 +69,7 @@ create table Prediccion(
 create table Estudia(
 	Cedula int not null,
 	Id_Carrera int not null,
+	Principal int not null,
 	constraint pk_estudia primary key (Cedula, Id_carrera),
 	constraint fk_alumno foreign key (Cedula) references Alumno(Cedula),
 	constraint fk_carrera foreign key (Id_carrera) references Carrera(Id)

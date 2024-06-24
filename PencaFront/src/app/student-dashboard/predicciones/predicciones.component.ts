@@ -25,10 +25,12 @@ export class PrediccionesComponent implements OnInit {
 
   async ngOnInit() {
     this.partidos = await this.partidoService.obtenerPartidos();
-    console.log(this.partidos[0])
-    this.alumno = this.authService.obtenerUsuarioAutenticado();
-    this.partidosPorEtapa = this.agruparPartidosPorEtapa(this.partidos);
-    console.log(this.partidosPorEtapa[0])
+    if(this.partidos && this.partidos.length > 0) {
+      console.log(this.partidos[0])
+      this.alumno = this.authService.obtenerUsuarioAutenticado();
+      this.partidosPorEtapa = this.agruparPartidosPorEtapa(this.partidos);
+      console.log(this.partidosPorEtapa[0])
+    }
   }
 
   guardarPrediccion(partido: Partido): void {

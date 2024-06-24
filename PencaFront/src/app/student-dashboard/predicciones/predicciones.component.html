@@ -1,5 +1,9 @@
 <h3>Lista de todos los partidos</h3>
 
+<div *ngIf="!this.partidos || this.partidos.length <= 0">
+    <h3>No hay partidos disponibles</h3>
+</div>
+
 <div *ngFor="let grupo of partidosPorEtapa">
   <h4>Etapa {{ grupo.etapa }}</h4>
   <table>

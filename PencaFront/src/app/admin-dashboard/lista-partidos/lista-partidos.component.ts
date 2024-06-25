@@ -25,6 +25,12 @@ export class ListaPartidosComponent implements OnInit {
     this.router.navigate([ruta]);
   }
 
+  resultadosPartido(fecha: Date, abreviatura_1: string, abreviatura_2: string): void {
+    const ruta = `/admin-dashboard/partidos/${abreviatura_1}/${abreviatura_2}/${fecha}/editar`;
+    console.log("Estableciendo resultados de partido " + ruta)
+    this.router.navigate([ruta]);
+  }
+
   private agruparPartidosPorEtapa(partidos: Partido[]): { etapa: Etapa, partidos: Partido[] }[] {
     const partidosAgrupados: { etapa: Etapa, partidos: Partido[] }[] = [];
 

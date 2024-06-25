@@ -15,7 +15,6 @@ export class RegistrarPartidoComponent implements OnInit {
   equipos: Equipo[] = [];
   etapas: Etapa[] = [];
   nuevoPartido: Partido = {
-    id: 0,
     fecha: new Date(),
     equipo_E1: {} as Equipo,
     equipo_E2: {} as Equipo,

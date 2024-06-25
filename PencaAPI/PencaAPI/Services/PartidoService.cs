@@ -9,11 +9,12 @@ namespace PencaAPI.Services;
 /// Service para realizar acciones en la base de datos realacionadas a la tabla de Carera.
 /// </summary>
 /// <param name="dbConnection">Instancia de PgDatabaseConnection correspondiente a la base de datos.</param>
-public class PartidoService(PgDatabaseConnection dbConnection, PrediccionService prediccionService)
+public class PartidoService(PgDatabaseConnection dbConnection, PrediccionService prediccionService, AlumnoService alumnoService)
     : IService<Partido>
 {
     private readonly PgDatabaseConnection _dbConnection = dbConnection;
-   private readonly PrediccionService _prediccionService = prediccionService;
+    private readonly PrediccionService _prediccionService = prediccionService;
+    private readonly AlumnoService _alumnoService = alumnoService;
     
     /// <summary>
     /// Obtener todas las arreras de la base de datos.
@@ -312,6 +313,10 @@ public class PartidoService(PgDatabaseConnection dbConnection, PrediccionService
             var resultPuntajes=  await _prediccionService.SetPuntajeAsync(partidoDto);
             var prediciones = resultPuntajes.FirstOrDefault();
             if (prediciones == null) throw new ArgumentException("Partido con resultados no se actualizó.");
+            if(part.Etapa.Id == 4)
+            {
+                await _alumnoService.SetPuntajeCampeonSubcampeonAsync(part);
+            }
 
             return part;
         }

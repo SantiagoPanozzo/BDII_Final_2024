@@ -75,6 +75,27 @@ create table Estudia(
 	constraint fk_carrera foreign key (Id_carrera) references Carrera(Id)
 );
 
+-- Función para actualizar el puntaje del alumno
+CREATE OR REPLACE FUNCTION actualizar_puntaje_alumno()
+RETURNS TRIGGER AS $$
+BEGIN
+    
+    IF TG_OP = 'UPDATE' AND NEW.Puntaje <> OLD.Puntaje THEN
+        UPDATE Alumno
+        SET Puntaje_Total = COALESCE(Puntaje_Total, 0) + NEW.Puntaje - COALESCE(OLD.Puntaje, 0)
+        WHERE Alumno.cedula = NEW.cedula;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Trigger para actualizar automáticamente el puntaje del alumno
+CREATE TRIGGER trigger_actualizar_puntaje_alumno
+AFTER UPDATE OF Puntaje ON Prediccion
+FOR EACH ROW
+EXECUTE FUNCTION actualizar_puntaje_alumno();
+
 
 
 

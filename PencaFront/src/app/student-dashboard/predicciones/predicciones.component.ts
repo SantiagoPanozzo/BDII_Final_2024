@@ -35,6 +35,14 @@ export class PrediccionesComponent implements OnInit {
     }
   }
 
+  guardarHabilitado(prediccion: Prediccion) {
+    const ahora: Date = new Date();
+    // @ts-ignore
+    const partido: Date = new Date(prediccion.partido.fecha as string);
+    ahora.setTime(ahora.getTime() + (60 * 60 * 1000));
+    return ahora > partido;
+  }
+
   guardarPrediccion(prediccion: Prediccion): void {
     console.log("Prediccion a guardar:")
     console.log(prediccion)

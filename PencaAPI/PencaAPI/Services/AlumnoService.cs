@@ -60,6 +60,55 @@ public class AlumnoService(PgDatabaseConnection dbConnection)
         ).ToList();
         return alumnos.ToArray();
     }
+    /// <summary>
+    /// Obtener todos los alumnos de la base de datos ordenados por puntaje.
+    /// </summary>
+    /// <returns>Un array con todos los alumnos de la base de datos.</returns>
+    public async Task<Alumno[]> GetAllOrderAsync()
+    {
+        var sqlQuery = @"SELECT a.*,
+                             c.Pais as campeon_nombre,
+                             s.Pais as subcampeon_nombre,
+                             carr.id as carrera_id,
+                             carr.nombre as carrera_nombre
+                      FROM Alumno a
+                      join Equipo c
+                      on a.campeon = c.Abreviatura
+                      join Equipo s
+                      on a.subcampeon = s.Abreviatura 
+                      join Estudia e
+                      on e.cedula = a.cedula
+                      join Carrera carr
+                      on e.id_carrera = carr.id
+                      where e.principal = 1
+                      order by a.puntaje_total desc
+                      ";
+        var result = await _dbConnection.QueryAsync(sqlQuery);
+        var alumnos = result.Select(x => new Alumno(
+                nombre: (string)x["nombre"],
+                apellido: (string)x["apellido"],
+                cedula: (int)x["cedula"],
+                contrasena: (string)x["contrasena"],
+                fechaNacimiento: (DateTime)x["fecha_nacimiento"],
+                anioIngreso: (int)x["anio_ingreso"],
+                semestreIngreso: (int)x["semestre_ingreso"],
+                puntajeTotal: (int)x["puntaje_total"],
+                campeon: new Equipo(
+                    abreviatura: (string)x["campeon"],
+                    pais: (string)x["campeon_nombre"]
+                ),
+                subCampeon: new Equipo(
+                    abreviatura: (string)x["subcampeon"],
+                    pais: (string)x["subcampeon_nombre"]
+                ),
+                carreraPrincipal: new Carrera(
+                    id: (int)x["carrera_id"],
+                    nombre: (string)x["carrera_nombre"]
+                )
+            )
+        ).ToList();
+        return alumnos.ToArray();
+    }
     
     /// <summary>
     /// Obtener un alumno de la base de datos por su cédula.

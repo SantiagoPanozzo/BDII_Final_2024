@@ -283,6 +283,41 @@ public class AlumnoService(PgDatabaseConnection dbConnection)
         );
     }
 
+    public async Task SetPuntajeCampeonSubcampeonAsync(Partido partido)
+    {
+        if (partido.Etapa.Id != 4)
+        {
+            throw new ArgumentException("El partido no es de la etapa final.");
+        }
+        Equipo campeon = partido.Resultado_E1 > partido.Resultado_E2 ? partido.Equipo_E1 : partido.Equipo_E2;
+        Equipo subcampeon = partido.Resultado_E1 < partido.Resultado_E2 ? partido.Equipo_E1 : partido.Equipo_E2;
+
+        var sqlQuery = @"
+                        UPDATE Alumno  
+                        SET 
+                        Puntaje_Total = Puntaje_Total +
+                                    Case
+                                        When Campeon = @c and Subcampeon <>@s then 10
+                                        When Campeon <> @c and Subcampeon = @s then 5
+                                        When Campeon = @c and Subcampeon = @s then 15
+                                        else 0
+                                    end
+                        Where Campeon = @c
+                              or SubCampeon =@s
+                              or (Campeon = @c and SubCampeon =@s)
+                        RETURNING *
+                        ";
+        await _dbConnection.QueryAsync(sqlQuery,
+                new Dictionary<string, object>()
+                {
+                    { "c", campeon.Abreviatura},
+                    { "s", subcampeon.Abreviatura}
+                }
+        );
+
+
+    }
+
     public async Task DeleteAsync(object id)
     {
         await this.GetByIdAsync(id);

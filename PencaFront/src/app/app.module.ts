@@ -17,6 +17,7 @@ import { RegistrarPartidoComponent } from './admin-dashboard/registrar-partido/r
 import {HttpClientModule} from "@angular/common/http";
 import { AppLayoutComponent } from './layouts/app-layout/app-layout.component';
 import { LogoutButtonComponent } from './components/logout-button/logout-button.component';
+import { EditarPartidoComponent } from './admin-dashboard/editar-partido/editar-partido.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { LogoutButtonComponent } from './components/logout-button/logout-button.
     AdminPartidosComponent,
     RegistrarPartidoComponent,
     AppLayoutComponent,
-    LogoutButtonComponent
+    LogoutButtonComponent,
+    EditarPartidoComponent
   ],
   imports: [
     BrowserModule,

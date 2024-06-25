@@ -46,7 +46,7 @@ export class AdminPartidosComponent implements OnInit {
       this.partido.etapa = await this.etapaService.obtenerEtapaPorId(this.partido.etapa.id);
       this.partido.equipo_E1 = await this.equipoService.obtenerEquipoPorAbreviatura(this.partido.equipo_E1.abreviatura);
       this.partido.equipo_E2 = await this.equipoService.obtenerEquipoPorAbreviatura(this.partido.equipo_E2.abreviatura);
-      await this.partidoService.modificarPartido(this.abreviatura_1, this.abreviatura_2, this.fecha, this.partido);
+      await this.partidoService.actualizarResultado(this.abreviatura_1, this.abreviatura_2, this.fecha, this.partido.resultado_E1!, this.partido.resultado_E2!);
       await this.router.navigate(['/admin-dashboard/partidos'])
     } else {
       alert("Error")

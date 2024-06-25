@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Partido } from '../interfaces/partido';
 import { EquipoService } from './equiposervice.service';
 import {HttpClient} from "@angular/common/http";
+import {PartidoSinResultados} from "../interfaces/partidoSinResultados";
 
 @Injectable({
   providedIn: 'root'
@@ -38,11 +39,17 @@ export class PartidoService {
     await this.http.post('http://localhost:8080/partido', nuevoPartido).toPromise();
   }
 
-  async modificarPartido(abreviatura_1: string, abreviatura_2: string, fecha: Date, partido: Partido){
+  async modificarPartido(abreviatura_1: string, abreviatura_2: string, fecha: Date, partido: PartidoSinResultados){
     const ruta = `http://localhost:8080/partido/${abreviatura_1}/${abreviatura_2}/${fecha}`;
-    console.log("PUT a: " + ruta);
-    console.log(partido);
-    await this.http.put(ruta, partido).toPromise();
+    const body = {
+      etapa: partido.etapa,
+      equipo_E1: partido.equipo_E1,
+      equipo_E2: partido.equipo_E2,
+      fecha: partido.fecha
+    } as PartidoSinResultados;
+    console.log("PUT a ruta: " + ruta);
+    console.log(body);
+    await this.http.put(ruta, body).toPromise();
   }
 
 

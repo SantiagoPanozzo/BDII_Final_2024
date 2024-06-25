@@ -49,10 +49,10 @@ export class AuthService {
   }
 
  
-  obtenerUsuarioAutenticado(): string {
+  obtenerUsuarioAutenticado(): number {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
-      return storedUser!;
+      return parseInt(storedUser.slice(1,storedUser.length-1));
     } else {
       throw new Error('No hay un usuario autenticado actualmente');
     }

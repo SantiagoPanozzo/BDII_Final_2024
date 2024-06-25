@@ -1,6 +1,6 @@
 <h3>Lista de todos los partidos</h3>
 
-<div *ngIf="!this.partidos || this.partidos.length <= 0">
+<div *ngIf="!this.predicciones || this.predicciones.length <= 0">
     <h3>No hay partidos disponibles</h3>
 </div>
 
@@ -20,12 +20,12 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let partido of grupo.partidos">
-        <td>{{ partido.equipo_E1.pais }}</td>
-        <td>{{ partido.equipo_E2.pais }}</td>
-        <td>{{ partido.fecha | date }}</td>
-        <td>{{ ((partido.resultado_E1 != null) && (partido.resultado_E1 >= 0)) ? partido.resultado_E1 : '-' }}</td>
-        <td>{{ ((partido.resultado_E2 != null) && (partido.resultado_E2 >= 0)) ? partido.resultado_E2 : '-' }}</td>
+      <tr *ngFor="let prediccion of grupo.predicciones">
+        <td>{{ prediccion.partido.equipo_E1.pais }}</td>
+        <td>{{ prediccion.partido.equipo_E2.pais }}</td>
+        <td>{{ prediccion.partido.fecha | date }}</td>
+        <td>{{ ((prediccion.partido.resultado_E1 != null) && (prediccion.partido.resultado_E1 >= 0)) ? prediccion.partido.resultado_E1 : '-' }}</td>
+        <td>{{ ((prediccion.partido.resultado_E2 != null) && (prediccion.partido.resultado_E2 >= 0)) ? prediccion.partido.resultado_E2 : '-' }}</td>
         <td>
           <!--<input type="number" [(ngModel)]="predicciones[partido.id].prediccionE1" placeholder="Predicción E1">-->
         </td>
@@ -33,4 +33,9 @@
           <!--<input type="number" [(ngModel)]="predicciones[partido.id].prediccionE2" placeholder="Predicción E2">-->
         </td>
         <td>
-          <button (click)="guardarPrediccion(partido)">Guardar</button>
+          <button (click)="guardarPrediccion(prediccion)">Guardar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

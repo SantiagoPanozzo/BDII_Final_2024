@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { PartidoService } from 'src/app/services/partido.service';
 import { Partido } from 'src/app/interfaces/partido';
 import { PrediccionesService } from 'src/app/services/predicciones.service';
-import { predicciones } from 'src/app/interfaces/predicciones';
+import { Prediccion } from 'src/app/interfaces/prediccion';
 import { AuthService } from 'src/app/services/auth.service';
 import {Etapa} from "../../interfaces/etapa";
+import {Alumno} from "../../interfaces/alumnoInterface";
+import {AlumnoService} from "../../services/alumno.service";
 
 @Component({
   selector: 'app-predicciones',
@@ -12,28 +14,32 @@ import {Etapa} from "../../interfaces/etapa";
   styleUrls: ['./predicciones.component.css']
 })
 export class PrediccionesComponent implements OnInit {
-  partidos: Partido[] = [];
-  predicciones: { [key: number]: { prediccionE1: number, prediccionE2: number } } = {};
+  predicciones: Prediccion[] = [];
   alumno: any;
-  partidosPorEtapa: { etapa: Etapa, partidos: Partido[] }[] = [];
+  partidosPorEtapa: { etapa: Etapa, predicciones: Prediccion[] }[] = [];
 
   constructor(
     private partidoService: PartidoService,
     private prediccionesService: PrediccionesService,
-    private authService: AuthService
+    private authService: AuthService,
+    private alumnoService: AlumnoService
   ) {}
 
   async ngOnInit() {
-    this.partidos = await this.partidoService.obtenerPartidos();
-    if(this.partidos && this.partidos.length > 0) {
-      console.log(this.partidos[0])
-      this.alumno = this.authService.obtenerUsuarioAutenticado();
-      this.partidosPorEtapa = this.agruparPartidosPorEtapa(this.partidos);
-      console.log(this.partidosPorEtapa[0])
+    console.log("Autenticado como " + this.authService.obtenerUsuarioAutenticado());
+    this.alumno = await this.alumnoService.obtenerUsuarioPorCedula(this.authService.obtenerUsuarioAutenticado());
+    this.predicciones = await this.prediccionesService.obtenerPrediccionesByAlumno(this.alumno);
+
+    if(this.predicciones && this.predicciones.length > 0) {
+      this.agruparPartidosPorEtapa();
     }
   }
 
-  guardarPrediccion(partido: Partido): void {
+  async obtenerPrediccion(partido: Partido) {
+    return this.prediccionesService.obtenerPrediccion(partido);
+  }
+
+  guardarPrediccion(prediccion: Prediccion): void {
     /*const prediccion = this.predicciones[partido.id];
     if (prediccion) {
       const nuevaPrediccion: predicciones = {
@@ -51,21 +57,15 @@ export class PrediccionesComponent implements OnInit {
       alert('Predicción guardada con éxito!');
     }*/
   }
-  private agruparPartidosPorEtapa(partidos: Partido[]): { etapa: Etapa, partidos: Partido[] }[] {
-    const partidosAgrupados: { etapa: Etapa, partidos: Partido[] }[] = [];
-    partidos.forEach(partido => {
-      console.log(partido);
-      console.log("etapa: ")
-      // @ts-ignore
-      console.log(partido.etapa);
-      const index = partidosAgrupados.findIndex(item => item.etapa === partido.etapa);
+
+  private agruparPartidosPorEtapa() {
+    this.predicciones.forEach(prediccion => {
+      const index = this.partidosPorEtapa.findIndex(item => item.etapa === prediccion.partido.etapa);
       if (index !== -1) {
-        partidosAgrupados[index].partidos.push(partido);
+        this.partidosPorEtapa[index].predicciones.push(prediccion);
       } else {
-        partidosAgrupados.push({ etapa: partido.etapa, partidos: [partido] });
+        this.partidosPorEtapa.push({ etapa: prediccion.partido.etapa, predicciones: [prediccion] });
       }
     });
-
-    return partidosAgrupados;
   }
 }

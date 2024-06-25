@@ -17,6 +17,12 @@ public class AlumnoController(AlumnoService alumnoService) : ControllerBase
         Alumno[] alumnos = await _alumnoService.GetAllAsync();
         return Ok(alumnos);
     }
+    [HttpGet("ranking")]
+    public async Task<ActionResult<Alumno[]>> GetByRanking()
+    {
+        Alumno[] alumnos = await _alumnoService.GetAllOrderAsync();
+        return Ok(alumnos);
+    }
     
     [HttpGet("{id}")]
     public async Task<ActionResult<Alumno>> Get(int id)

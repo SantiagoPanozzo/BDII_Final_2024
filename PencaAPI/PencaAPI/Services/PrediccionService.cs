@@ -118,6 +118,124 @@ public class PrediccionService(PgDatabaseConnection dbConnection)
         ).ToList();
         return predicciones.ToArray();
     }
+
+      /// <summary>
+    /// Obtener todas las arreras de la base de datos.
+    /// </summary>
+    /// <returns>Un array con todas las carreras de la base de datos.</returns>
+    public async Task<Prediccion[]> GetAllByPartidoAsync(PartidoDTO partidoDTO)
+    {
+         var sqlQuery = @"Select 
+                            p.Prediccion_E1 as pe1,
+                            p.Prediccion_E2 as pe2,
+                            coalesce(p.Puntaje, 0) as PuntajePred,
+
+                            a.*,
+                            camp.Pais as campeon_nombre,
+                            subcamp.Pais as subcampeon_nombre,
+                            c.id as carrera_id,
+                            c.nombre as carrera_nombre,
+
+                            par.Fecha as fecha,
+                            e1.Abreviatura as E1_Abreviatura,
+                            e1.Pais as E1_Pais,
+                            e2.Abreviatura as E2_Abreviatura,
+                            e2.Pais as E2_Pais,
+                            coalesce(par.Resultado_E1, -1) as Resultado_E1,
+                            coalesce(par.Resultado_E2, -1) as Resultado_E2,
+                            et.Id as Etapa_Id,
+                            et.Nombre as Etapa_Nombre
+
+                         From Prediccion p
+
+                         join Alumno a
+                         on p.cedula = a.cedula
+                         join Estudia e
+                         on a.cedula = e.cedula
+                         join Carrera c
+                         on e.id_carrera = c.id
+                         join Equipo camp
+                         on a.campeon = camp.abreviatura
+                         join Equipo subcamp
+                         on a.subcampeon = subcamp.abreviatura
+                    
+                         join Partido par
+                         on (p.Equipo_E1 = par.Equipo_E1
+                         and p.Equipo_E2 = par.Equipo_E2
+                         AND p.fecha_partido = par.fecha)
+                         or
+                         (p.Equipo_E1 = par.Equipo_E2
+                         and p.Equipo_E2 = par.Equipo_E1
+                         AND p.fecha_partido = par.fecha)
+
+                         join Equipo e1
+                         on par.Equipo_E1 = e1.Abreviatura
+                         join Equipo e2
+                         on par.Equipo_E2 = e2.Abreviatura
+                         
+                         join Etapa et
+                         on par.Etapa = et.id
+                         Where par.Equipo_E1 = @equipo1
+                         and par.Equipo_E2 = @equipo2
+                         and par.Fecha = @fecha";
+        var result = (
+            await _dbConnection.QueryAsync(
+                sqlQuery,
+                new Dictionary<string, object>()
+                {
+                    { "fecha", partidoDTO.Fecha },
+                    { "equipo1", partidoDTO.Equipo_E1 },
+                    { "equipo2", partidoDTO.Equipo_E2 }
+                }
+            )
+        );
+        var predicciones = result.Select(x => new Prediccion(
+                alumno: new Alumno(
+                        nombre: (string)x["nombre"],
+                        apellido: (string)x["apellido"],
+                        cedula: (int)x["cedula"],
+                        contrasena: (string)x["contrasena"],
+                        fechaNacimiento: (DateTime)x["fecha_nacimiento"],
+                        anioIngreso: (int)x["anio_ingreso"],
+                        semestreIngreso: (int)x["semestre_ingreso"],
+                        puntajeTotal: (int)x["puntaje_total"],
+                        campeon: new Equipo(
+                            abreviatura: (string)x["campeon"],
+                            pais: (string)x["campeon_nombre"]
+                        ),
+                        subCampeon: new Equipo(
+                            abreviatura: (string)x["subcampeon"],
+                            pais: (string)x["subcampeon_nombre"]
+                        ),
+                        carreraPrincipal: new Carrera(
+                            id: (int)x["carrera_id"],
+                            nombre: (string)x["carrera_nombre"]
+                        )
+                ),
+                partido: new Partido(
+                        fecha: (DateTime)x["fecha"],
+                        equipo_E1: new Equipo(
+                            abreviatura: (string)x["e1_abreviatura"],
+                            pais: (string)x["e1_pais"]
+                        ),
+                        equipo_E2: new Equipo(
+                            abreviatura: (string)x["e2_abreviatura"],
+                            pais: (string)x["e2_pais"]
+                        ),
+                        resultado_E1:(int)x["resultado_e1"],
+                        resultado_E2:(int)x["resultado_e2"],
+                        etapa: new Etapa(
+                            id: (int)x["etapa_id"],
+                            nombre: (string)x["etapa_nombre"]
+                        )
+                ),
+                prediccion_e1: (int)x["pe1"],
+                prediccion_e2: (int)x["pe2"],
+                puntaje: (int)x["puntajepred"]
+            )
+        ).ToList();
+        return predicciones.ToArray();
+    }
     
     /// <summary>
     /// Obtener una carrera de la base de datos por su id
@@ -127,7 +245,7 @@ public class PrediccionService(PgDatabaseConnection dbConnection)
     /// <exception cref="ArgumentException">No existe una carrera con el id introducido.</exception>
     public async Task<Prediccion> GetByIdAsync(object id)
     {   
-        PrediccionDTO PrediccionDto = (PrediccionDTO)id;
+        PrediccionDTO prediccionDto = (PrediccionDTO)id;
         var sqlQuery = @"Select 
                             p.Prediccion_E1 as pe1,
                             p.Prediccion_E2 as pe2,
@@ -193,10 +311,10 @@ public class PrediccionService(PgDatabaseConnection dbConnection)
                 sqlQuery,
                 new Dictionary<string, object>()
                 {
-                    { "cedula", PrediccionDto.Cedula},
-                    { "fecha", PrediccionDto.Fecha },
-                    { "equipo1", PrediccionDto.Equipo_E1 },
-                    { "equipo2", PrediccionDto.Equipo_E2 }
+                    { "cedula", prediccionDto.Cedula},
+                    { "fecha", prediccionDto.Fecha },
+                    { "equipo1", prediccionDto.Equipo_E1 },
+                    { "equipo2", prediccionDto.Equipo_E2 }
                 }
             )
         );
@@ -514,6 +632,65 @@ public class PrediccionService(PgDatabaseConnection dbConnection)
                 prediccion_e2: (int)prediccion["pe2"],
                 puntaje: (int)prediccion["puntajepred"]
             );
+    }
+    public async Task<Prediccion[]> SetPuntajeAsync(object id)
+    {
+        PartidoDTO partidoDto = (PartidoDTO)id;
+       
+            var sqlQuery = @"
+                            UPDATE Prediccion
+                            SET Puntaje = case 
+                                when (prediccion_e1= p.resultado_e1 
+                                    and prediccion_e2 = p.resultado_e2) then 4
+                                when (
+                                    (prediccion_e1 > prediccion_e2 
+                                    and p.resultado_e1 > p.resultado_e2
+                                    and (prediccion_e1 <> p.resultado_e1 
+                                        or prediccion_e2 <> p.resultado_e2
+                                        )
+                                    )
+                                    or 
+                                    (prediccion_e2 > prediccion_e1 
+                                    and p.resultado_e2 > p.resultado_e1
+                                    and (prediccion_e1 <> p.resultado_e1 
+                                        or prediccion_e2 <> p.resultado_e2
+                                        )
+                                    )
+                                    or 
+                                    (prediccion_e1 = prediccion_e2 
+                                    and p.resultado_e1 = p.resultado_e2
+                                    and (prediccion_e1 <> p.resultado_e1 
+                                        or prediccion_e2 <> p.resultado_e2
+                                        )
+                                    )
+                                    )then 2
+                                else 0
+                            end
+
+                            from partido p
+                            Where Prediccion.equipo_e1 = p.equipo_e1 
+                            and Prediccion.equipo_e2 = p.equipo_e2 
+                            and Prediccion.fecha_partido = p.fecha
+                            and Prediccion.equipo_e1 = @e1
+                            and Prediccion.equipo_e2 = @e2
+                            and Prediccion.fecha_partido = @f
+                            RETURNING *;
+                            ";
+
+        var result = await _dbConnection.QueryAsync(
+            sqlQuery,
+            new Dictionary<string, object>()
+            {
+                { "e1", partidoDto.Equipo_E1 },
+                { "e2", partidoDto.Equipo_E2 },
+                { "f", partidoDto.Fecha }
+            }
+        );
+        var prediccion = result.FirstOrDefault();
+        if (prediccion == null) throw new ArgumentException("Prediccion con resultados no se actualizó.");
+
+        return await this.GetAllByPartidoAsync(partidoDto);
+       
     }
     
     public async Task DeleteAsync(object id)

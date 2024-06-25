@@ -21,7 +21,7 @@ export class DatosComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.usuarioAutenticado = this.authService.obtenerUsuarioAutenticado();
+    // this.usuarioAutenticado = this.authService.obtenerUsuarioAutenticado(); TODO
     await this.obtenerNombreCarrera();
      
   }

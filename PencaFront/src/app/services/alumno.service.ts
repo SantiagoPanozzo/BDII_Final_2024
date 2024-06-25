@@ -18,12 +18,8 @@ export class AlumnoService {
     this.http.post('http://localhost:8080/auth/register', alumno).subscribe( x => console.log(x));
   }
 
-  obtenerUsuarioPorCedulaYContrasena(cedula: number, contrasena: string): Alumno | null {
-    const usuario = this.alumnos.find(u => u.cedula === cedula && u.contrasena === contrasena) || null;
-    if (usuario) {
-      this.alumnoAutenticado = usuario;
-    }
-    return usuario;
+  async obtenerUsuarioPorCedulaYContrasena(cedula: number, contrasena: string) : Promise<Alumno | undefined> {
+    return (await this.http.get<Alumno>('http://localhost:8080/alumno/' + cedula).toPromise());
   }
 
   obtenerUsuarios(): Alumno[] {

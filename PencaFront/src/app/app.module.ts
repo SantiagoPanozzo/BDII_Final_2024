@@ -15,6 +15,8 @@ import { PuntajeComponent } from './student-dashboard/puntaje/puntaje.component'
 import { AdminPartidosComponent } from './admin-dashboard/admin-partidos/admin-partidos.component';
 import { RegistrarPartidoComponent } from './admin-dashboard/registrar-partido/registrar-partido.component';
 import {HttpClientModule} from "@angular/common/http";
+import { AppLayoutComponent } from './layouts/app-layout/app-layout.component';
+import { LogoutButtonComponent } from './components/logout-button/logout-button.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import {HttpClientModule} from "@angular/common/http";
     DatosComponent,
     PuntajeComponent,
     AdminPartidosComponent,
-    RegistrarPartidoComponent
+    RegistrarPartidoComponent,
+    AppLayoutComponent,
+    LogoutButtonComponent
   ],
   imports: [
     BrowserModule,

@@ -22,8 +22,12 @@ export class AlumnoService {
     return (await this.http.get<Alumno>('http://localhost:8080/alumno/' + cedula).toPromise());
   }
 
-  obtenerUsuarios(): Alumno[] {
-    return this.alumnos;
+  async obtenerUsuarios() {
+    return (await this.http.get<Alumno[]>('http://localhost:8080/alumno').toPromise())!;
+  }
+
+  async obtenerRanking() {
+    return (await this.http.get<Alumno[]>('http://localhost:8080/alumno/ranking').toPromise())!;
   }
 
   obtenerPuntajePorCedula(cedula: number): number | null {

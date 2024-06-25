@@ -13,9 +13,7 @@ export class ListaAlumnosComponent implements OnInit {
   cedulaABuscar: string = '';
 
   constructor(private alumnoService: AlumnoService) {
-    this.alumnos = this.alumnoService.obtenerUsuarios();
-    this.alumnosFiltrados = [...this.alumnos];
-  }
+    }
   buscarAlumnosPorCedula(): void {
     if (this.cedulaABuscar.trim() !== '') {
       const cedulaABuscarNumber = Number(this.cedulaABuscar);
@@ -26,7 +24,8 @@ export class ListaAlumnosComponent implements OnInit {
       this.alumnosFiltrados = [...this.alumnos];
     }
   }
-  ngOnInit(): void {
-    this.alumnos = this.alumnoService.obtenerUsuarios();
+  async ngOnInit() {
+    this.alumnos = await this.alumnoService.obtenerUsuarios();
+    this.alumnosFiltrados = [...this.alumnos];
   }
 }

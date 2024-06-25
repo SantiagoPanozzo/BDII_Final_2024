@@ -1,0 +1,19 @@
+<h3>Ranking general</h3>
+<app-puntaje></app-puntaje>
+
+<table>
+    <thead>
+    <tr>
+        <th>Puntaje Total</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let alumno of this.alumnos">
+        <td>{{ alumno.puntajeTotal }}</td>
+        <td>{{ alumno.nombre }}</td>
+        <td>{{ alumno.apellido }}</td>
+    </tr>
+    </tbody>
+</table>

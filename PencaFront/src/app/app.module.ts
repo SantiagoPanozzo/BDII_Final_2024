@@ -18,6 +18,7 @@ import {HttpClientModule} from "@angular/common/http";
 import { AppLayoutComponent } from './layouts/app-layout/app-layout.component';
 import { LogoutButtonComponent } from './components/logout-button/logout-button.component';
 import { EditarPartidoComponent } from './admin-dashboard/editar-partido/editar-partido.component';
+import { RankingComponent } from './student-dashboard/ranking/ranking.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { EditarPartidoComponent } from './admin-dashboard/editar-partido/editar-
     RegistrarPartidoComponent,
     AppLayoutComponent,
     LogoutButtonComponent,
-    EditarPartidoComponent
+    EditarPartidoComponent,
+    RankingComponent
   ],
   imports: [
     BrowserModule,

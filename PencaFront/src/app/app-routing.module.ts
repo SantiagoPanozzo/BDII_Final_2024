@@ -15,6 +15,7 @@ import {AdminGuard} from "./guards/admin.guard";
 import {StudentGuard} from "./guards/student.guard";
 import {AppLayoutComponent} from "./layouts/app-layout/app-layout.component";
 import {EditarPartidoComponent} from "./admin-dashboard/editar-partido/editar-partido.component";
+import {RankingComponent} from "./student-dashboard/ranking/ranking.component";
 
 const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -43,6 +44,7 @@ const routes: Routes = [
             { path: 'datos', component: DatosComponent, pathMatch: 'full'},
             { path: 'predicciones', component: PrediccionesComponent, pathMatch: 'full'},
             { path: 'puntaje', component: PuntajeComponent, pathMatch: 'full'},
+            { path: 'ranking', component: RankingComponent, pathMatch: 'full'}
         ]
     }
 ];

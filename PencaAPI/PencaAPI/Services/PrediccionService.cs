@@ -13,6 +13,7 @@ public class PrediccionService(PgDatabaseConnection dbConnection)
     : IService<Prediccion>
 {
     private readonly PgDatabaseConnection _dbConnection = dbConnection;
+
     
     /// <summary>
     /// Obtener todas las arreras de la base de datos.
@@ -373,6 +374,10 @@ public class PrediccionService(PgDatabaseConnection dbConnection)
     
     public async Task<Prediccion> CreateAsync(Prediccion entity)
     {
+        if (!entity.Partido.EsPosibleCrearPrediccion())
+        {
+            throw new ArgumentException("No se puede crear la predicción porque el tiempo límite ha pasado.");
+        }
         var sqlQuery = @"
                         WITH inserted AS (
                             INSERT INTO Prediccion 
@@ -501,6 +506,10 @@ public class PrediccionService(PgDatabaseConnection dbConnection)
     
     public async Task<Prediccion> UpdateAsync(object id, Prediccion entity)
     {
+         if (!entity.Partido.EsPosibleCrearPrediccion())
+        {
+            throw new ArgumentException("No se puede editar la predicción porque el tiempo límite ha pasado.");
+        }
         await this.GetByIdAsync(id);
         
         PrediccionDTO prediccionDto = (PrediccionDTO)id;

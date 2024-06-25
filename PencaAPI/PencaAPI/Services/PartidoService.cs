@@ -9,10 +9,11 @@ namespace PencaAPI.Services;
 /// Service para realizar acciones en la base de datos realacionadas a la tabla de Carera.
 /// </summary>
 /// <param name="dbConnection">Instancia de PgDatabaseConnection correspondiente a la base de datos.</param>
-public class PartidoService(PgDatabaseConnection dbConnection)
+public class PartidoService(PgDatabaseConnection dbConnection, PrediccionService prediccionService)
     : IService<Partido>
 {
     private readonly PgDatabaseConnection _dbConnection = dbConnection;
+   private readonly PrediccionService _prediccionService = prediccionService;
     
     /// <summary>
     /// Obtener todas las arreras de la base de datos.
@@ -209,14 +210,11 @@ public class PartidoService(PgDatabaseConnection dbConnection)
         PartidoDTO partidoDto = (PartidoDTO)id;
         var sqlQuery = @"
                         WITH updated as (
-                        UPDATE Partido 
-                        set Fecha = @f , 
-                        Equipo_E1 = @e1, 
-                        Equipo_E2 = @e2, 
+                        UPDATE Partido  
+                        SET 
                         Resultado_E1 = @r1,
-                        Resultado_E2 = @r2,
-                        Etapa = @e
-                        Where Fecha = @fw
+                        Resultado_E2 = @r2
+                        Where Fecha = @fw 
                         and Equipo_E1 = @e1w
                         and Equipo_E2 = @e2w
                         RETURNING *
@@ -276,12 +274,8 @@ public class PartidoService(PgDatabaseConnection dbConnection)
                 sqlQuery,
                 new Dictionary<string, object>()
                 {
-                    { "f", entity.Fecha},
-                    { "e1", entity.Equipo_E1.Abreviatura},
-                    { "e2", entity.Equipo_E2.Abreviatura},
                     { "r1", entity.Resultado_E1},
                     { "r2", entity.Resultado_E2},
-                    { "e", entity.Etapa.Id},
                     { "fw", partidoDto.Fecha },
                     { "e1w", partidoDto.Equipo_E1},
                     { "e2w", partidoDto.Equipo_E2}
@@ -305,7 +299,8 @@ public class PartidoService(PgDatabaseConnection dbConnection)
                 id: (int)partido["etapa_id"],
                 nombre: (string)partido["etapa_nombre"]
             );
-            return new Partido(
+
+            var part = new Partido(
                     fecha: (DateTime)partido["fecha"],
                     equipo_E1: equipo1,
                     equipo_E2: equipo2,
@@ -313,6 +308,12 @@ public class PartidoService(PgDatabaseConnection dbConnection)
                     resultado_E2:(int)partido["resultado_e2"],
                     etapa: et
             );
+        
+            var resultPuntajes=  await _prediccionService.SetPuntajeAsync(partidoDto);
+            var prediciones = resultPuntajes.FirstOrDefault();
+            if (prediciones == null) throw new ArgumentException("Partido con resultados no se actualizó.");
+
+            return part;
         }
         else
         {   

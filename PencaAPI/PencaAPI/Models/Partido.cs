@@ -26,5 +26,25 @@ public class Partido
         Resultado_E2 = resultado_E2;
         Etapa = etapa;
     }
+    public bool EsPosibleCrearPrediccion()
+    {
+        // Obtener la hora actual
+        DateTime horaActual = DateTime.Now;
+
+        // Calcular la hora límite para la predicción (una hora antes del inicio del partido)
+        DateTime horaLimite = Fecha.AddHours(-1);
+
+        // Comparar la hora actual con la hora límite
+        if (horaActual < horaLimite)
+        {
+            // Aún es posible crear la predicción
+            return true;
+        }
+        else
+        {
+            // La hora actual es igual o mayor a la hora límite, no se puede crear la predicción
+            return false;
+        }
+    }
             
 }

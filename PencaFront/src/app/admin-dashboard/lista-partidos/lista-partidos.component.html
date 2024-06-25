@@ -22,7 +22,12 @@
         <td>{{ partido.etapa.nombre }} </td>
         <td>{{ ((partido.resultado_E1 != null) && (partido.resultado_E1 >= 0)) ? partido.resultado_E1 : '-' }}</td>
         <td>{{ ((partido.resultado_E2 != null) && (partido.resultado_E2 >= 0)) ? partido.resultado_E2 : '-' }}</td>
-        <td><button (click)="editarPartido(partido.fecha, partido.equipo_E1.abreviatura, partido.equipo_E2.abreviatura)">Editar {{partido.id}}</button></td>
+        <td>
+            <span style="display: flex; flex-direction: row;">
+                <button (click)="editarPartido(partido.fecha, partido.equipo_E1.abreviatura, partido.equipo_E2.abreviatura)">Resultados</button>
+                <button (click)="resultadosPartido(partido.fecha, partido.equipo_E1.abreviatura, partido.equipo_E2.abreviatura)">Editar</button>
+            </span>
+        </td>
       </tr>
     </tbody>
   </table>

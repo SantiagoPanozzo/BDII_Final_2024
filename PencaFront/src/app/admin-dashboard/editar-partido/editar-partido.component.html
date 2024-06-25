@@ -1,0 +1,33 @@
+
+<div *ngIf="partido" class="container">
+    <h2>Editar Partido</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Equipo A</th>
+            <th>Equipo B</th>
+            <th>Fecha</th>
+            <th>Etapa</th>
+            <th>Acción</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><select id="equipoE1" name="equipoE1" [(ngModel)]="partido.equipo_E1.abreviatura" required>
+                <option *ngFor="let equipo of equipos" [value]="equipo.abreviatura">{{ equipo.pais }}</option>
+            </select></td>
+            <td><select id="equipoE2" name="equipoE2" [(ngModel)]="partido.equipo_E2.abreviatura" required>
+                <option *ngFor="let equipo of equipos" [value]="equipo.abreviatura">{{ equipo.pais }}</option>
+            </select></td>
+            <td><input type="datetime-local" [(ngModel)]="partido.fecha"></td>
+            <td><select id="etapa" name="etapa" [(ngModel)]="partido.etapa.id" required>
+                <option *ngFor="let etapa of etapas" [value]="etapa.id">{{ etapa.nombre }}</option>
+            </select></td>
+            <td>
+                <button (click)="guardarResultado()" [disabled]="partido.fecha > today">Guardar</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+  

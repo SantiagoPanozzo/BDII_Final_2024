@@ -34,7 +34,7 @@ export class PrediccionesComponent implements OnInit {
   }
 
   guardarPrediccion(partido: Partido): void {
-    const prediccion = this.predicciones[partido.id];
+    /*const prediccion = this.predicciones[partido.id];
     if (prediccion) {
       const nuevaPrediccion: predicciones = {
         Cedula: this.alumno.cedula,
@@ -49,7 +49,7 @@ export class PrediccionesComponent implements OnInit {
       console.log(nuevaPrediccion);
       this.prediccionesService.agregarOActualizarPrediccion(nuevaPrediccion);
       alert('Predicción guardada con éxito!');
-    }
+    }*/
   }
   private agruparPartidosPorEtapa(partidos: Partido[]): { etapa: Etapa, partidos: Partido[] }[] {
     const partidosAgrupados: { etapa: Etapa, partidos: Partido[] }[] = [];

@@ -1,19 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { PartidoService } from 'src/app/services/partido.service';
-import { Partido } from 'src/app/interfaces/partido';
-import {EquipoService} from "../../services/equiposervice.service";
+import { Component } from '@angular/core';
+import {PartidoSinResultados} from "../../interfaces/partidoSinResultados";
 import {Equipo} from "../../interfaces/equipo";
-import {EtapaService} from "../../services/etapa.service";
 import {Etapa} from "../../interfaces/etapa";
+import {PartidoService} from "../../services/partido.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {EquipoService} from "../../services/equiposervice.service";
+import {EtapaService} from "../../services/etapa.service";
 
 @Component({
-  selector: 'app-admin-partidos',
-  templateUrl: './admin-partidos.component.html',
-  styleUrls: ['./admin-partidos.component.css']
+  selector: 'app-editar-partido',
+  templateUrl: './editar-partido.component.html',
+  styleUrls: ['./editar-partido.component.css']
 })
-export class AdminPartidosComponent implements OnInit {
-  partido: Partido | undefined;
+export class EditarPartidoComponent {
+  partido: PartidoSinResultados | undefined;
   today: Date = new Date();
   equipos: Equipo[] = [];
   etapas: Etapa[] = [];
@@ -22,11 +22,11 @@ export class AdminPartidosComponent implements OnInit {
   fecha: Date = {} as Date;
 
   constructor(
-    private partidoService: PartidoService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private equipoService: EquipoService,
-    private etapaService: EtapaService
+      private partidoService: PartidoService,
+      private route: ActivatedRoute,
+      private router: Router,
+      private equipoService: EquipoService,
+      private etapaService: EtapaService
   ) {}
 
   async ngOnInit() {
@@ -34,8 +34,6 @@ export class AdminPartidosComponent implements OnInit {
     this.abreviatura_1 = this.route.snapshot.params['abreviatura_1'];
     this.abreviatura_2 = this.route.snapshot.params['abreviatura_2'];
     this.partido = await this.partidoService.obtenerPartidoPorId(this.fecha, this.abreviatura_1, this.abreviatura_2);
-    if(this.partido.resultado_E1 == null || this.partido.resultado_E1 < 0) this.partido.resultado_E1 = 0;
-    if(this.partido.resultado_E2 == null || this.partido.resultado_E2 < 0) this.partido.resultado_E2 = 0;
     this.equipos = await this.equipoService.obtenerEquipos();
     this.etapas = await this.etapaService.obtenerEtapas();
     console.log('Partido obtenido:', this.partido);
@@ -46,16 +44,10 @@ export class AdminPartidosComponent implements OnInit {
       this.partido.etapa = await this.etapaService.obtenerEtapaPorId(this.partido.etapa.id);
       this.partido.equipo_E1 = await this.equipoService.obtenerEquipoPorAbreviatura(this.partido.equipo_E1.abreviatura);
       this.partido.equipo_E2 = await this.equipoService.obtenerEquipoPorAbreviatura(this.partido.equipo_E2.abreviatura);
-      await this.partidoService.actualizarResultado(this.abreviatura_1, this.abreviatura_2, this.fecha, this.partido.resultado_E1!, this.partido.resultado_E2!);
+      await this.partidoService.modificarPartido(this.abreviatura_1, this.abreviatura_2, this.fecha, this.partido);
       await this.router.navigate(['/admin-dashboard/partidos'])
     } else {
       alert("Error")
     }
   }
 }
-
-
-
-
-
-

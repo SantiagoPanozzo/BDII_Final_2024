@@ -18,7 +18,13 @@ export class PrediccionesService {
     console.log("Obteniendo partidos");
     const partidos: Partido[] = await this.partidoService.obtenerPartidos()
     console.log(partidos);
-    const predicciones: Prediccion[] = (await this.http.get<Prediccion[]>('http://localhost:8080/prediccion').toPromise())!.filter(x => x.alumno === alumno);
+    let predicciones = (await this.http.get<Prediccion[]>('http://localhost:8080/prediccion').toPromise());
+    if (!predicciones || predicciones.length <= 0){
+      predicciones = [];
+    } else {
+      predicciones = predicciones.filter(x => x.alumno === alumno);
+    }
+
     for (const partido of partidos) {
       let x = predicciones.filter(x => x.partido === partido);
       if(!x || x.length == 0){

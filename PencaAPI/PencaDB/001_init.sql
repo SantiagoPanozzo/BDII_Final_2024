@@ -24,8 +24,15 @@ create table Partido(
 	constraint pk_partido primary key (Fecha, Equipo_E1, Equipo_E2),
 	constraint fk_partido_equipo_1 foreign key (Equipo_E1) references Equipo(Abreviatura),
 	constraint fk_partido_equipo_2 foreign key (Equipo_E2) references Equipo(Abreviatura),
-	constraint fk_partido_etapa foreign key (Etapa) references Etapa(Id)	
-	--hay que hacer un trigger para controlar que no sean el mismo equipo.
+	constraint fk_partido_etapa foreign key (Etapa) references Etapa(Id),
+	constraint check_equipos_diferentes check (Equipo_E1 <> Equipo_E2)
+	--hay que hacer un trigger para controlar que no sean el mismo equipo y que no queden dados vuelta porque significa lo mismo.
+);
+
+CREATE UNIQUE INDEX unique_partido_ordenado ON Partido (
+    Fecha,
+    LEAST(Equipo_E1, Equipo_E2),
+    GREATEST(Equipo_E1, Equipo_E2)
 );
 
 create table Administrador(
@@ -35,6 +42,8 @@ create table Administrador(
 	Fecha_Nacimiento date not null,
 	Rol_Universidad varchar(100) not null,
 	Contrasena varchar not null
+	--constraint admin_no_alumno check (Cedula not in (SELECT Cedula FROM Alumno))
+
 );
 
 create table Alumno(
@@ -49,7 +58,9 @@ create table Alumno(
 	Subcampeon varchar(3) not null,
 	Contrasena varchar not null,
 	constraint fk_campeon foreign key (Campeon) references Equipo(Abreviatura),
-	constraint fk_subcampeon foreign key (Subcampeon) references Equipo(Abreviatura)
+	constraint fk_subcampeon foreign key (Subcampeon) references Equipo(Abreviatura),
+	constraint check_campeon_diferente_subcampeon check (Campeon <> Subcampeon)
+	--constraint alumno_no_admin check (Cedula not in (SELECT Cedula FROM Administrador))
 	--hay que hacer un trigger para controlar que campeon y subcampeon sean diferentes
 );
 
@@ -63,7 +74,9 @@ create table Prediccion(
 	Puntaje int,
 	constraint pk_prediccion primary key (Cedula, Equipo_E1, Equipo_E2, Fecha_partido),
 	constraint fk_prediccion_alumno foreign key (Cedula) references Alumno(Cedula),
-	constraint fk_prediccion_partido foreign key (Equipo_E1, Equipo_E2, Fecha_partido) references Partido(Equipo_E1, Equipo_E2, Fecha)
+	constraint fk_prediccion_partido foreign key (Equipo_E1, Equipo_E2, Fecha_partido) 
+		references Partido(Equipo_E1, Equipo_E2, Fecha)
+        ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 create table Estudia(
@@ -72,8 +85,30 @@ create table Estudia(
 	Principal int not null,
 	constraint pk_estudia primary key (Cedula, Id_carrera),
 	constraint fk_alumno foreign key (Cedula) references Alumno(Cedula),
-	constraint fk_carrera foreign key (Id_carrera) references Carrera(Id)
+	constraint fk_carrera foreign key (Id_carrera) references Carrera(Id),
+	constraint check_principal check (Principal IN (0, 1))
 );
+
+create unique index idx_unico_principal
+on Estudia (Cedula)
+where Principal = 1;
+
+-- Función para verificar la exclusividad de cédula entre Administrador y Alumno
+CREATE OR REPLACE FUNCTION check_admin_alumno_exclusivity()
+RETURNS TRIGGER AS $$
+BEGIN
+    
+    IF EXISTS (
+        SELECT 1 FROM Administrador WHERE Cedula = NEW.Cedula
+        INTERSECT
+        SELECT 1 FROM Alumno WHERE Cedula = NEW.Cedula
+    ) THEN
+        RAISE EXCEPTION 'La cedula % no puede estar en ambas tablas Administrador y Alumno simultáneamente', NEW.Cedula;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
 
 -- Función para actualizar el puntaje del alumno
 CREATE OR REPLACE FUNCTION actualizar_puntaje_alumno()
@@ -90,11 +125,23 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Trigger para actualizar automáticamente el puntaje del alumno
-CREATE TRIGGER trigger_actualizar_puntaje_alumno
-AFTER UPDATE OF Puntaje ON Prediccion
-FOR EACH ROW
-EXECUTE FUNCTION actualizar_puntaje_alumno();
+
+create trigger trigger_check_admin_alumno_exclusivity
+before insert or update on Administrador
+for each row
+execute function check_admin_alumno_exclusivity();
+
+create trigger trigger_check_admin_alumno_exclusivity
+before insert or update on Alumno
+for each row
+execute function check_admin_alumno_exclusivity();
+
+
+
+create trigger trigger_actualizar_puntaje_alumno
+after update OF Puntaje ON Prediccion
+for each row
+execute function actualizar_puntaje_alumno();
 
 
 

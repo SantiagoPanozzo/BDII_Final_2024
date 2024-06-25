@@ -13,23 +13,19 @@ import {UserLogin} from "../interfaces/UserLogin";
   providedIn: 'root'
 })
 export class AuthService {
-  private adminCredentials = { cedula: 999, contrasena: 'admin' };
-  private usuarioAutenticado: Alumno | null = null;
-  private token: string | null = null;
-  private esAdmin: boolean = false;
-
   public isLoggedIn() {
-    return this.token != null;
+    return localStorage.getItem('userToken') != null;
   }
 
   public isAdmin() {
-    return this.esAdmin;
+    const token = localStorage.getItem('userToken');
+    if (token)
+      // @ts-ignore
+      return jwtDecode(token).role !== "alumno";
+    return false;
   }
 
   constructor(
-    private alumnoService: AlumnoService, 
-    private administradorService: AdministradorService, 
-    private carreraService: CarreraService,
     private router: Router,
     private http: HttpClient
   ) {}
@@ -42,29 +38,28 @@ export class AuthService {
     const response = await this.http.post('http://localhost:8080/auth/login', userLogin).toPromise();
 
     // @ts-ignore
-    this.token = response.token.result;
-    localStorage.setItem('userToken', JSON.stringify(this.token));
+    const token = response.token.result;
+    localStorage.setItem('userToken', JSON.stringify(token));
+
     // @ts-ignore
-    this.esAdmin = jwtDecode(this.token).role !== "alumno";
-    // @ts-ignore
-    if(!this.esAdmin) console.log("no es admin!!!!!");
-    return { esAdmin: this.esAdmin, usuario: null };
+    const user = jwtDecode(token).nameid;
+    localStorage.setItem('user', JSON.stringify(user));
+
+    return { esAdmin: this.isAdmin(), usuario: this.obtenerUsuarioAutenticado() };
   }
 
  
-  obtenerUsuarioAutenticado(): Alumno {
+  obtenerUsuarioAutenticado(): string {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
-      this.usuarioAutenticado = JSON.parse(storedUser);
-      return this.usuarioAutenticado!;
+      return storedUser!;
     } else {
       throw new Error('No hay un usuario autenticado actualmente');
     }
   }
 
   logout(): void {
-    this.usuarioAutenticado = null;
-    localStorage.removeItem('user'); // Remove user data
+    localStorage.removeItem('userToken'); // Remove user data
     this.router.navigate(['/login']);
   }
 }

@@ -13,6 +13,7 @@ import { AdminPartidosComponent } from './admin-dashboard/admin-partidos/admin-p
 import { RegistrarPartidoComponent } from './admin-dashboard/registrar-partido/registrar-partido.component';
 import {AdminGuard} from "./guards/admin.guard";
 import {StudentGuard} from "./guards/student.guard";
+import {AppLayoutComponent} from "./layouts/app-layout/app-layout.component";
 
 const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -21,6 +22,7 @@ const routes: Routes = [
     {
         path: 'admin-dashboard',
         canActivate: [AdminGuard],
+        component: AppLayoutComponent,
         children: [
             { path: '', component: AdminDashboardComponent, pathMatch: 'full' }, // Default child route
             { path: 'partidos', component: ListaPartidosComponent, pathMatch: 'full'},
@@ -33,6 +35,7 @@ const routes: Routes = [
     {
         path: 'student-dashboard',
         canActivate: [StudentGuard],
+        component: AppLayoutComponent,
         children: [
             { path: '', component: StudentDashboardComponent },
             { path: 'datos', component: DatosComponent, pathMatch: 'full'},

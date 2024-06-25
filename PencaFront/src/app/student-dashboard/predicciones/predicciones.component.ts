@@ -35,27 +35,10 @@ export class PrediccionesComponent implements OnInit {
     }
   }
 
-  async obtenerPrediccion(partido: Partido) {
-    return this.prediccionesService.obtenerPrediccion(partido);
-  }
-
   guardarPrediccion(prediccion: Prediccion): void {
-    /*const prediccion = this.predicciones[partido.id];
-    if (prediccion) {
-      const nuevaPrediccion: predicciones = {
-        Cedula: this.alumno.cedula,
-        Equipo_E1: partido.equipo_E1,
-        Equipo_E2: partido.equipo_E2,
-        Fecha_partido: partido.fecha,
-        Prediccion_E1: prediccion.prediccionE1,
-        Prediccion_E2: prediccion.prediccionE2,
-        Puntaje: this.alumno.puntajeTotal
-      };
-      console.log("Guardando prediccion:");
-      console.log(nuevaPrediccion);
-      this.prediccionesService.agregarOActualizarPrediccion(nuevaPrediccion);
-      alert('Predicción guardada con éxito!');
-    }*/
+    console.log("Prediccion a guardar:")
+    console.log(prediccion)
+    this.prediccionesService.agregarOActualizarPrediccion(prediccion);
   }
 
   private agruparPartidosPorEtapa() {

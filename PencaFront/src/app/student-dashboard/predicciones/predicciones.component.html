@@ -27,10 +27,10 @@
         <td>{{ ((prediccion.partido.resultado_E1 != null) && (prediccion.partido.resultado_E1 >= 0)) ? prediccion.partido.resultado_E1 : '-' }}</td>
         <td>{{ ((prediccion.partido.resultado_E2 != null) && (prediccion.partido.resultado_E2 >= 0)) ? prediccion.partido.resultado_E2 : '-' }}</td>
         <td>
-          <!--<input type="number" [(ngModel)]="predicciones[partido.id].prediccionE1" placeholder="Predicción E1">-->
+          <input type="number" [(ngModel)]="prediccion.prediccion_E1" placeholder="Predicción E1">
         </td>
         <td>
-          <!--<input type="number" [(ngModel)]="predicciones[partido.id].prediccionE2" placeholder="Predicción E2">-->
+          <input type="number" [(ngModel)]="prediccion.prediccion_E2" placeholder="Predicción E2">
         </td>
         <td>
           <button (click)="guardarPrediccion(prediccion)">Guardar</button>

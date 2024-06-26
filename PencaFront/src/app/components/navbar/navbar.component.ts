@@ -12,8 +12,10 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   isLoggedIn: boolean = false;
+  isAdmin: boolean = false;
 
   ngOnInit() {
     this.isLoggedIn = this.authService.isLoggedIn();
+    this.isAdmin = this.authService.isAdmin();
   }
 }

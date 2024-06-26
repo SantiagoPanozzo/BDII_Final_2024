@@ -1,56 +1,79 @@
-<div class="registro-container">
-  <h2>Registro de Alumno</h2>
-  <form (ngSubmit)="registrar()">
-    <div class="form-group">
-      <label for="cedula">Cédula:</label>
-      <input type="text" id="cedula" name="cedula" [(ngModel)]="alumno.cedula" required>
+<div class="registro-container ">
+  <h2 class="font-bold text-2xl mt-2">Registro de alumno</h2>
+  <form class="max-w-sm mx-auto" (ngSubmit)="registrar()">
+    <div class="form-group mb-5">
+      <label for="cedula" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cédula:</label>
+      <input type="text" id="cedula" name="cedula" [(ngModel)]="alumno.cedula" required
+             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
     </div>
-    <div class="form-group">
-      <label for="contrasena">Contraseña:</label>
-      <input type="password" id="contrasena" name="contrasena" [(ngModel)]="alumno.contrasena" required>
+    <div class="form-group mb-5">
+      <label for="contrasena" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña:</label>
+      <input type="password" id="contrasena" name="contrasena" [(ngModel)]="alumno.contrasena" required
+             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
     </div>
-    <div class="form-group">
-      <label for="nombre">Nombre:</label>
-      <input type="text" id="nombre" name="nombre" [(ngModel)]="alumno.nombre" required>
+    <div class="form-group mb-5">
+      <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" [(ngModel)]="alumno.nombre" required
+             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
     </div>
-    <div class="form-group">
-      <label for="apellido">Apellido:</label>
-      <input type="text" id="apellido" name="apellido" [(ngModel)]="alumno.apellido" required>
+    <div class="form-group mb-5">
+      <label for="apellido" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido:</label>
+      <input type="text" id="apellido" name="apellido" [(ngModel)]="alumno.apellido" required
+             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
     </div>
-    <div class="form-group">
-      <label for="fechaNacimiento">Fecha de Nacimiento:</label>
-      <input type="date" id="fechaNacimiento" name="fechaNacimiento" [(ngModel)]="alumno.fechaNacimiento" required>
+    <div class="form-group mb-5">
+      <label for="fechaNacimiento" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Nacimiento:</label>
+      <input type="date" id="fechaNacimiento" name="fechaNacimiento" [(ngModel)]="alumno.fechaNacimiento" required
+             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
     </div>
-    <div class="form-group">
-      <label for="carrera">Carrera:</label>
-      <select id="carrera" name="carrera" [(ngModel)]="alumno.carreraPrincipal.id" required>
+    <div class="form-group mb-5">
+      <label for="carrera" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Carrera:</label>
+      <select id="carrera" name="carrera" [(ngModel)]="alumno.carreraPrincipal.id" required
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500
+                    focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                    dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
         <option *ngFor="let carrera of carreras" [value]="carrera.id">{{ carrera.nombre }}</option>
       </select>
     </div>
-    <div class="form-group">
-      <label for="anioIngreso">Año de Ingreso:</label>
-      <input type="number" id="anioIngreso" name="anioIngreso" [(ngModel)]="alumno.anioIngreso" required>
+    <div class="form-group mb-5">
+      <label for="anioIngreso" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Año de Ingreso:</label>
+      <input type="number" id="anioIngreso" name="anioIngreso" [(ngModel)]="alumno.anioIngreso" required
+             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
     </div>
-    <div class="form-group">
-      <label for="semestreIngreso">Semestre de Ingreso:</label>
-      <select id="semestreIngreso" name="semestreIngreso" [(ngModel)]="alumno.semestreIngreso" required>
+    <div class="form-group mb-5">
+      <label for="semestreIngreso" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Semestre de Ingreso:</label>
+      <select id="semestreIngreso" name="semestreIngreso" [(ngModel)]="alumno.semestreIngreso" required
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500
+                    focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                    dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
         <option value="1">Marzo</option>
         <option value="2">Agosto</option>
       </select>
     </div>
-    <div class="form-group">
-      <label for="campeon">Campeón:</label>
-      <select id="campeon" name="campeon" [(ngModel)]="alumno.campeon.abreviatura" required>
+    <div class="form-group mb-5">
+      <label for="campeon" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Campeón:</label>
+      <select id="campeon" name="campeon" [(ngModel)]="alumno.campeon.abreviatura" required
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500
+                    focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                    dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
         <option *ngFor="let equipo of equipos" [value]="equipo.abreviatura">{{ equipo.pais }}</option>
       </select>
     </div>
-    <div class="form-group">
-      <label for="subcampeon">Subcampeón:</label>
-      <select id="subcampeon" name="subcampeon" [(ngModel)]="alumno.subcampeon.abreviatura" required>
+    <div class="form-group mb-5">
+      <label for="subcampeon" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Subcampeón:</label>
+      <select id="subcampeon" name="subcampeon" [(ngModel)]="alumno.subcampeon.abreviatura" required
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500
+                    focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                    dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
         <option *ngFor="let equipo of equipos" [value]="equipo.abreviatura">{{ equipo.pais }}</option>
       </select>
     </div>
-    
-    <button type="submit">Registrar</button>
+
+    <button type="submit" class="mt-4 bg-lime-600 hover:bg-lime-500 hover:text-gray-800 font-bold w-96 h-12 mb-2 rounded-md flex flex-col items-center content-center justify-center">
+      Registrar
+    </button>
+      <div>
+          <a class="hover:cursor-pointer text-white hover:text-lime-500" routerLink="/login">Ya tengo usuario</a>
+      </div>
   </form>
 </div>

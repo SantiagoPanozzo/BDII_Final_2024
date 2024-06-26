@@ -24,7 +24,7 @@ export class RegistroComponent implements OnInit {
     semestreIngreso: '',
     puntajeTotal: 0,
     campeon: {} as Equipo,
-    subcampeon: {} as Equipo
+    subCampeon: {} as Equipo
   };
   equipos: Equipo[] = [];
   carreras: Carrera[] = [];
@@ -44,7 +44,7 @@ export class RegistroComponent implements OnInit {
   async registrar() {
     this.alumno.carreraPrincipal = await this.carreraService.obtenerCarreraPorId(this.alumno.carreraPrincipal.id);
     this.alumno.campeon = await this.equipoService.obtenerEquipoPorAbreviatura(this.alumno.campeon.abreviatura);
-    this.alumno.subcampeon = await this.equipoService.obtenerEquipoPorAbreviatura(this.alumno.subcampeon.abreviatura);
+    this.alumno.subCampeon = await this.equipoService.obtenerEquipoPorAbreviatura(this.alumno.subCampeon.abreviatura);
     console.log("Registrando: ")
     console.log(this.alumno);
     this.alumnoService.registrarUsuario(this.alumno);

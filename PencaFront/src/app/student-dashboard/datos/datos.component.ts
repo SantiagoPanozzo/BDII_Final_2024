@@ -14,7 +14,6 @@ import { Carrera } from 'src/app/interfaces/carrera';
 })
 export class DatosComponent implements OnInit {
   usuarioAutenticado: Alumno | null = null;
-  nombreCarrera: string = '';
 
   equipos: Equipo[] = [];
   carreras: Carrera[] = [];
@@ -35,4 +34,5 @@ export class DatosComponent implements OnInit {
   async obtenerNombreCarrera() {
     return this.usuarioAutenticado!.carreraPrincipal.nombre; // TODO deprecar esto
   }
+
 }

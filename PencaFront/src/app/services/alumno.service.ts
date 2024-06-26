@@ -18,6 +18,10 @@ export class AlumnoService {
     this.http.post('http://localhost:8080/auth/register', alumno).subscribe( x => console.log(x));
   }
 
+  async actualizarUsuario(alumno: Alumno): Promise<Alumno> {
+    return (await (this.http.put<Alumno>('http://localhost:8080/alumno/' + alumno.cedula, alumno).toPromise()))!;
+  }
+
   // TODO proteger esto lol
   async obtenerUsuarioPorCedula(cedula: number) : Promise<Alumno | undefined> {
     return (await this.http.get<Alumno>('http://localhost:8080/alumno/' + cedula).toPromise());

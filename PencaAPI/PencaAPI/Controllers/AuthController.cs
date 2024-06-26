@@ -48,12 +48,16 @@ namespace PencaAPI.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] Alumno alumno)
         {
-            var user = await _alumnoService.CreateAsync(alumno);
+            try{
+                var user = await _alumnoService.CreateAsync(alumno);
 
-            if (user == null)
-                return BadRequest(new { message = "Error al registrar el usuario" });
+                if (user == null)
+                    return BadRequest(new { message = "Error al registrar el usuario" });
 
-            return Ok(new { message = "Usuario registrado exitosamente" });
+                return Ok(new { message = "Usuario registrado exitosamente" });
+            } catch (ArgumentException e) {
+                return NotFound(e.Message);
+            }
         }
     }
 }

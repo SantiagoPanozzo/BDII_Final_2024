@@ -11,9 +11,13 @@ public class CarreraController(CarreraService carreraService) : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var carreras = await _carreraService.GetAllAsync();
-        if (carreras.Length == 0) return NoContent();
-        return Ok(carreras);
+        try{
+            var carreras = await _carreraService.GetAllAsync();
+            if (carreras.Length == 0) return NoContent();
+            return Ok(carreras);
+        } catch (ArgumentException e) {
+            return NotFound(e.Message);
+        }
     }
 
     [HttpGet("{id}")]

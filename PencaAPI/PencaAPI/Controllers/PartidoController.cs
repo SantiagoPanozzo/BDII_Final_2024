@@ -14,9 +14,13 @@ public class PartidoController(PartidoService partidoService) : ControllerBase
     [HttpGet]
     public async Task<ActionResult<Partido[]>> GetAll()
     {
-        var Partidos = await _partidoService.GetAllAsync();
-        if (Partidos.Length == 0) return NoContent();
-        return Ok(Partidos);
+        try{
+            var Partidos = await _partidoService.GetAllAsync();
+            if (Partidos.Length == 0) return NoContent();
+            return Ok(Partidos);
+        } catch (ArgumentException e) {
+            return NotFound(e.Message);
+        }
     }
     
     [HttpGet("{equipo_1}/{equipo_2}/{partidoFecha}")]

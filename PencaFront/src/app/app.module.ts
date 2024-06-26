@@ -18,6 +18,7 @@ import {HttpClientModule} from "@angular/common/http";
 import { AppLayoutComponent } from './layouts/app-layout/app-layout.component';
 import { LogoutButtonComponent } from './components/logout-button/logout-button.component';
 import { EditarPartidoComponent } from './admin-dashboard/editar-partido/editar-partido.component';
+import { RankingComponent } from './student-dashboard/ranking/ranking.component';
 import { PartidoPrediccionComponent } from './student-dashboard/predicciones/partido-prediccion/partido-prediccion.component';
 
 @NgModule({
@@ -37,6 +38,7 @@ import { PartidoPrediccionComponent } from './student-dashboard/predicciones/par
     AppLayoutComponent,
     LogoutButtonComponent,
     EditarPartidoComponent,
+    RankingComponent,
     PartidoPrediccionComponent
   ],
   imports: [

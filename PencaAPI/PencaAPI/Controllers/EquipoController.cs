@@ -13,9 +13,13 @@ public class EquipoController(EquipoService equipoService) : ControllerBase
     [HttpGet]
     public async Task<ActionResult<Equipo[]>> GetAll()
     {
-        var equipos = await _equipoService.GetAllAsync();
-        if (equipos.Length == 0) return NoContent();
-        return Ok(equipos);
+        try{
+            var equipos = await _equipoService.GetAllAsync();
+            if (equipos.Length == 0) return NoContent();
+            return Ok(equipos);
+        } catch (ArgumentException e) {
+            return NotFound(e.Message);
+        }
     }
     
     [HttpGet("{id}")]

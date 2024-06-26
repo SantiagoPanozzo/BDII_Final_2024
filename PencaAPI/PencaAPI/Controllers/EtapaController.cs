@@ -13,9 +13,13 @@ public class EtapaController(EtapaService etapaService) : ControllerBase
     [HttpGet]
     public async Task<ActionResult<Etapa[]>> Get()
     {
-        Etapa[] etapas = await _etapaService.GetAllAsync();
-        if (etapas.Length == 0) return NoContent();
-        return Ok(etapas);
+        try{
+            Etapa[] etapas = await _etapaService.GetAllAsync();
+            if (etapas.Length == 0) return NoContent();
+            return Ok(etapas);
+        } catch (ArgumentException e) {
+            return NotFound(e.Message);
+        }
     }
     
     [HttpGet(template:"{id}")]
@@ -32,8 +36,12 @@ public class EtapaController(EtapaService etapaService) : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Etapa>> Post(Etapa etapa)
     {
-        var nuevaEtapa = await _etapaService.CreateAsync(etapa);
-        return CreatedAtAction(nameof(Get), new { id = etapa.Id }, nuevaEtapa);
+        try {
+            var nuevaEtapa = await _etapaService.CreateAsync(etapa);
+            return CreatedAtAction(nameof(Get), new { id = etapa.Id }, nuevaEtapa);
+        } catch (ArgumentException e) {
+            return Conflict(e.Message);
+        }
     }
 
     [HttpPut]

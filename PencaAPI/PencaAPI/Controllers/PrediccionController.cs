@@ -14,9 +14,13 @@ public class PrediccionController(PrediccionService prediccionService) : Control
     [HttpGet]
     public async Task<ActionResult<Prediccion[]>> GetAll()
     {
-        var predicciones = await _prediccionService.GetAllAsync();
-        if (predicciones.Length == 0) return NoContent();
-        return Ok(predicciones);
+        try{
+            var predicciones = await _prediccionService.GetAllAsync();
+            if (predicciones.Length == 0) return NoContent();
+            return Ok(predicciones);
+        }catch (ArgumentException e) {
+            return NotFound(e.Message);
+        }
     }
     
     [HttpGet("{equipo_1}/{equipo_2}/{partidoFecha}/{alumno}")]

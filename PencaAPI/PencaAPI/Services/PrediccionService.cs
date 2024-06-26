@@ -676,11 +676,20 @@ public class PrediccionService(PgDatabaseConnection dbConnection)
             throw new ArgumentException("Ocurrió un error al acceder a la base de datos.", e);
         }
     }
-    public async Task<Prediccion[]> SetPuntajeAsync(object id)
+    public async Task<bool> SetPuntajeAsync(object id)
     {
         try{
             PartidoDTO partidoDto = (PartidoDTO)id;
-        
+
+            var resultPredicciones = await this.GetAllByPartidoAsync(partidoDto);
+
+             if (resultPredicciones == null || resultPredicciones.LongLength<=0) 
+             {
+                return false;
+             }
+
+
+           
                 var sqlQuery = @"
                                 UPDATE Prediccion
                                 SET Puntaje = case 
@@ -733,7 +742,7 @@ public class PrediccionService(PgDatabaseConnection dbConnection)
             var prediccion = result.FirstOrDefault();
             if (prediccion == null) throw new ArgumentException("Prediccion con resultados no se actualizó.");
 
-            return await this.GetAllByPartidoAsync(partidoDto);
+            return true;
         }
         catch (PostgresException e)
         {

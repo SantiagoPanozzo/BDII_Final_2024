@@ -226,7 +226,14 @@ public class PartidoService(PgDatabaseConnection dbConnection, PrediccionService
     public async Task<Partido> UpdateAsync(object id, Partido entity)
     {
         try{
-            await this.GetByIdAsync(id);
+            
+            var partidoExistente = await this.GetByIdAsync(id);
+            Console.WriteLine($"{partidoExistente.Resultado_E1}");
+            if((partidoExistente.Resultado_E1 != null && partidoExistente.Resultado_E2>= 0 )||
+               (partidoExistente.Resultado_E2 != null && partidoExistente.Resultado_E2 >= 0 ))
+               {
+                    throw new ArgumentException("El partido ya está finalizado, no se puede actualizar.");
+               }
             
             PartidoDTO partidoDto = (PartidoDTO)id;
             var sqlQuery = @"
@@ -288,8 +295,8 @@ public class PartidoService(PgDatabaseConnection dbConnection, PrediccionService
                             on p.Equipo_E1 = e1.Abreviatura
                             join Equipo e2
                             on p.Equipo_E2 = e2.Abreviatura";
-            if ((entity.Resultado_E1 != null ||entity.Resultado_E1 >= 0) && 
-                (entity.Resultado_E2 != null ||entity.Resultado_E2 >= 0))
+            if ((entity.Resultado_E1 != null && entity.Resultado_E1 >= 0) ||
+                (entity.Resultado_E2 != null && entity.Resultado_E2 >= 0))
             {
                 var result = await _dbConnection.QueryAsync(
                     sqlQuery,
@@ -330,9 +337,8 @@ public class PartidoService(PgDatabaseConnection dbConnection, PrediccionService
                         etapa: et
                 );
             
-                var resultPuntajes=  await _prediccionService.SetPuntajeAsync(partidoDto);
-                var prediciones = resultPuntajes.FirstOrDefault();
-                if (prediciones == null) throw new ArgumentException("Partido con resultados no se actualizó.");
+                await _prediccionService.SetPuntajeAsync(partidoDto);
+                
                 if(part.Etapa.Id == 4)
                 {
                     await _alumnoService.SetPuntajeCampeonSubcampeonAsync(part);

@@ -2,44 +2,13 @@
     width: 400px;
     margin: auto;
   }
-  
+
   .registrar-partido-container h2 {
     text-align: center;
   }
-  
+
   .registrar-partido-container form {
     display: flex;
     flex-direction: column;
   }
-  
-  .registrar-partido-container form div {
-    margin-bottom: 10px;
-  }
-  
-  .registrar-partido-container form label {
-    font-weight: bold;
-  }
-  
-  .registrar-partido-container form select,
-  .registrar-partido-container form input[type="text"],
-  .registrar-partido-container form input[type="date"] {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .registrar-partido-container form button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .registrar-partido-container form button:hover {
-    background-color: #0056b3;
-  }
-  
+

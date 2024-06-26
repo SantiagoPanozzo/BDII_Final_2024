@@ -16,11 +16,13 @@ import { AdminPartidosComponent } from './admin-dashboard/admin-partidos/admin-p
 import { RegistrarPartidoComponent } from './admin-dashboard/registrar-partido/registrar-partido.component';
 import {HttpClientModule} from "@angular/common/http";
 import { AppLayoutComponent } from './layouts/app-layout/app-layout.component';
-import { LogoutButtonComponent } from './components/logout-button/logout-button.component';
+import { LogoutButtonComponent } from './components/navbar/logout-button/logout-button.component';
 import { EditarPartidoComponent } from './admin-dashboard/editar-partido/editar-partido.component';
 import { RankingComponent } from './student-dashboard/ranking/ranking.component';
 import { PartidoPrediccionComponent } from './student-dashboard/predicciones/partido-prediccion/partido-prediccion.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { NavbarLinkComponent } from './components/navbar/navbar-link/navbar-link.component';
+import { LoginButtonComponent } from './components/navbar/login-button/login-button.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     EditarPartidoComponent,
     RankingComponent,
     PartidoPrediccionComponent,
-    NavbarComponent
+    NavbarComponent,
+    NavbarLinkComponent,
+    LoginButtonComponent
   ],
   imports: [
     BrowserModule,

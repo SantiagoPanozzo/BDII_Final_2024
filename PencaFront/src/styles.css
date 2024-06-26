@@ -3,42 +3,57 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --accent: #61892f;
+  --accent-lighter: #86c232;
+  --bg-dark: #222629;
+  --bg-dim: #474b4f;
+  --bg-light: #6b6e70;
+  --text-light: #FFFFFF;
+  --text-dark: #6b6e70;
+}
+
 body {
-    font-family: Arial, sans-serif;
-  }
-  
-  .login-container {
-    max-width: 300px;
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 2px 2px 12px #aaa;
-  }
-  
-  .login-container h2 {
-    text-align: center;
-  }
-  
-  .login-container form div {
-    margin-bottom: 15px;
-  }
-  
-  button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  .admin-dashboard, .student-dashboard {
-    text-align: center;
-    margin-top: 50px;
-  }
+  background: var(--bg-dark);
+  color: var(--text-light);
+  font-family: Arial, sans-serif;
+}
+
+nav {
+  background: var(--bg-dim);
+}
+
+.login-container {
+  max-width: 300px;
+  background: var(--bg-dim);
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 2px 2px 12px #aaa;
+}
+
+.login-container h2 {
+  text-align: center;
+}
+
+.login-container form div {
+  margin-bottom: 15px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--accent);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--accent-lighter);
+}
+
+.admin-dashboard, .student-dashboard {
+  text-align: center;
+}

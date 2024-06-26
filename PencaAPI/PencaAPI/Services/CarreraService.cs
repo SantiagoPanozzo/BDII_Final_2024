@@ -1,3 +1,4 @@
+using Npgsql;
 using PencaAPI.DatabaseConnection;
 using PencaAPI.Models;
 
@@ -18,14 +19,18 @@ public class CarreraService(PgDatabaseConnection dbConnection)
     /// <returns>Un array con todas las carreras de la base de datos.</returns>
     public async Task<Carrera[]> GetAllAsync()
     {
-        var result = await _dbConnection.QueryAsync("SELECT * FROM Carrera");
-        var carreras = result.Select(x => new Carrera(
-                id: (int)x["id"],
-                nombre: (string)x["nombre"]
-                
-            )
-        ).ToList();
-        return carreras.ToArray();
+        try{
+            var result = await _dbConnection.QueryAsync("SELECT * FROM Carrera");
+            var carreras = result.Select(x => new Carrera(
+                    id: (int)x["id"],
+                    nombre: (string)x["nombre"]
+                    
+                )
+            ).ToList();
+            return carreras.ToArray();
+        }catch (NpgsqlException e){
+            throw new ArgumentException(e.ToString());
+        }
     }
     
     /// <summary>
@@ -36,72 +41,88 @@ public class CarreraService(PgDatabaseConnection dbConnection)
     /// <exception cref="ArgumentException">No existe una carrera con el id introducido.</exception>
     public async Task<Carrera> GetByIdAsync(object id)
     {
-        var result = (
-            await _dbConnection.QueryAsync(
-                "SELECT * FROM carrera WHERE id = @i",
-                new Dictionary<string, object>()
-                {
-                    { "i", id }
-                }
-            )
-        );
+        try{
+            var result = (
+                await _dbConnection.QueryAsync(
+                    "SELECT * FROM carrera WHERE id = @i",
+                    new Dictionary<string, object>()
+                    {
+                        { "i", id }
+                    }
+                )
+            );
 
-        var carrera = result.FirstOrDefault();
+            var carrera = result.FirstOrDefault();
 
-        if (carrera == null) throw new ArgumentException("No existe una carrera con ese id.");
-        
-        return new Carrera(
-            id: (int)carrera["id"],
-            nombre: (string)carrera["nombre"]
-        );
+            if (carrera == null) throw new ArgumentException("No existe una carrera con ese id.");
+            
+            return new Carrera(
+                id: (int)carrera["id"],
+                nombre: (string)carrera["nombre"]
+            );
+        }catch (NpgsqlException e){
+            throw new ArgumentException(e.ToString());
+        }
     }
     
     public async Task<Carrera> CreateAsync(Carrera entity)
     {
-        var result = await _dbConnection.QueryAsync(
-            "INSERT INTO carrera (nombre) VALUES (@n) RETURNING *",
-            new Dictionary<string, object>()
-            {
-                { "n", entity.Nombre }
-            }
-        );
+        try{
+            var result = await _dbConnection.QueryAsync(
+                "INSERT INTO carrera (nombre) VALUES (@n) RETURNING *",
+                new Dictionary<string, object>()
+                {
+                    { "n", entity.Nombre }
+                }
+            );
 
-        var carrera = result.FirstOrDefault();
+            var carrera = result.FirstOrDefault();
 
-        return new Carrera(
-            id: (int)carrera["id"],
-            nombre: (string)carrera["nombre"]
-        );
+            return new Carrera(
+                id: (int)carrera["id"],
+                nombre: (string)carrera["nombre"]
+            );
+        }catch (NpgsqlException e){
+            throw new ArgumentException(e.ToString());
+        }
     }
     
     public async Task<Carrera> UpdateAsync(object id, Carrera entity)
     {
-        var result = await _dbConnection.QueryAsync(
-            "UPDATE carrera SET nombre = @n WHERE id = @i RETURNING *",
-            new Dictionary<string, object>()
-            {
-                { "n", entity.Nombre },
-                { "i", id }
-            }
-        );
+        try{
+            var result = await _dbConnection.QueryAsync(
+                "UPDATE carrera SET nombre = @n WHERE id = @i RETURNING *",
+                new Dictionary<string, object>()
+                {
+                    { "n", entity.Nombre },
+                    { "i", id }
+                }
+            );
 
-        var carrera = result.FirstOrDefault();
+            var carrera = result.FirstOrDefault();
 
-        return new Carrera(
-            id: (int)carrera["id"],
-            nombre: (string)carrera["nombre"]
-        );
+            return new Carrera(
+                id: (int)carrera["id"],
+                nombre: (string)carrera["nombre"]
+            );
+        }catch (NpgsqlException e){
+            throw new ArgumentException(e.ToString());
+        }
     }
     
     public async Task DeleteAsync(object id)
     {
-        var result = await _dbConnection.QueryAsync(
-            "DELETE FROM carrera WHERE id = @i RETURNING *",
-            new Dictionary<string, object>()
-            {
-                { "i", id }
-            }
-        );
+        try{
+            var result = await _dbConnection.QueryAsync(
+                "DELETE FROM carrera WHERE id = @i RETURNING *",
+                new Dictionary<string, object>()
+                {
+                    { "i", id }
+                }
+            );
+        }catch (NpgsqlException e){
+            throw new ArgumentException(e.ToString());
+        }
     }
 
 }

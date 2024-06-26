@@ -1,43 +1,57 @@
-<h3>Lista de todos los partidos</h3>
+<div class="flex flex-col items-center">
+    <h2 class="font-bold text-2xl">Lista de todos los partidos</h2>
 
-<div *ngIf="!this.predicciones || this.predicciones.length <= 0">
-    <h3>No hay partidos disponibles</h3>
-</div>
+    <div *ngIf="!this.predicciones || this.predicciones.length <= 0">
+        <h3 class="font-bold text-xl mb-2">No hay partidos disponibles</h3>
+    </div>
 
-<div *ngFor="let grupo of partidosPorEtapa">
-  <h4>Etapa {{ grupo.etapa }}</h4>
-  <table>
-    <thead>
-      <tr>
-        <th>Equipo 1</th>
-        <th>Equipo 2</th>
-        <th>Fecha</th>
-        <th>Resultado Equipo 1</th>
-        <th>Resultado Equipo 2</th>
-        <th>Predicción Equipo 1</th>
-        <th>Predicción Equipo 2</th>
-        <th>Acción</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let prediccion of grupo.predicciones">
-        <td>{{ prediccion.partido.equipo_E1.pais }}</td>
-        <td>{{ prediccion.partido.equipo_E2.pais }}</td>
-        <td>
-            <input type="datetime-local" [value]="prediccion.partido.fecha" disabled>
-        </td>
-        <td>{{ ((prediccion.partido.resultado_E1 != null) && (prediccion.partido.resultado_E1 >= 0)) ? prediccion.partido.resultado_E1 : '-' }}</td>
-        <td>{{ ((prediccion.partido.resultado_E2 != null) && (prediccion.partido.resultado_E2 >= 0)) ? prediccion.partido.resultado_E2 : '-' }}</td>
-        <td>
-          <input type="number" [(ngModel)]="prediccion.prediccion_E1" placeholder="Predicción E1" [disabled]="this.guardarHabilitado(prediccion)">
-        </td>
-        <td>
-          <input type="number" [(ngModel)]="prediccion.prediccion_E2" placeholder="Predicción E2" [disabled]="this.guardarHabilitado(prediccion)">
-        </td>
-        <td>
-          <button (click)="guardarPrediccion(prediccion)" [disabled]="this.guardarHabilitado(prediccion)">Guardar</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <div class="mx-10 my-4" *ngFor="let grupo of partidosPorEtapa">
+        <h3 class="font-bold text-xl mb-2">Etapa {{ grupo.etapa.nombre }}</h3>
+
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg rounded-2xl">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-2xl">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 rounded-2xl">
+          <tr>
+            <th scope="col" class="px-6 py-3">Equipo 1</th>
+            <th scope="col" class="px-6 py-3">Equipo 2</th>
+            <th scope="col" class="px-6 py-3">Fecha</th>
+            <th scope="col" class="px-6 py-3">Resultado Equipo 1</th>
+            <th scope="col" class="px-6 py-3">Resultado Equipo 2</th>
+            <th scope="col" class="px-6 py-3">Predicción Equipo 1</th>
+            <th scope="col" class="px-6 py-3">Predicción Equipo 2</th>
+            <th scope="col" class="px-6 py-3">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700" *ngFor="let prediccion of grupo.predicciones">
+              <th scope="row" class="px-6 py-4 font-bold text-gray-900 whitespace-nowrap dark:text-white">
+                  {{ prediccion.partido.equipo_E1.pais }}
+              </th>
+              <th scope="row" class="px-6 py-4 font-bold text-gray-900 whitespace-nowrap dark:text-white">
+                  {{ prediccion.partido.equipo_E2.pais }}
+              </th>
+            <td class="px-6 py-4">
+                <input type="datetime-local" [value]="prediccion.partido.fecha" disabled>
+            </td>
+            <td class="px-6 py-4">{{ ((prediccion.partido.resultado_E1 != null) && (prediccion.partido.resultado_E1 >= 0)) ? prediccion.partido.resultado_E1 : '-' }}</td>
+            <td class="px-6 py-4">{{ ((prediccion.partido.resultado_E2 != null) && (prediccion.partido.resultado_E2 >= 0)) ? prediccion.partido.resultado_E2 : '-' }}</td>
+            <td class="px-6 py-4">
+              <input type="number" [(ngModel)]="prediccion.prediccion_E1" placeholder="Predicción E1" [disabled]="this.guardarHabilitado(prediccion)"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500
+                    focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                    dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
+            </td>
+            <td class="px-6 py-4">
+              <input type="number" [(ngModel)]="prediccion.prediccion_E2" placeholder="Predicción E2" [disabled]="this.guardarHabilitado(prediccion)"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500
+                    focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                    dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
+            </td>
+            <td class="px-6 py-4">
+              <button (click)="guardarPrediccion(prediccion)" [disabled]="this.guardarHabilitado(prediccion)">Guardar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 </div>

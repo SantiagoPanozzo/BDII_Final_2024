@@ -1,19 +1,25 @@
-<h3>Ranking general</h3>
-<app-puntaje></app-puntaje>
+<div class="flex flex-col content-center items-center">
+    <h2 class="font-bold text-2xl mb-5">Ranking General</h2>
+    <app-puntaje class="mb-5"></app-puntaje>
 
-<table>
-    <thead>
-    <tr>
-        <th>Puntaje Total</th>
-        <th>Nombre</th>
-        <th>Apellido</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let alumno of this.alumnos">
-        <td>{{ alumno.puntajeTotal }}</td>
-        <td>{{ alumno.nombre }}</td>
-        <td>{{ alumno.apellido }}</td>
-    </tr>
-    </tbody>
-</table>
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg rounded-2xl">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-2xl">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 rounded-2xl">
+                <tr>
+                    <th scope="col" class="px-6 py-3">Puntaje Total</th>
+                    <th scope="col" class="px-6 py-3">Nombre</th>
+                    <th scope="col" class="px-6 py-3">Apellido</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let alumno of this.alumnos">
+                    <th scope="row" class="px-6 py-4 font-bold text-gray-900 whitespace-nowrap dark:text-white">
+                        {{ alumno.puntajeTotal }}
+                    </th>
+                    <td>{{ alumno.nombre }}</td>
+                    <td>{{ alumno.apellido }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

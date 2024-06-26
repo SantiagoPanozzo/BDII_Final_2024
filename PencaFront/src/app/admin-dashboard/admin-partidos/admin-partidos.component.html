@@ -21,31 +21,31 @@
             <th scope="row" class="px-6 py-4 font-bold text-gray-900 whitespace-nowrap dark:text-white">
                 {{ this.partido!.equipo_E2.pais }}
             </th>
-          <td>
-              <input type="datetime-local" [(ngModel)]="partido.fecha" disabled
-                     class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500
-                    focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                    dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
-          </td>
-          <td>{{this.partido!.etapa.nombre}}</td>
-          <td>
-              <input type="number" [(ngModel)]="partido.resultado_E1"
-                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500
-                    focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                    dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
-          </td>
-          <td>
-              <input type="number" [(ngModel)]="partido.resultado_E2"
-                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500
-                    focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                    dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
-          </td>
-          <td>
-            <button (click)="guardarResultado()" [disabled]="partido.fecha > today || partido.resultado_E1 === null || partido.resultado_E2 === null"
-              class="hover:cursor-pointer text-lime-500 hover:bg-gray-800 h-10">
-                Guardar
-            </button>
-          </td>
+              <td>
+                  <input type="datetime-local" [(ngModel)]="partido.fecha" disabled
+                         class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500
+                        focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                        dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
+              </td>
+              <td>{{this.partido!.etapa.nombre}}</td>
+              <td>
+                  <input type="number" [(ngModel)]="partido.resultado_E1"
+                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500
+                        focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                        dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
+              </td>
+              <td>
+                  <input type="number" [(ngModel)]="partido.resultado_E2"
+                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500
+                        focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                        dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
+              </td>
+              <td>
+                <button (click)="guardarResultado()" [disabled]="partido.fecha > today || partido.resultado_E1 === null || partido.resultado_E2 === null"
+                  class="hover:cursor-pointer text-lime-500 hover:bg-gray-800 h-10">
+                    Guardar
+                </button>
+              </td>
         </tr>
       </tbody>
     </table>

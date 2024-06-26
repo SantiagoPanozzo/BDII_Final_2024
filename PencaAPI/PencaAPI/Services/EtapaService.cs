@@ -77,7 +77,6 @@ public class EtapaService(PgDatabaseConnection dbConnection)
         }
          catch (PostgresException e)
         {
-            // Manejo genérico para otras excepciones de PostgreSQL
             throw new ArgumentException("Ocurrió un error al acceder a la base de datos.", e);
         }
         catch (Exception e)

@@ -48,10 +48,14 @@
                     dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
             </td>
             <td class="px-6 py-4">
-              <button (click)="guardarPrediccion(prediccion)" [disabled]="this.guardarHabilitado(prediccion)">Guardar</button>
+              <button (click)="guardarPrediccion(prediccion)" [disabled]="this.guardarHabilitado(prediccion)"
+                  class="hover:cursor-pointer text-lime-500 hover:bg-gray-800 h-10">
+                  Guardar
+              </button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
+</div>
 </div>

@@ -12,5 +12,5 @@ export interface Alumno {
     semestreIngreso: string;
     puntajeTotal: number;
     campeon: Equipo;
-    subcampeon: Equipo;
+    subCampeon: Equipo;
   }

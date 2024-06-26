@@ -14,7 +14,6 @@ import { Carrera } from 'src/app/interfaces/carrera';
 })
 export class DatosComponent implements OnInit {
   usuarioAutenticado: Alumno | null = null;
-  nombreCarrera: string = '';
 
   equipos: Equipo[] = [];
   carreras: Carrera[] = [];
@@ -32,7 +31,14 @@ export class DatosComponent implements OnInit {
     this.equipos = await this.equipoService.obtenerEquipos();
   }
 
-  async obtenerNombreCarrera() {
-    return this.usuarioAutenticado!.carreraPrincipal.nombre; // TODO deprecar esto
+  async actualizar() {
+    try{
+      const res = await this.alumnoService.actualizarUsuario(this.usuarioAutenticado!);
+      alert("Usuario editado con éxito!")
+    } catch (err) {
+      console.error(err);
+      alert("Error al actualizar usuario");
+    }
   }
+
 }

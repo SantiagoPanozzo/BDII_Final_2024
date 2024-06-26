@@ -12,10 +12,10 @@ export class PuntajeComponent implements OnInit {
 
   constructor(private alumnoService: AlumnoService, private authService: AuthService) { }
 
-  ngOnInit(): void {
-    const usuarioAutenticado = this.authService.obtenerUsuarioAutenticado();
+  async ngOnInit() {
+    const usuarioAutenticado = (await this.alumnoService.obtenerUsuarioPorCedula(this.authService.obtenerUsuarioAutenticado()))!;
     if (usuarioAutenticado) {
-      const puntaje = null; // TODO fix
+      const puntaje = usuarioAutenticado.puntajeTotal;
       if (puntaje !== null) {
         this.puntajeAlumno = puntaje;
       }

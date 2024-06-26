@@ -6,7 +6,7 @@ namespace PencaAPI.Services
     /// <summary>
     /// Interfaz para el servicio de usuarios.
     /// </summary>
-    public interface IUsuarioService : IService<IUsuario>
+    public interface IUsuarioService 
     {
         /// <summary>
         /// Autentica a un usuario.

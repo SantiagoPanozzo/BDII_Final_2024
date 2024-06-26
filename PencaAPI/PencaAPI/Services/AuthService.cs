@@ -34,9 +34,6 @@ namespace PencaAPI.Services
         /// <returns>Token JWT si la autenticación es exitosa, null si falla.</returns>
         public async Task<string> AuthenticateAsync(int cedula, string contrasena)
         {
-            Console.WriteLine($"{cedula}");
-            Console.WriteLine($"{contrasena}");
-            Console.WriteLine($"{_secret}");
             var user = await _usuarioService.Authenticate(cedula, contrasena);
 
             if (user == null)

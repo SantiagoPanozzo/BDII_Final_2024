@@ -19,7 +19,7 @@ public class EtapaService(PgDatabaseConnection dbConnection)
                 )
             ).ToArray();
             return etapas;
-        }catch (NpgsqlException e){
+        }catch (PostgresException e){
             throw new ArgumentException(e.ToString());
         }
     }
@@ -43,7 +43,7 @@ public class EtapaService(PgDatabaseConnection dbConnection)
                 id: (int)etapa["id"],
                 nombre: (string)etapa["nombre"]
             );
-        }catch (NpgsqlException e){
+        }catch (PostgresException e){
             throw new ArgumentException(e.ToString());
         }
     }
@@ -70,8 +70,19 @@ public class EtapaService(PgDatabaseConnection dbConnection)
                 id: (int)etapa["id"],
                 nombre: (string)etapa["nombre"]
             );
-        }catch (NpgsqlException e){
-            throw new ArgumentException(e.ToString());
+        }
+        catch (PostgresException e) when (e.SqlState == PostgresErrorCodes.UniqueViolation)
+        {
+            throw new ArgumentException("Ya existe una etapa con el mismo identificador.", e);
+        }
+         catch (PostgresException e)
+        {
+            // Manejo genérico para otras excepciones de PostgreSQL
+            throw new ArgumentException("Ocurrió un error al acceder a la base de datos.", e);
+        }
+        catch (Exception e)
+        {
+            throw new ArgumentException("Ocurrió un error al crear la etapa.", e);
         }
     }
 
@@ -96,7 +107,7 @@ public class EtapaService(PgDatabaseConnection dbConnection)
                 id: (int)etapa["id"],
                 nombre: (string)etapa["nombre"]
             );
-        }catch (NpgsqlException e){
+        }catch (PostgresException e){
             throw new ArgumentException(e.ToString());
         }
     }
@@ -111,7 +122,7 @@ public class EtapaService(PgDatabaseConnection dbConnection)
             };
 
             await _dbConnection.QueryAsync(queryString, parameters);
-        }catch (NpgsqlException e){
+        }catch (PostgresException e){
             throw new ArgumentException(e.ToString());
         }
     }

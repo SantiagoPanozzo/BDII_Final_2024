@@ -31,8 +31,14 @@ export class DatosComponent implements OnInit {
     this.equipos = await this.equipoService.obtenerEquipos();
   }
 
-  async obtenerNombreCarrera() {
-    return this.usuarioAutenticado!.carreraPrincipal.nombre; // TODO deprecar esto
+  async actualizar() {
+    try{
+      const res = await this.alumnoService.actualizarUsuario(this.usuarioAutenticado!);
+      alert("Usuario editado con éxito!")
+    } catch (err) {
+      console.error(err);
+      alert("Error al actualizar usuario");
+    }
   }
 
 }

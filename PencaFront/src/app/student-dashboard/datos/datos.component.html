@@ -1,6 +1,6 @@
 <div class="registro-container ">
     <h2 class="font-bold text-2xl mt-2">Registro de alumno</h2>
-    <form class="max-w-sm mx-auto">
+    <form class="max-w-sm mx-auto" (ngSubmit)="actualizar()">
         <div class="form-group mb-5">
             <label for="cedula" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cédula:</label>
             <input type="text" id="cedula" name="cedula" [(ngModel)]="this.usuarioAutenticado!.cedula" required

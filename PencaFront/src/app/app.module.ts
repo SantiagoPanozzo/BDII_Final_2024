@@ -19,6 +19,7 @@ import { AppLayoutComponent } from './layouts/app-layout/app-layout.component';
 import { LogoutButtonComponent } from './components/logout-button/logout-button.component';
 import { EditarPartidoComponent } from './admin-dashboard/editar-partido/editar-partido.component';
 import { RankingComponent } from './student-dashboard/ranking/ranking.component';
+import { PartidoPrediccionComponent } from './student-dashboard/predicciones/partido-prediccion/partido-prediccion.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { RankingComponent } from './student-dashboard/ranking/ranking.component'
     AppLayoutComponent,
     LogoutButtonComponent,
     EditarPartidoComponent,
-    RankingComponent
+    RankingComponent,
+    PartidoPrediccionComponent
   ],
   imports: [
     BrowserModule,

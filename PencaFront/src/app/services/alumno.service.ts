@@ -18,7 +18,8 @@ export class AlumnoService {
     this.http.post('http://localhost:8080/auth/register', alumno).subscribe( x => console.log(x));
   }
 
-  async obtenerUsuarioPorCedulaYContrasena(cedula: number, contrasena: string) : Promise<Alumno | undefined> {
+  // TODO proteger esto lol
+  async obtenerUsuarioPorCedula(cedula: number) : Promise<Alumno | undefined> {
     return (await this.http.get<Alumno>('http://localhost:8080/alumno/' + cedula).toPromise());
   }
 

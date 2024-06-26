@@ -40,7 +40,8 @@ public class PartidoService(PgDatabaseConnection dbConnection, PrediccionService
                             join Equipo e1
                             on p.Equipo_E1 = e1.Abreviatura
                             join Equipo e2
-                            on p.Equipo_E2 = e2.Abreviatura";
+                            on p.Equipo_E2 = e2.Abreviatura
+                            order by p.fecha asc";
             var result = await _dbConnection.QueryAsync(sqlQuery);
             var partidos = result.Select(x => new Partido(
                     fecha: (DateTime)x["fecha"],

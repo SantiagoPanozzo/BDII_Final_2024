@@ -1,31 +1,53 @@
-
-<div *ngIf="partido" class="container">
-    <h2>Editar Partido</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Equipo A</th>
-          <th>Equipo B</th>
-          <th>Fecha</th>
-          <th>Etapa</th>
-          <th>Resultado E1</th>
-          <th>Resultado E2</th>
-          <th>Acción</th>
+<div *ngIf="partido" class="container flex flex-col content-center items-center">
+    <h2 class="font-bold text-2xl mb-5">Establecer Resultados del Partido</h2>
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg rounded-2xl">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-2xl">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 rounded-2xl">
+            <tr>
+          <th scope="col" class="px-6 py-3">Equipo A</th>
+          <th scope="col" class="px-6 py-3">Equipo B</th>
+          <th scope="col" class="px-6 py-3">Fecha</th>
+          <th scope="col" class="px-6 py-3">Etapa</th>
+          <th scope="col" class="px-6 py-3">Resultado E1</th>
+          <th scope="col" class="px-6 py-3">Resultado E2</th>
+          <th scope="col" class="px-6 py-3">Acción</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>{{this.partido!.equipo_E1.pais}}</td>
-          <td>{{this.partido!.equipo_E2.pais}}</td>
-          <td><input type="datetime-local" [(ngModel)]="partido.fecha" disabled></td>
-          <td>{{this.partido!.etapa.nombre}}</td>
-          <td><input type="number" [(ngModel)]="partido.resultado_E1"></td>
-          <td><input type="number" [(ngModel)]="partido.resultado_E2"></td>
-          <td>
-            <button (click)="guardarResultado()" [disabled]="partido.fecha > today || partido.resultado_E1 === null || partido.resultado_E2 === null">Guardar</button>
-          </td>
+        <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+            <th scope="row" class="px-6 py-4 font-bold text-gray-900 whitespace-nowrap dark:text-white">
+                {{ this.partido!.equipo_E1.pais }}
+            </th>
+            <th scope="row" class="px-6 py-4 font-bold text-gray-900 whitespace-nowrap dark:text-white">
+                {{ this.partido!.equipo_E2.pais }}
+            </th>
+              <td>
+                  <input type="datetime-local" [(ngModel)]="partido.fecha" disabled
+                         class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500
+                        focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                        dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
+              </td>
+              <td>{{this.partido!.etapa.nombre}}</td>
+              <td>
+                  <input type="number" [(ngModel)]="partido.resultado_E1"
+                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500
+                        focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                        dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
+              </td>
+              <td>
+                  <input type="number" [(ngModel)]="partido.resultado_E2"
+                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500
+                        focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                        dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
+              </td>
+              <td>
+                <button (click)="guardarResultado()" [disabled]="partido.fecha > today || partido.resultado_E1 === null || partido.resultado_E2 === null"
+                  class="hover:cursor-pointer text-lime-500 hover:bg-gray-800 h-10">
+                    Guardar
+                </button>
+              </td>
         </tr>
       </tbody>
     </table>
   </div>
-  
+</div>

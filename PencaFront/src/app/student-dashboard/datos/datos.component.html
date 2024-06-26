@@ -1,13 +1,76 @@
-<div *ngIf="usuarioAutenticado">
-    <h2>Mis Datos</h2>
-    <p><strong>Nombre:</strong> {{ usuarioAutenticado.nombre }}</p>
-    <p><strong>Apellido:</strong> {{ usuarioAutenticado.apellido }}</p>
-    <p><strong>Cédula:</strong> {{ usuarioAutenticado.cedula }}</p>
-    <p><strong>Fecha de Nacimiento:</strong> {{ usuarioAutenticado.fechaNacimiento | date }}</p>
-    <p><strong>Carrera:</strong> {{ nombreCarrera }}</p>
-    <p><strong>Año de Ingreso:</strong> {{ usuarioAutenticado.anioIngreso }}</p>
-    <p><strong>Semestre de Ingreso:</strong> {{ usuarioAutenticado.semestreIngreso }}</p>
-    <p><strong>Campeon: </strong>{{ usuarioAutenticado.campeon }}</p>
-    <p><strong>SubCampeon: </strong>{{ usuarioAutenticado.subcampeon }}</p>
-  </div>
-  
+<div class="registro-container ">
+    <h2 class="font-bold text-2xl mt-2">Registro de alumno</h2>
+    <form class="max-w-sm mx-auto">
+        <div class="form-group mb-5">
+            <label for="cedula" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cédula:</label>
+            <input type="text" id="cedula" name="cedula" [(ngModel)]="this.usuarioAutenticado!.cedula" required
+                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
+        </div>
+        <div class="form-group mb-5">
+            <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" [(ngModel)]="this.usuarioAutenticado!.nombre" required
+                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
+        </div>
+        <div class="form-group mb-5">
+            <label for="apellido" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido:</label>
+            <input type="text" id="apellido" name="apellido" [(ngModel)]="this.usuarioAutenticado!.apellido" required
+                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
+        </div>
+        <div class="form-group mb-5">
+            <label for="fechaNacimiento" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Nacimiento:</label>
+            <input type="date" id="fechaNacimiento" name="fechaNacimiento" [(ngModel)]="this.usuarioAutenticado!.fechaNacimiento" required
+                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
+        </div>
+        <div class="form-group mb-5">
+            <label for="carrera" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Carrera:</label>
+            <select id="carrera" name="carrera" [(ngModel)]="this.usuarioAutenticado!.carreraPrincipal.id" required
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500
+                    focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                    dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
+                <option *ngFor="let carrera of carreras" [value]="carrera.id">{{ carrera.nombre }}</option>
+            </select>
+        </div>
+        <div class="form-group mb-5">
+            <label for="anioIngreso" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Año de Ingreso:</label>
+            <input type="number" id="anioIngreso" name="anioIngreso" [(ngModel)]="this.usuarioAutenticado!.anioIngreso" required
+                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
+        </div>
+        <div class="form-group mb-5">
+            <label for="semestreIngreso" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Semestre de Ingreso:</label>
+            <select id="semestreIngreso" name="semestreIngreso" [(ngModel)]="this.usuarioAutenticado!.semestreIngreso" required
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500
+                    focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                    dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
+                <option value="1">Marzo</option>
+                <option value="2">Agosto</option>
+            </select>
+        </div>
+        <div class="form-group mb-5">
+            <label for="campeon" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Campeón:</label>
+            <select id="campeon" name="campeon" [(ngModel)]="this.usuarioAutenticado!.campeon.abreviatura" required
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500
+                    focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                    dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
+                <option *ngFor="let equipo of equipos" [value]="equipo.abreviatura">{{ equipo.pais }}</option>
+            </select>
+        </div>
+        <div class="form-group mb-5">
+            <label for="subcampeon" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Subcampeón:</label>
+            <select id="subcampeon" name="subcampeon" [(ngModel)]="this.usuarioAutenticado!.subcampeon.abreviatura" required
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500
+                    focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                    dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
+                <option *ngFor="let equipo of equipos" [value]="equipo.abreviatura">{{ equipo.pais }}</option>
+            </select>
+        </div>
+
+        <button type="submit" class="mt-4 bg-lime-600 hover:bg-lime-500 hover:text-gray-800 font-bold w-96 h-12 mb-2 rounded-md flex flex-col items-center content-center justify-center">
+            Guardar
+        </button>
+        <div>
+            <a class="mt-4 bg-red-600 hover:bg-red-500 hover:text-gray-800 font-bold w-96 h-12 mb-2 rounded-md flex flex-col items-center content-center justify-center" routerLink="/student-dashboard">
+                Cancelar
+            </a>
+        </div>
+    </form>
+</div>

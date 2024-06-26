@@ -1,22 +1,31 @@
-<input type="text" [(ngModel)]="cedulaABuscar" placeholder="Buscar por cédula">
-<button (click)="buscarAlumnosPorCedula()">Buscar</button>
+<div class="flex flex-col items-center">
 
-<h3>Lista de todos los alumnos</h3>
-<table>
-  <thead>
-    <tr>
-      <th>Cédula</th>
-      <th>Nombre</th>
-      <th>Apellido</th>
-      <th>Puntaje Total</th>
-    </tr>
-  </thead>
+<h2 class="font-bold text-2xl">Lista de todos los alumnos</h2>
+<span class="flex flex-row my-4">
+    <input type="text" [(ngModel)]="cedulaABuscar" placeholder="Buscar por cédula">
+    <button (click)="buscarAlumnosPorCedula()">Buscar</button>
+</span>
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg rounded-2xl">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-2xl">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 rounded-2xl">
+            <tr>
+                <th scope="col" class="px-6 py-3">Cédula</th>
+                <th scope="col" class="px-6 py-3">Nombre</th>
+                <th scope="col" class="px-6 py-3">Apellido</th>
+                <th scope="col" class="px-6 py-3">Puntaje Total</th>
+            </tr>
+      </thead>
   <tbody>
-    <tr *ngFor="let alumno of alumnosFiltrados">
-      <td>{{ alumno.cedula }}</td>
-      <td>{{ alumno.nombre }}</td>
-      <td>{{ alumno.apellido }}</td>
-      <td>{{ alumno.puntajeTotal }}</td>
+    <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700" *ngFor="let alumno of alumnosFiltrados">
+        <th scope="row" class="px-6 py-4 font-bold text-gray-900 whitespace-nowrap dark:text-white">
+            {{ alumno.cedula }}
+        </th>
+        <td class="px-6 py-4">{{ alumno.nombre }}</td>
+        <td class="px-6 py-4">{{ alumno.apellido }}</td>
+        <td class="px-6 py-4">{{ alumno.puntajeTotal }}</td>
     </tr>
   </tbody>
 </table>
+</div>
+</div>

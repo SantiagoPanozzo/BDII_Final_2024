@@ -1,8 +1,16 @@
-<div class="alumno-dashboard">
-  <h2>Bienvenido, {{ alumno?.nombre || 'Usuario' }}</h2>
-  <div class="botones">
-    <button [routerLink]="['/student-dashboard/predicciones']">predicciones</button>
-    <button [routerLink]="['/student-dashboard/datos']">Mis datos</button>
-    <button [routerLink]="['/student-dashboard/puntaje']">Mi puntaje</button>
-  </div>
+<div class="student-dashboard content-center h-full">
+    <h2 class="font-bold text-2xl">Bienvenido, {{ this.usuario.nombre || 'Usuario' }}</h2>
+    <div class="flex flex-col">
+        <a href="/student-dashboard/predicciones" class="bg-lime-600 w-96 h-16 mb-2 content-center rounded-md">
+            <p>
+                Predicciones
+            </p>
+        </a>
+        <a href="/student-dashboard/ranking" class="bg-lime-600 w-96 h-16 mb-2 content-center rounded-md">
+            Ranking
+        </a>
+        <a href="/student-dashboard/datos" class="bg-lime-600 w-96 h-16 mb-2 content-center rounded-md">
+            Mis datos
+        </a>
+    </div>
 </div>

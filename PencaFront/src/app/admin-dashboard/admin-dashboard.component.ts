@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import {AuthService} from "../services/auth.service";
+import {AlumnoService} from "../services/alumno.service";
+import {Alumno} from "../interfaces/alumnoInterface";
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -7,17 +10,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./admin-dashboard.component.css']
 })
 export class AdminDashboardComponent implements OnInit {
-  usuario: any; 
-  seccionActiva: string = 'alumnos';
-  constructor(private router: Router) {
-    const navigation = this.router.getCurrentNavigation();
-    const state = navigation?.extras.state as { usuario: any };
-    this.usuario = state?.usuario || {};
-  }
+  usuario: Alumno = {} as Alumno;
 
-  ngOnInit(): void {}
-  mostrarSeccion(seccion: string): void {
-    this.seccionActiva = seccion;
+  constructor(
+      private router: Router,
+      private authService: AuthService,
+      private alumnoService: AlumnoService
+  ) {}
+
+  async ngOnInit() {
+    this.usuario = (await this.alumnoService.obtenerUsuarioPorCedula(this.authService.obtenerUsuarioAutenticado()))!;
   }
 
 }

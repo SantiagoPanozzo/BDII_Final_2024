@@ -1,29 +1,46 @@
 <div class="registrar-partido-container">
     <h2>Registrar Nuevo Partido</h2>
-    <form (submit)="registrarPartido()">
-        <div>
-            <label for="etapa">Etapa:</label>
-            <select id="etapa" name="etapa" [(ngModel)]="nuevoPartido.etapa.id" required>
+    <form class="max-w-sm mx-auto" (submit)="registrarPartido()">
+        <div class="mb-2">
+            <label for="etapa" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Etapa:</label>
+            <select id="etapa" name="etapa" [(ngModel)]="nuevoPartido.etapa.id" required
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500
+                    focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                    dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
               <option *ngFor="let etapa of etapas" [value]="etapa.id">{{etapa.nombre}}</option>
             </select>
           </div>
-      <div class="form-group">
-        <label for="fecha">Fecha:</label>
-        <input type="datetime-local" id="fecha" name="fecha" [(ngModel)]="nuevoPartido.fecha" required>
+      <div class="form-group mb-2">
+        <label for="fecha" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-2">Fecha:</label>
+        <input type="datetime-local" id="fecha" name="fecha" [(ngModel)]="nuevoPartido.fecha" required
+               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500
+                    focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                    dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
       </div>
-      <div class="form-group">
-        <label for="equipoE1">Equipo 1:</label>
-        <select id="equipoE1" name="equipoE1" [(ngModel)]="nuevoPartido.equipo_E1.abreviatura" required>
+      <div class="form-group mb-2">
+        <label for="equipoE1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-2">Equipo 1:</label>
+        <select id="equipoE1" name="equipoE1" [(ngModel)]="nuevoPartido.equipo_E1.abreviatura" required
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500
+                    focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                    dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
           <option *ngFor="let equipo of equipos" [value]="equipo.abreviatura">{{ equipo.pais }}</option>
         </select>
       </div>
-      <div class="form-group">
-        <label for="equipoE2">Equipo 2:</label>
-        <select id="equipoE2" name="equipoE2" [(ngModel)]="nuevoPartido.equipo_E2.abreviatura" required>
+      <div class="form-group mb-2">
+        <label for="equipoE2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-2">Equipo 2:</label>
+        <select id="equipoE2" name="equipoE2" [(ngModel)]="nuevoPartido.equipo_E2.abreviatura" required
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500
+                    focus:border-lime-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                    dark:text-white dark:focus:ring-lime-500 dark:focus:border-lime-500">
           <option *ngFor="let equipo of equipos" [value]="equipo.abreviatura">{{ equipo.pais }}</option>
         </select>
       </div>
-      <button type="submit">Registrar Partido</button>
+      <button type="submit" class="mt-4 bg-lime-600 hover:bg-lime-500 hover:text-gray-800 font-bold w-96 h-12 mb-2 rounded-md flex flex-col items-center content-center justify-center">
+          Registrar Partido
+      </button>
+      <a href="/admin-dashboard/partidos" class="bg-red-700 hover:bg-red-600 hover:text-gray-800 font-bold w-96 h-12 mb-2 rounded-md flex flex-col items-center content-center justify-center">
+          Cancelar
+      </a>
     </form>
   </div>
   

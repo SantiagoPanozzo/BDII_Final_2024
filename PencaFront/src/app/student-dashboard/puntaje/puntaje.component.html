@@ -1,5 +1,8 @@
-<div class="puntaje">
-    <h2>Mi Puntaje</h2>
-    <p>{{ puntajeAlumno }}</p>
-  </div>
-  
+<div class="puntaje w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-2xl ">
+    <div class="text-xs text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400 w-60 rounded-t-xl">
+        <h2 class="font-bold text-2xl mb-5">Mi Puntaje</h2>
+    </div>
+    <span class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+        <p class="px-6 py-6 pb-8 font-bold text-gray-900 whitespace-nowrap dark:text-white">{{ puntajeAlumno }}</p>
+    </span>
+</div>

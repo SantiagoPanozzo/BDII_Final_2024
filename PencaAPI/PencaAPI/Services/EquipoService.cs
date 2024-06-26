@@ -1,3 +1,4 @@
+using Npgsql;
 using PencaAPI.DatabaseConnection;
 using PencaAPI.Models;
 
@@ -18,13 +19,19 @@ public class EquipoService(PgDatabaseConnection dbConnection)
     /// <returns>Un array con todos los equipos de la base de datos.</returns>
     public async Task<Equipo[]> GetAllAsync()
     {
-        var result = await _dbConnection.QueryAsync("SELECT * FROM Equipo");
-        var equipos = result.Select(x => new Equipo(
-                abreviatura : (string)x["abreviatura"],
-                pais: (string)x["pais"]
-            )
-        ).ToList();
-        return equipos.ToArray();
+        try{
+            var result = await _dbConnection.QueryAsync("SELECT * FROM Equipo");
+            var equipos = result.Select(x => new Equipo(
+                    abreviatura : (string)x["abreviatura"],
+                    pais: (string)x["pais"]
+                )
+            ).ToList();
+            return equipos.ToArray();
+        }
+        catch (PostgresException e)
+        {
+            throw new ArgumentException("Ocurrió un error al acceder a la base de datos.", e);
+        }
     }
     
     /// <summary>
@@ -35,75 +42,99 @@ public class EquipoService(PgDatabaseConnection dbConnection)
     /// <exception cref="ArgumentException">No existe una equipo con esa abreviatura.</exception>
     public async Task<Equipo> GetByIdAsync(object id)
     {
-        var result = (
-            await _dbConnection.QueryAsync(
-                "SELECT * FROM equipo WHERE abreviatura = @a",
-                new Dictionary<string, object>()
-                {
-                    { "a", id }
-                }
-            )
-        );
+        try{
+            var result = (
+                await _dbConnection.QueryAsync(
+                    "SELECT * FROM equipo WHERE abreviatura = @a",
+                    new Dictionary<string, object>()
+                    {
+                        { "a", id }
+                    }
+                )
+            );
 
-        var equipo = result.FirstOrDefault();
+            var equipo = result.FirstOrDefault();
 
-        if (equipo == null) throw new ArgumentException("No existe un equipo con esa abreviatura.");
-        
-        return new Equipo(
-            abreviatura: (string)equipo["abreviatura"],
-            pais: (string)equipo["pais"]
-        );
+            if (equipo == null) throw new ArgumentException("No existe un equipo con esa abreviatura.");
+            
+            return new Equipo(
+                abreviatura: (string)equipo["abreviatura"],
+                pais: (string)equipo["pais"]
+            );
+        }
+        catch (PostgresException e)
+        {
+            throw new ArgumentException("Ocurrió un error al acceder a la base de datos.", e);
+        }
     }
     
     public async Task<Equipo> CreateAsync(Equipo entity)
     {
-        var result = await _dbConnection.QueryAsync(
-            "INSERT INTO equipo (abreviatura, pais) VALUES (@a, @p) RETURNING *",
-            new Dictionary<string, object>()
-            {
-                { "a", entity.Abreviatura },
-                { "p", entity.Pais }
-            }
-        );
+        try{
+            var result = await _dbConnection.QueryAsync(
+                "INSERT INTO equipo (abreviatura, pais) VALUES (@a, @p) RETURNING *",
+                new Dictionary<string, object>()
+                {
+                    { "a", entity.Abreviatura },
+                    { "p", entity.Pais }
+                }
+            );
 
-        var equipo = result.FirstOrDefault();
-        
-        return new Equipo(
-            abreviatura: (string)equipo["abreviatura"],
-            pais: (string)equipo["pais"]
-        );
+            var equipo = result.FirstOrDefault();
+            
+            return new Equipo(
+                abreviatura: (string)equipo["abreviatura"],
+                pais: (string)equipo["pais"]
+            );
+        }
+        catch (PostgresException e)
+        {
+            throw new ArgumentException("Ocurrió un error al acceder a la base de datos.", e);
+        }
     }
     
     public async Task<Equipo> UpdateAsync(object id, Equipo entity)
     {
-        var result = await _dbConnection.QueryAsync(
-            "UPDATE equipo SET abreviatura = @a, pais = @p WHERE abreviatura = @i RETURNING *",
-            new Dictionary<string, object>()
-            {
-                { "a", entity.Abreviatura },
-                { "p", entity.Pais },
-                { "i", id }
-            }
-        );
+        try{
+            var result = await _dbConnection.QueryAsync(
+                "UPDATE equipo SET abreviatura = @a, pais = @p WHERE abreviatura = @i RETURNING *",
+                new Dictionary<string, object>()
+                {
+                    { "a", entity.Abreviatura },
+                    { "p", entity.Pais },
+                    { "i", id }
+                }
+            );
 
-        var equipo = result.FirstOrDefault();
+            var equipo = result.FirstOrDefault();
 
-        return new Equipo(
-            abreviatura: (string)equipo["abreviatura"],
-            pais: (string)equipo["pais"]
-        );
+            return new Equipo(
+                abreviatura: (string)equipo["abreviatura"],
+                pais: (string)equipo["pais"]
+            );
+        }
+        catch (PostgresException e)
+        {
+            throw new ArgumentException("Ocurrió un error al acceder a la base de datos.", e);
+        }
 
     }
 
     public async Task DeleteAsync(object id)
     {
-        var result = await _dbConnection.QueryAsync(
-            "DELETE FROM equipo WHERE abreviatura = @a",
-            new Dictionary<string, object>()
-            {
-                { "a", id }
-            }
-        );
+        try{
+            var result = await _dbConnection.QueryAsync(
+                "DELETE FROM equipo WHERE abreviatura = @a",
+                new Dictionary<string, object>()
+                {
+                    { "a", id }
+                }
+            );
+        }
+        catch (PostgresException e)
+        {
+            throw new ArgumentException("Ocurrió un error al acceder a la base de datos.", e);
+        }
     }
 
 }

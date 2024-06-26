@@ -20,6 +20,7 @@ import { LogoutButtonComponent } from './components/logout-button/logout-button.
 import { EditarPartidoComponent } from './admin-dashboard/editar-partido/editar-partido.component';
 import { RankingComponent } from './student-dashboard/ranking/ranking.component';
 import { PartidoPrediccionComponent } from './student-dashboard/predicciones/partido-prediccion/partido-prediccion.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { PartidoPrediccionComponent } from './student-dashboard/predicciones/par
     LogoutButtonComponent,
     EditarPartidoComponent,
     RankingComponent,
-    PartidoPrediccionComponent
+    PartidoPrediccionComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

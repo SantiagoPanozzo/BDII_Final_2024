@@ -1,4 +1,3 @@
-
 create table Carrera(
 	Id serial primary key,
 	Nombre varchar(100) not null UNIQUE
@@ -88,6 +87,17 @@ create table Estudia(
 	constraint fk_carrera foreign key (Id_carrera) references Carrera(Id),
 	constraint check_principal check (Principal IN (0, 1))
 );
+
+create table Notificacion (
+    Id serial PRIMARY KEY,
+    AlumnoCedula int not null,
+    Mensaje text not null,
+    FechaCreacion timestamp not null default CURRENT_TIMESTAMP,
+    Visto boolean not null default FALSE,
+    constraint fk_alumno_notificacion foreign key (AlumnoCedula) references Alumno(Cedula)
+);
+
+
 
 create unique index idx_unico_principal
 on Estudia (Cedula)

@@ -1,4 +1,4 @@
-FROM postgres:16-alpine
+FROM postgres:16-bookworm
 
 ENV POSTGRES_DB=pencadb
 ENV POSTGRES_USER=postgres
@@ -8,4 +8,6 @@ ENV POSTGRES_PASSWORD=postgres
 WORKDIR /docker-entrypoint-initdb.d
 
 COPY ./*.sql /docker-entrypoint-initdb.d/
+RUN apt-get update && apt-get install -y pgagent
+
 

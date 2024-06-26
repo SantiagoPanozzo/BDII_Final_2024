@@ -61,10 +61,12 @@ public class PartidoService(PgDatabaseConnection dbConnection, PrediccionService
                 )
             ).ToList();
                 return partidos.ToArray();
-            }catch (NpgsqlException e){
-            throw new ArgumentException(e.ToString());
             }
+        catch (PostgresException e)
+        {
+            throw new ArgumentException("Ocurrió un error al acceder a la base de datos.", e);
         }
+    }
         
         /// <summary>
         /// Obtener una carrera de la base de datos por su id
@@ -140,15 +142,17 @@ public class PartidoService(PgDatabaseConnection dbConnection, PrediccionService
                     resultado_E2:(int)partido["resultado_e2"],
                     etapa: et
                 );
-            }catch (NpgsqlException e){
-                throw new ArgumentException(e.ToString());
-            }
         }
-        
-        public async Task<Partido> CreateAsync(Partido entity)
+        catch (PostgresException e)
         {
-            try{
-                var sqlQuery = @"
+            throw new ArgumentException("Ocurrió un error al acceder a la base de datos.", e);
+        }
+    }
+        
+    public async Task<Partido> CreateAsync(Partido entity)
+    {
+        try{
+            var sqlQuery = @"
                             WITH inserted as (
                             INSERT INTO Partido 
                             (Fecha, Equipo_E1, Equipo_E2, Etapa)
@@ -212,8 +216,10 @@ public class PartidoService(PgDatabaseConnection dbConnection, PrediccionService
                 resultado_E2: (int)partido["resultado_e2"],
                 etapa: et
             );
-        }catch (NpgsqlException e){
-            throw new ArgumentException(e.ToString());
+        }
+        catch (PostgresException e)
+        {
+            throw new ArgumentException("Ocurrió un error al acceder a la base de datos.", e);
         }
     }
     
@@ -377,8 +383,10 @@ public class PartidoService(PgDatabaseConnection dbConnection, PrediccionService
                         etapa: et
                 );
             }
-        }catch (NpgsqlException e){
-            throw new ArgumentException(e.ToString());
+        }
+        catch (PostgresException e)
+        {
+            throw new ArgumentException("Ocurrió un error al acceder a la base de datos.", e);
         }
     }
     
@@ -400,8 +408,10 @@ public class PartidoService(PgDatabaseConnection dbConnection, PrediccionService
                     { "e2w", partidoDto.Equipo_E2}
                 }
             );
-        }catch (NpgsqlException e){
-            throw new ArgumentException(e.ToString());
+        }
+        catch (PostgresException e)
+        {
+            throw new ArgumentException("Ocurrió un error al acceder a la base de datos.", e);
         }
     }
 

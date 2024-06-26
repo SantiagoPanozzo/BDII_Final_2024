@@ -14,14 +14,22 @@ public class AlumnoController(AlumnoService alumnoService) : ControllerBase
     [HttpGet]
     public async Task<ActionResult<Alumno[]>> Get()
     {
-        Alumno[] alumnos = await _alumnoService.GetAllAsync();
-        return Ok(alumnos);
+        try{
+            Alumno[] alumnos = await _alumnoService.GetAllAsync();
+            return Ok(alumnos);
+        } catch (ArgumentException e) {
+            return NotFound(e.Message);
+        }
     }
     [HttpGet("ranking")]
     public async Task<ActionResult<Alumno[]>> GetByRanking()
     {
-        Alumno[] alumnos = await _alumnoService.GetAllOrderAsync();
-        return Ok(alumnos);
+        try{
+            Alumno[] alumnos = await _alumnoService.GetAllOrderAsync();
+            return Ok(alumnos);
+        } catch (ArgumentException e) {
+            return NotFound(e.Message);
+        }
     }
     
     [HttpGet("{id}")]
@@ -38,8 +46,12 @@ public class AlumnoController(AlumnoService alumnoService) : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Alumno>> Post(Alumno alumno)
     {
-        var nuevoAlumno = await _alumnoService.CreateAsync(alumno);
-        return CreatedAtAction(nameof(Get), new { id = alumno.Cedula }, nuevoAlumno);
+        try{
+            var nuevoAlumno = await _alumnoService.CreateAsync(alumno);
+            return CreatedAtAction(nameof(Get), new { id = alumno.Cedula }, nuevoAlumno);
+        } catch (ArgumentException e) {
+            return NotFound(e.Message);
+        }
     }
     
     [HttpPut("{id}")]

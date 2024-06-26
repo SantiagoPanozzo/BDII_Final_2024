@@ -28,8 +28,10 @@ public class CarreraService(PgDatabaseConnection dbConnection)
                 )
             ).ToList();
             return carreras.ToArray();
-        }catch (NpgsqlException e){
-            throw new ArgumentException(e.ToString());
+        }
+         catch (PostgresException e)
+        {
+            throw new ArgumentException("Ocurrió un error al acceder a la base de datos.", e);
         }
     }
     
@@ -60,8 +62,10 @@ public class CarreraService(PgDatabaseConnection dbConnection)
                 id: (int)carrera["id"],
                 nombre: (string)carrera["nombre"]
             );
-        }catch (NpgsqlException e){
-            throw new ArgumentException(e.ToString());
+        }
+        catch (PostgresException e)
+        {
+            throw new ArgumentException("Ocurrió un error al acceder a la base de datos.", e);
         }
     }
     
@@ -82,8 +86,10 @@ public class CarreraService(PgDatabaseConnection dbConnection)
                 id: (int)carrera["id"],
                 nombre: (string)carrera["nombre"]
             );
-        }catch (NpgsqlException e){
-            throw new ArgumentException(e.ToString());
+        }
+        catch (PostgresException e)
+        {
+            throw new ArgumentException("Ocurrió un error al acceder a la base de datos.", e);
         }
     }
     
@@ -105,8 +111,10 @@ public class CarreraService(PgDatabaseConnection dbConnection)
                 id: (int)carrera["id"],
                 nombre: (string)carrera["nombre"]
             );
-        }catch (NpgsqlException e){
-            throw new ArgumentException(e.ToString());
+        }
+        catch (PostgresException e)
+        {
+            throw new ArgumentException("Ocurrió un error al acceder a la base de datos.", e);
         }
     }
     
@@ -120,8 +128,10 @@ public class CarreraService(PgDatabaseConnection dbConnection)
                     { "i", id }
                 }
             );
-        }catch (NpgsqlException e){
-            throw new ArgumentException(e.ToString());
+        }
+        catch (PostgresException e)
+        {
+            throw new ArgumentException("Ocurrió un error al acceder a la base de datos.", e);
         }
     }
 

@@ -121,8 +121,10 @@ public class PrediccionService(PgDatabaseConnection dbConnection)
                     )
                 ).ToList();
                 return predicciones.ToArray();
-        }catch (NpgsqlException e){
-            throw new ArgumentException(e.ToString());
+        }
+        catch (PostgresException e)
+        {
+            throw new ArgumentException("Ocurrió un error al acceder a la base de datos.", e);
         }
     }
 
@@ -243,8 +245,10 @@ public class PrediccionService(PgDatabaseConnection dbConnection)
                 )
             ).ToList();
             return predicciones.ToArray();
-        }catch (NpgsqlException e){
-            throw new ArgumentException(e.ToString());
+        }
+        catch (PostgresException e)
+        {
+            throw new ArgumentException("Ocurrió un error al acceder a la base de datos.", e);
         }
     }
     
@@ -381,8 +385,10 @@ public class PrediccionService(PgDatabaseConnection dbConnection)
                 prediccion_e2: (int)prediccion["pe2"],
                 puntaje: (int)prediccion["puntajepred"]
             );
-        }catch (NpgsqlException e){
-            throw new ArgumentException(e.ToString());
+        }
+        catch (PostgresException e)
+        {
+            throw new ArgumentException("Ocurrió un error al acceder a la base de datos.", e);
         }
 
     }
@@ -519,8 +525,10 @@ public class PrediccionService(PgDatabaseConnection dbConnection)
                 prediccion_e2: (int)prediccion["pe2"],
                 puntaje: (int)prediccion["puntajepred"]
             );
-        }catch (NpgsqlException e){
-            throw new ArgumentException(e.ToString());
+        }
+        catch (PostgresException e)
+        {
+            throw new ArgumentException("Ocurrió un error al acceder a la base de datos.", e);
         }
     }
     
@@ -662,8 +670,10 @@ public class PrediccionService(PgDatabaseConnection dbConnection)
                     prediccion_e2: (int)prediccion["pe2"],
                     puntaje: (int)prediccion["puntajepred"]
                 );
-            }catch (NpgsqlException e){
-            throw new ArgumentException(e.ToString());
+         }
+        catch (PostgresException e)
+        {
+            throw new ArgumentException("Ocurrió un error al acceder a la base de datos.", e);
         }
     }
     public async Task<Prediccion[]> SetPuntajeAsync(object id)
@@ -724,8 +734,10 @@ public class PrediccionService(PgDatabaseConnection dbConnection)
             if (prediccion == null) throw new ArgumentException("Prediccion con resultados no se actualizó.");
 
             return await this.GetAllByPartidoAsync(partidoDto);
-        }catch (NpgsqlException e){
-            throw new ArgumentException(e.ToString());
+        }
+        catch (PostgresException e)
+        {
+            throw new ArgumentException("Ocurrió un error al acceder a la base de datos.", e);
         }
        
     }
@@ -750,8 +762,10 @@ public class PrediccionService(PgDatabaseConnection dbConnection)
                     { "e2w", prediccionDto.Equipo_E2}
                 }
             );
-        }catch (NpgsqlException e){
-            throw new ArgumentException(e.ToString());
+        }
+        catch (PostgresException e)
+        {
+            throw new ArgumentException("Ocurrió un error al acceder a la base de datos.", e);
         }
     }
 

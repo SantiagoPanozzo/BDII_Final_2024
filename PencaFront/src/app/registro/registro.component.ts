@@ -47,7 +47,11 @@ export class RegistroComponent implements OnInit {
     this.alumno.subCampeon = await this.equipoService.obtenerEquipoPorAbreviatura(this.alumno.subCampeon.abreviatura);
     console.log("Registrando: ")
     console.log(this.alumno);
-    this.alumnoService.registrarUsuario(this.alumno);
-    //this.router.navigate(['/login']);
+    try{
+      this.alumnoService.registrarUsuario(this.alumno);
+      await this.router.navigate(['/login']);
+    } catch (err){
+       alert("Error al registrar")
+    }
   }
 }

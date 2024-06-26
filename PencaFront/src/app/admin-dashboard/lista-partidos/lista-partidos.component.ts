@@ -36,7 +36,7 @@ export class ListaPartidosComponent implements OnInit {
 
 
     partidos.forEach(partido => {
-      const index = partidosAgrupados.findIndex(item => item.etapa === partido.etapa);
+      const index = partidosAgrupados.findIndex(item => item.etapa.id == partido.etapa.id);
       if (index !== -1) {
         partidosAgrupados[index].partidos.push(partido);
       } else {

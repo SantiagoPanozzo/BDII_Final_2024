@@ -1,5 +1,5 @@
 <div class="alumno-dashboard">
-  <h2>Bienvenido, {{ alumno?.nombre || 'Usuario' }}</h2>
+  <h2>Bienvenido, {{ this.usuario.nombre || 'Usuario' }}</h2>
   <div class="botones">
     <button [routerLink]="['/student-dashboard/predicciones']">predicciones</button>
     <button [routerLink]="['/student-dashboard/datos']">Mis datos</button>

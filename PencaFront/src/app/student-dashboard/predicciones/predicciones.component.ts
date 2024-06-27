@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { PartidoService } from 'src/app/services/partido.service';
-import { Partido } from 'src/app/interfaces/partido';
 import { PrediccionesService } from 'src/app/services/predicciones.service';
 import { Prediccion } from 'src/app/interfaces/prediccion';
 import { AuthService } from 'src/app/services/auth.service';
 import {Etapa} from "../../interfaces/etapa";
-import {Alumno} from "../../interfaces/alumnoInterface";
 import {AlumnoService} from "../../services/alumno.service";
 
 @Component({
@@ -40,7 +38,7 @@ export class PrediccionesComponent implements OnInit {
     // @ts-ignore
     const partido: Date = new Date(prediccion.partido.fecha as string);
     ahora.setTime(ahora.getTime() + (60 * 60 * 1000));
-    return ahora > partido;
+    return (ahora > partido || prediccion.partido.resultado_E1 != -1);
   }
 
   guardarPrediccion(prediccion: Prediccion): void {
@@ -51,7 +49,7 @@ export class PrediccionesComponent implements OnInit {
 
   private agruparPartidosPorEtapa() {
     this.predicciones.forEach(prediccion => {
-      const index = this.partidosPorEtapa.findIndex(item => item.etapa === prediccion.partido.etapa);
+      const index = this.partidosPorEtapa.findIndex(item => item.etapa.id === prediccion.partido.etapa.id);
       if (index !== -1) {
         this.partidosPorEtapa[index].predicciones.push(prediccion);
       } else {

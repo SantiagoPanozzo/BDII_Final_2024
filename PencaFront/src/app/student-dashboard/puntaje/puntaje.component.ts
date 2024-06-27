@@ -16,6 +16,7 @@ export class PuntajeComponent implements OnInit {
     const usuarioAutenticado = (await this.alumnoService.obtenerUsuarioPorCedula(this.authService.obtenerUsuarioAutenticado()))!;
     if (usuarioAutenticado) {
       const puntaje = usuarioAutenticado.puntajeTotal;
+      console.log(puntaje);
       if (puntaje !== null) {
         this.puntajeAlumno = puntaje;
       }

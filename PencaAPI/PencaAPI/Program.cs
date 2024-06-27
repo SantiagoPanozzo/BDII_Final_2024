@@ -3,6 +3,11 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using PencaAPI.DatabaseConnection;
 using PencaAPI.Services;
+using Quartz;
+using Quartz.Impl;
+using Quartz.Spi;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace PencaAPI;
 
@@ -47,6 +52,27 @@ public static class Program
                 ValidateAudience = false
             };
         });
+        // Configurar Quartz
+        builder.Services.AddQuartz(q =>
+        {
+            q.UseMicrosoftDependencyInjectionScopedJobFactory();
+
+            // Configurar el Job
+            var jobKey = new JobKey("GenerateNotificationsJob");
+            q.AddJob<GenerateNotificationsJob>(opts => opts.WithIdentity(jobKey));
+
+            // Configurar el Trigger
+            q.AddTrigger(opts => opts
+                .ForJob(jobKey)
+                .WithIdentity("GenerateNotificationsTrigger")
+                .WithSimpleSchedule(x => x
+                    .WithIntervalInMinutes(5)
+                    .RepeatForever()));
+        });
+
+        // Agregar Quartz Hosted Service
+        builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
+
 
         
 

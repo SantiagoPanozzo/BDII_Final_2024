@@ -88,6 +88,10 @@ create table Estudia(
 	constraint check_principal check (Principal IN (0, 1))
 );
 
+create unique index idx_unico_principal
+on Estudia (Cedula)
+where Principal = 1;
+
 create table Notificacion (
     Id serial PRIMARY KEY,
     AlumnoCedula int not null,
@@ -97,11 +101,6 @@ create table Notificacion (
     constraint fk_alumno_notificacion foreign key (AlumnoCedula) references Alumno(Cedula)
 );
 
-
-
-create unique index idx_unico_principal
-on Estudia (Cedula)
-where Principal = 1;
 
 -- Función para verificar la exclusividad de cédula entre Administrador y Alumno
 CREATE OR REPLACE FUNCTION check_admin_alumno_exclusivity()

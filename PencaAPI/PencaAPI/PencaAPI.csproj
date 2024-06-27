@@ -12,6 +12,8 @@
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.6" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.4" />
         <PackageReference Include="Npgsql" Version="8.0.3" />
+        <PackageReference Include="quartz" Version="3.3.3" />
+        <PackageReference Include="Quartz.Extensions.Hosting" Version="3.3.3" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     </ItemGroup>
 

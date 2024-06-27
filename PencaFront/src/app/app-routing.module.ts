@@ -16,11 +16,12 @@ import {StudentGuard} from "./guards/student.guard";
 import {AppLayoutComponent} from "./layouts/app-layout/app-layout.component";
 import {EditarPartidoComponent} from "./admin-dashboard/editar-partido/editar-partido.component";
 import {RankingComponent} from "./student-dashboard/ranking/ranking.component";
+import {UnloggedGuard} from "./guards/unlogged.guard";
 
 const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
-    { path: 'login', component: LoginComponent },
-    { path: 'registro', component: RegistroComponent },
+    { path: 'login', component: LoginComponent, pathMatch: 'full', canActivate: [UnloggedGuard] },
+    { path: 'registro', component: RegistroComponent, pathMatch: 'full', canActivate: [UnloggedGuard] },
     {
         path: 'admin-dashboard',
         canActivate: [AdminGuard],

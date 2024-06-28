@@ -12,4 +12,4 @@ Se puede iniciar el backend, la base de datos y el frontend con los siguientes c
 
 ## Frontend
 - `cd PencaFront`
-- `./ngup.sh`
+- `docker compose -f ./docker-compose.yml up --build`

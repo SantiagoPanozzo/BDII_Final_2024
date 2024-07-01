@@ -1,9 +1,13 @@
-<div class="admin-dashboard">
-  <h2>Bienvenido, {{ usuario.nombre }}</h2>
-  <nav>
-    
-      <button [routerLink]="['/admin-dashboard/alumnos']">Lista de todos los alumnos</button>
-      <button [routerLink]="['/admin-dashboard/partidos']">Todos los partidos</button>
-    
-  </nav>
+<div class="admin-dashboard content-center h-full">
+  <h2 class="font-bold text-2xl">Bienvenido</h2>
+  <div class="flex flex-col">
+      <a href="/admin-dashboard/alumnos" class="bg-lime-600 w-96 h-16 mb-2 content-center rounded-md hover:bg-lime-500 hover:text-gray-800">
+          <p>
+              Lista de todos los alumnos
+          </p>
+      </a>
+      <a href="/admin-dashboard/partidos" class="bg-lime-600 w-96 h-16 mb-2 content-center rounded-md hover:bg-lime-500 hover:text-gray-800">
+          Todos los partidos
+      </a>
+  </div>
 </div>
